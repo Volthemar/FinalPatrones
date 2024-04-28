@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300&display=swap');
+
+body {
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: #50ee91;
+  width: 100%;
+}
+
+h2 {
+  font-family: 'Encode Sans Condensed', sans-serif;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+#logo{
+  border-radius: 40px;
+  width: 80px;
+  align-self: center;
+}
+
+#container {
+  display: flex;
+  background-color: #ffffff;
+  border-radius: 50px;
+  width: 700px;
+  height: 500px;
+  box-shadow: 5px 2px 5px 0 rgba(0, 0, 0, 0.25);
+}
+
+#backgroundContainer{
+  width: 300px; 
+  height: 500px; 
+  overflow: hidden; 
+  border-radius: 50px 0 0 50px;
+}
+
+#backgroundContainer img{
+  height: 111%;
+  display: block;
+}
+
+#contentContainer{
+  box-sizing: border-box;
+  padding: 50px;
+  color: #121012;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+}
+
+#contentContainer label {
+  font-size: 12px;
+  font-family: 'Assistant', sans-serif;
+  font-weight: 300;
+}
+
+#contentContainer p {
+  font-size: 12px;
+  font-family: 'Assistant', sans-serif;
+  font-weight: 300;
+  margin-top: 20px;
+}
+
+a {
+  color: #458E2B;
+  text-decoration: inherit;
+  font-weight: 700;
+}
+
+#username, #password{
+  position: relative;
+}
+
+form{
+  margin-top: 20px;
+}
+form label {
+  font-size: 7pt;
+  color: rgba(18, 16, 18, 0.3);
+  background-color:#ffffff;
+  padding: 0px 2px 0px 2px;
+  position: absolute;
+  top: 12px;
+  left: 35px;
+}
+input{
+  margin-top: 20px;
+  border: 1px solid rgba(18, 16, 18, 0.3);
+  height: 30px;
+  width: 250px;
+  border-radius: 10px;
+  outline: none;
+  box-shadow: none;
+  padding-left: 10px;
+}
+button {
+  color: #ffffff;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #009929;
+  cursor: pointer;
+  border-radius: 30px;
+  width: 125px;
+  height: 40px;
+  margin-top: 20px;
+  border: 1px solid transparent;
+}
+
+
