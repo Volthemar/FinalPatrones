@@ -1,12 +1,11 @@
-package com.example.Hola.controllers;
+package com.api.crud.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Hola.services.UserService;
-import com.example.Hola.models.UserModel;
+import com.api.crud.services.UserService;
+import com.api.crud.models.UserModel;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -16,9 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-
-
 
 @RestController
 @RequestMapping("/usuario")
@@ -36,10 +32,10 @@ public class UserController {
     public UserModel postGuardarUsuario(@RequestBody UserModel usuario) {
         return this.userService.guardarUsuario(usuario);
     }
-    
+
     @GetMapping("/{id}")
     public Optional<UserModel> getUsuariosPorId(@PathVariable Long id) {
         return this.userService.getPorId(id);
     }
-    
+
 }

@@ -1,7 +1,6 @@
-package com.example.Hola.models;
+package com.api.crud.models;
 
 import java.util.Date;
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,9 +35,6 @@ public class UserModel {
 
     @Column
     private Date fecha_creacion;
-
-    
-
 
     /**
      * @return long return the id

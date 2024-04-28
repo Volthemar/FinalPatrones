@@ -1,4 +1,4 @@
-package com.example.Hola.services;
+package com.api.crud.services;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.Hola.models.UserModel;
-import com.example.Hola.repositories.IUserRepository;
+import com.api.crud.models.UserModel;
+import com.api.crud.repositories.IUserRepository;
 
 @Service
 public class UserService {

@@ -1,13 +1,13 @@
-package com.example.Hola;
+package com.api.crud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HolaMundoApplication {
+public class CrudApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HolaMundoApplication.class, args);
+		SpringApplication.run(CrudApplication.class, args);
 	}
 
 }
