@@ -1,0 +1,18 @@
+.ImageCardLayout {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+
+  }
+  
+  .ImageContainer img {
+    max-width: 450px; /* Ajusta esto según el tamaño de tu imagen */
+    height: auto;
+    display: block; /* Esto asegura que no haya margen extra alrededor de la imagen */
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    width: 425px; /* Ajusta el tamaño según sea necesario */
+    max-width: 120%;
+    box-sizing: border-box;
+  }
+  

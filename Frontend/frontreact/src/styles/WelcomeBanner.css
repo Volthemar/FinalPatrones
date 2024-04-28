@@ -1,0 +1,19 @@
+.WelcomeBanner {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .Logo {
+    width: 120px; /* Ajusta según el tamaño de tu logo */
+    margin-bottom: 1rem;
+  }
+  
+  .WelcomeBanner h1 {
+    margin-bottom: 0.25rem;
+    font-size: 1.5rem; /* Ajusta el tamaño del texto según sea necesario */
+  }
+  
+  .WelcomeBanner p {
+    font-size: 1rem;
+  }
+  

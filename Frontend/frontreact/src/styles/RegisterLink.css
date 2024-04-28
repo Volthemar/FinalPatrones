@@ -1,0 +1,10 @@
+.RegisterLink {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .RegisterLink a {
+    color: #4CAF50; /* Color de enlace que coincida con tu esquema de color */
+    text-decoration: none; /* O cualquier otro estilo para el enlace de registro */
+  }
+  

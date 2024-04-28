@@ -1,0 +1,14 @@
+.CardContainer {
+    /* Usar una imagen de fondo si está disponible, o un color de fondo sólido como fallback */
+    background-image: url('./background.png');
+    background-size: cover;
+    background-position: center;
+    padding: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 350px; /* Ajusta el tamaño según sea necesario */
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
