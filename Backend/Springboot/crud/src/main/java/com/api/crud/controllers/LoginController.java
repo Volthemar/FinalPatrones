@@ -25,7 +25,7 @@ public class LoginController {
         if (!this.userService.login(usuario,contrasena).isEmpty()){
             return Map.of("data",this.userService.login(usuario,contrasena),"status",HttpStatus.valueOf(200),"msg","El usuario existe");
         }else{
-            return Map.of("data","","status",HttpStatus.valueOf(200),"msg","El usuario o contraseña incorrecta");
+            return Map.of("data","","status",HttpStatus.valueOf(200),"msg","Usuario o contraseña incorrecta");
         }
         
     }
