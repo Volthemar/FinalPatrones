@@ -24,8 +24,8 @@ function LoginForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: username,
-          password: password,
+          usuario: username, //TODO EN ESPAÑOL
+          contrasena: password,
         }),
       });
 
