@@ -27,7 +27,7 @@ public class UsuarioService {
         return userRepository.findById(id);
     }
 
-    public UsuarioModel login(String usuario, String contrasena){
+    public Optional<UsuarioModel> login(String usuario, String contrasena){
         return userRepository.findByUsuarioAndContrasena(usuario, contrasena);
     }
     
