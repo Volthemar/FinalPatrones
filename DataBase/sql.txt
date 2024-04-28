@@ -11,7 +11,9 @@ CREATE TABLE Usuario (
     Correo VARCHAR(50) NOT NULL,
     Estado BOOLEAN NOT NULL DEFAULT TRUE,
     Usuario VARCHAR(50) NOT NULL,
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE)
+    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
+    Num_intentos INT NOT NULL,
+    Cod_verificacion VARCHAR(6) NOT NULL
 );
 
 -- Creación de la tabla Tarjeta_credito
