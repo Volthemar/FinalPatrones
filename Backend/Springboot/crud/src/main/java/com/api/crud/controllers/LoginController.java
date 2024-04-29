@@ -21,7 +21,7 @@ public class LoginController {
     public Map<String,Object> login(@RequestBody LoginRequest loginRequest) {
         String usuario = loginRequest.getUsuario();
         String contrasena = loginRequest.getContrasena();
-
+        
         if (!this.userService.login(usuario,contrasena).isEmpty()){
             return Map.of("data",this.userService.login(usuario,contrasena),"status",HttpStatus.valueOf(200),"msg","El usuario existe");
         }else{
