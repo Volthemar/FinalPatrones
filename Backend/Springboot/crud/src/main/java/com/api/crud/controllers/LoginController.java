@@ -28,30 +28,27 @@ public class LoginController {
         String contrasena = loginRequest.getContrasena();
         
         if (!this.userService.login(usuario,contrasena).isEmpty()){
-            return Map.of("data",this.userService.login(usuario,contrasena),"status",HttpStatus.valueOf(200),"msg","El usuario existe");
-        }else{
-            return Map.of("data","","status",HttpStatus.valueOf(200),"msg","Usuario o contraseña incorrecta");
-        }
-        if (!this.userService.login(usuario,contrasena).isEmpty()){
-            return Map.of("data",this.userService.login(usuario,contrasena),"status",HttpStatus.valueOf(200),"msg","El usuario existe");
-        }else{
-            // Verificar si el usuario ha sido bloqueado
-            if (userService.isBlocked(usuario)) {
-                return Map.of("data", "", "status", HttpStatus.valueOf(403), "msg", "El usuario ha sido bloqueado");
-            } else {
-                // Incrementar el contador de intentos fallidos
-                userService.incrementFailedLoginAttempts(usuario);
-
-                // Verificar si el usuario ha alcanzado el límite de intentos fallidos
-                if (userService.getFailedLoginAttempts(usuario) >= 3) {
-                    // Bloquear el usuario
-                    userService.blockUser(usuario);
-                    return Map.of("data", "", "status", HttpStatus.valueOf(403), "msg", "El usuario ha sido bloqueado");
-                } else {
-                    return Map.of("data", "", "status", HttpStatus.valueOf(200), "msg", "Intentos fallidos: " + userService.getFailedLoginAttempts(usuario));
-                }
+            if (!userService.isBlocked(usuario)) {
+                return Map.of("data", "", "msg", "El usuario ha sido bloqueado");
+            else{
+                //reiniciar el conteo a 0
+                return Map.of("data",this.userService.login(usuario,contrasena),"msg","El usuario existe");
             }
+        }else{
+            //select * buscando por usuario
+            userService.incrementFailedLoginAttempts(usuario);
+            // Verificar si el usuario ha alcanzado el límite de intentos fallidos
+            if (userService.getFailedLoginAttempts(usuario) >= 3) {
+                // Bloquear el usuario
+                userService.blockUser(usuario);
+                return Map.of("data", "", "msg", "El usuario ha sido bloqueado");
+            } else {
+                return Map.of("data", "","msg", "Intentos fallidos: " + userService.getFailedLoginAttempts(usuario));
+            }
+            return Map.of("data","","msg","Usuario o contraseña incorrecta");
         }
+        
+
     }
     private String generateVerificationCode() {
         // Generar un código de verificación aleatorio
@@ -84,4 +81,5 @@ public class LoginController {
             // Manejar la excepción
         }
     }
+}
 }

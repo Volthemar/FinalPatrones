@@ -37,7 +37,7 @@ public class UsuarioModel {
     private Date fecha_creacion;
 
     @Column
-    private Int num_intentos;
+    private int num_intentos;
 
     @Column
     private String cod_verificacion;
@@ -155,30 +155,31 @@ public class UsuarioModel {
     }
 
     /**
-    * @return Int return num_intentos
-    */
-    public Int getNum_intentos(){
-        return num_intentos
+     * @return int return the num_intentos
+     */
+    public int getNum_intentos() {
+        return num_intentos;
     }
 
     /**
-    * @param num_intentos the num_intentos to set
-    */
-    public void setNum_intentos(Int num_intentos){
-        this.num_intentos = num_intentos
+     * @param num_intentos the num_intentos to set
+     */
+    public void setNum_intentos(int num_intentos) {
+        this.num_intentos = num_intentos;
     }
 
     /**
-    * @return String return cod_verificacion
-    */
-    public String getCod_verificacion(){
-        return cod_verificacion
+     * @return String return the cod_verificacion
+     */
+    public String getCod_verificacion() {
+        return cod_verificacion;
     }
-    
+
     /**
-    * @param cod_verificacion the cod_verificacion to set
-    */
-    public void setCod_verificacion(String cod_verificacion){
-        this.cod_verificacion = cod_verificaicon
+     * @param cod_verificacion the cod_verificacion to set
+     */
+    public void setCod_verificacion(String cod_verificacion) {
+        this.cod_verificacion = cod_verificacion;
     }
+
 }

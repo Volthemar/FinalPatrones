@@ -30,5 +30,10 @@ public class UsuarioService {
     public Optional<UsuarioModel> login(String usuario, String contrasena){
         return userRepository.findByUsuarioAndContrasena(usuario, contrasena);
     }
+
+    public boolean isBlocked(Long id){
+        Optional<UsuarioModel> usuario = userRepository.findById(id);
+        return usuario.isEstado(); 
+    }
     
 }
