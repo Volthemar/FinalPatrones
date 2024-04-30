@@ -27,8 +27,11 @@ public class LoginController {
     public Map<String,Object> login(@RequestBody LoginRequest loginRequest) {
         String usuario = loginRequest.getUsuario();
         String contrasena = loginRequest.getContrasena();
-        if (!this.userService.login(usuario,contrasena).isEmpty()){
-            if (this.userService.login(usuario,contrasena).get().isEstado()) {
+        Optional<UsuarioModel> usuarioLoggeado = this.userService.login(usuario,contrasena);
+        if (!usuarioLoggeado.isEmpty()){
+            if (usuarioLoggeado.get().isEstado()) {
+                usuarioLoggeado.get().setNum_intentos(0);
+                userService.guardarUsuario(usuarioLoggeado.get());
                 return Map.of("data",this.userService.login(usuario,contrasena),"msg","Usuario habilitado");
             }else{
                 return Map.of("data", "", "msg", "Usuario bloqueado");
