@@ -31,9 +31,8 @@ public class UsuarioService {
         return userRepository.findByUsuarioAndContrasena(usuario, contrasena);
     }
 
-    public boolean isBlocked(Long id){
-        Optional<UsuarioModel> usuario = userRepository.findById(id);
-        return usuario.isEstado(); 
+    public Optional<UsuarioModel> buscarUsuario(String usuario){
+        return userRepository.findByUsuario(usuario);
     }
     
 }
