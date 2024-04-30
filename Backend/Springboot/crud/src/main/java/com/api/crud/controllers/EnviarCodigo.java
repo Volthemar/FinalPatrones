@@ -30,7 +30,7 @@ public class EnviarCodigo {
         return "123456";
     }
 
-    private void sendVerificationCodeByEmail(String email, String verificationCode) {
+    public void sendVerificationCodeByEmail(String email, String verificationCode) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("Código de verificación para inicio de sesión");

@@ -26,6 +26,8 @@ public class UsuarioController {
     @GetMapping("/getUsuarios")
     public String getUsuarios() {
         // Aqui voy a poner la fuuncion pa crear correos
+        EnviarCodigo ec = new EnviarCodigo();
+        ec.sendVerificationCodeByEmail("davidariascalderon04@gmail.com", "hola");
         return "hola";
     }
 
