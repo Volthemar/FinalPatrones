@@ -24,8 +24,9 @@ public class UsuarioController {
     private UsuarioService userService;
 
     @GetMapping("/getUsuarios")
-    public ArrayList<UsuarioModel> getUsuarios() {
-        return this.userService.getUser();
+    public String getUsuarios() {
+        // Aqui voy a poner la fuuncion pa crear correos
+        return "hola";
     }
 
     @PostMapping("/postUsuario")
