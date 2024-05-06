@@ -1,37 +1,156 @@
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400&display=swap");
+
+body {
+  color: #333;
+  /* Establece el color de texto predeterminado para toda la página */
+}
+
 .card {
-    width: 90vmax;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    font-family: 'Arial', sans-serif;
-    background-color: #002E83;
+  display: flex;
+  flex-direction: column;
+  width: 90vmax;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f5f7;
+}
+
+.UserProfile {
+  display: flex;
+  flex-direction: column;
+  align-items:baseline;
+}
+
+.botones {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin: 5px;
+
+  .Configuracion {
+    background-color: #4CAF50;
+    /* Verde */
+    color: white;
+    /* Texto blanco */
+    border: none;
+    /* No border */
+    padding: 10px 20px;
+    /* Padding para hacer el botón más grande */
+    cursor: pointer;
+    /* Cambia el cursor a una mano al pasar por encima */
+    transition: background-color 0.3s;
   }
+}
+
+hr {
+  border: none;
+  /* Elimina el borde predeterminado */
+  height: 2px;
+  /* Espesor de la línea */
+  background-color: #ccc;
+  /* Color de la línea */
+  margin: 20px 0;
+  /* Espacio vertical antes y después de la línea */
+  color: #333;
+  width: 90%;
+}
+
+.botones .Salir {
+  background-color: #f44336;
+  /* Rojo */
+  color: white;
+  /* Texto blanco */
+  border: none;
+  /* No border */
+  padding: 10px 20px;
+  /* Padding similar al otro botón */
+  cursor: pointer;
+  /* Igual que el otro botón */
+  transition: background-color 0.3s;
+  /* Igual que el otro botón */
+}
+
+.UserPaymentInfo p {
+  margin: 5px 0;
+  /* Reduce el margen entre los párrafos */
+}
+
+/* Estilo del historial de uso */
+.UserUsageHistory h2 {
+  font-weight: 50;
+  font-style: italic;
+}
+
+.UserUsageHistory ul {
+  list-style-type: none;
+  /* Elimina los bullets */
+  padding: 0;
+}
+
+.UserUsageHistory li {
+  display: flex;     /* Usa Flexbox para alinear los elementos en filas */
+  align-items: center; /* Centra los elementos verticalmente */
+  border-bottom: 1px solid #4a4949; /* Opcional: añade una línea separadora entre entradas */
+  padding: 10px; 
+  gap: 10px;
+}
+.UserUsageHistory .Date, .UserUsageHistory .Time, .UserUsageHistory .Amount {
+  flex: 1;  /* Asigna igual flexibilidad para que tomen el mismo ancho */
+}
+
+.UserUsageHistory .Locations {
+  flex: 3;  /* Asigna más espacio a las ubicaciones ya que podrían ser más extensas */
+}
+
+.UserUsageHistory .Status {
+  flex: 1;  /* Mismo tratamiento que fecha, tiempo y monto */
+}
+.UserUsageHistory div {
   
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  .card-image {
-    border-radius: 40px;
-    width: 100%;
-    align-self: center;
-  }
-  
-  .card-content {
-    padding: 20px;
-  }
-  
-  .card-title {
-    margin: 0;
-    color: #333;
-    font-size: 24px;
-  }
-  
-  .card-description {
-    color: #666;
-    font-size: 16px;
-    line-height: 1.5;
-  }
-  
+  margin-bottom: 5px;
+}
+
+.UserHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin: 0; /* Remueve cualquier margen externo */
+  padding: 20px; /* Añade padding interno para un poco de espacio dentro del header */
+  box-sizing: border-box;
+  align-items: center; /* Centra los elementos verticalmente */
+  justify-content: space-between; /* Distribuye los elementos uniformemente */
+  margin-bottom: 20px; /* Espacio entre el encabezado y el cuerpo */
+  background: #ffffff; /* Fondo blanco, cambia según necesites */
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-image {
+  border-radius: 40px;
+  width: 100%;
+  align-self: center;
+}
+
+.card-content {
+  padding: 20px;
+  align-items: center;
+}
+
+.card-title {
+  margin: 0;
+  color: #333;
+  font-size: 24px;
+  align-items: center;
+}
+
+.card-description {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.5;
+  align-items: center;
+}
+
