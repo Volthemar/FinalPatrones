@@ -37,7 +37,7 @@ public class UsuarioController {
         email.setMensaje("123456");
         email.setAsunto("prueba 1");
         email.setDestinatario("davariasc@udistrital.edu.co");
-        emailService.enviarCorreo(email);
+        emailService.enviarCorreoCodigo(email);
         return new ResponseEntity<>("Correo enviado exitosamente",HttpStatus.OK);
     }
 
