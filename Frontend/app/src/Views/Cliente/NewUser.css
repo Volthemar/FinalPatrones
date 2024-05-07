@@ -130,8 +130,8 @@ hr {
 }
 
 .card-image {
-  border-radius: 40px;
-  width: 100%;
+  border-radius: 4px;
+  width: 1px;
   align-self: center;
 }
 
