@@ -7,4 +7,5 @@ import jakarta.mail.MessagingException;
 public interface IEmailService {
     public void enviarCorreoCodigo(EmailDTO email) throws MessagingException;
     public void enviarCorreoRegistro(EmailDTO email) throws MessagingException;
+    public void enviarCorreoBloqueo(EmailDTO email) throws MessagingException;
 }

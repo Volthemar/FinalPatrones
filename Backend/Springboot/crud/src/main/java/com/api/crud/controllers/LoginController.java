@@ -65,10 +65,10 @@ public class LoginController {
                 if (intentos >= 3) {
                     usuarioExiste.get().setEstado(false);
                     userService.guardarUsuario(usuarioExiste.get());
-                    email.setDestinatario(usuarioLoggeado.get().getCorreo());
+                    email.setDestinatario(usuarioExiste.get().getCorreo());
                     email.setMensaje("Su cuenta ha sido bloqueada, por favor comuniquese con administración");
                     email.setAsunto("Bloqueo de cuenta");
-                    emailService.enviarCorreoCodigo(email);
+                    emailService.enviarCorreoBloqueo(email);
                     return Map.of("data", "", "msg", "El usuario ha sido bloqueado por exceso de intentos");
                 } else {
                     return Map.of("data", "", "msg", "Contraseña incorrecta");
