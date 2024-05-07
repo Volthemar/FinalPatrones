@@ -124,6 +124,13 @@ hr {
   margin-bottom: 20px; /* Espacio entre el encabezado y el cuerpo */
   background: #ffffff; /* Fondo blanco, cambia según necesites */
 }
+.UserImage {
+  width: 20%;          /* Ancho del SVG */
+  height: 20%;         /* Alto del SVG, asegúrate de que sea proporcional al ancho para evitar distorsión */
+  border-radius: 50%;   /* Opcional: Crea un efecto de imagen circular */
+  margin-right: 10px;   /* Opcional: Añade margen a la derecha */
+  object-fit: contain;  /* Asegura que el SVG se ajuste proporcionalmente dentro del espacio asignado */
+}
 
 .card:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
