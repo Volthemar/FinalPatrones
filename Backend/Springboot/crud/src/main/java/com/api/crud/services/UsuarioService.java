@@ -35,4 +35,8 @@ public class UsuarioService {
         return userRepository.findByUsuario(usuario);
     }
     
+    public String codigoUsuario(Long id){
+        return userRepository.findCodigoForId(id);
+    }
+
 }
