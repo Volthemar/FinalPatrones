@@ -3,7 +3,7 @@ import Logo from '../assets/logo.png' // Placeholder para el logo
 import backgroundLogin from '../assets/backgroundLogin.svg'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import NewUser from './NewUser'; // Importando el componente NewUser
+import NewUser from '../Views/Cliente/NewUser'; // Importando el componente NewUser
 
 function Registro() {
   const URL_POST = 'http://localhost:3241/login'; // Endpoint para confirmar datos

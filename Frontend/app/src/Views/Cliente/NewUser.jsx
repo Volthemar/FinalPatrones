@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './NewUser.css'
-import Persona from '../assets/Persona.svg'
+import Persona from './assets/Persona.svg'
 import { Map, Marker } from "pigeon-maps"
 import Parqueadero from './Parqueadero';
 
@@ -81,7 +81,8 @@ function NewUser() {
           onClick={() => {
             setParqueaderoOpen(true);
             setNombreParqueadero('Cuatro Parques'); // Esto asume que puedes obtener el nombre del evento
-          }}
+          }
+        }
         />
       </Map>
       <Parqueadero isOpen={isParqueaderoOpen} onClose={() => setParqueaderoOpen(false)} name={NombreParqueadero}/>
