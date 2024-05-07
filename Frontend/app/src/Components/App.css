@@ -5,7 +5,7 @@ body {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  background-color: #F7C700;
+  background-color: #4157fe;
   width: 100vw;
 }
 
@@ -47,7 +47,7 @@ h2 {
 
 #contentContainer {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   box-sizing: border-box;
   padding: 3rem;
   color: #121012;
@@ -73,7 +73,6 @@ a {
   position: relative;
 }
 
-input,
 button {
   width: 100%;
   margin-top: 1rem;
@@ -91,7 +90,7 @@ button {
 @media (min-width: 800px ) {
   
   #container {
-    
+
     padding: 0rem;
     flex-direction: row;
     height: 100%;
