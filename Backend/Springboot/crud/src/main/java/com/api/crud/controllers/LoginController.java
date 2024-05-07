@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Optional;
 
 import com.api.crud.DTO.LoginCodigoRequest;
 import com.api.crud.DTO.LoginRequest;
@@ -17,9 +16,6 @@ import com.api.crud.models.UsuarioModel;
 import com.api.crud.services.IEmailService;
 import com.api.crud.services.UsuarioService;
 import com.api.crud.services.models.EmailDTO;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import java.util.Map;
 import com.api.crud.services.CodigoLogin;
 
 import jakarta.mail.MessagingException;
