@@ -12,7 +12,7 @@ body {
 h2 {
   font-family: 'Encode Sans Condensed', sans-serif;
   letter-spacing: 2px;
-  margin: 1rem 0;
+  margin: 1vmax 0;
 }
 
 #logo {
@@ -26,7 +26,7 @@ h2 {
   display: flex;
   background-color: #ffffff;
   border-radius: 50px;
-  width: 95vw;
+  width: 95vh;
   height: auto;
   flex-direction: column;
   box-shadow: 10px 10px 10px 0 rgba(0, 0, 0, 0.25);
@@ -55,10 +55,10 @@ h2 {
 
 #contentContainer label,
 #contentContainer p {
-  font-size: 1rem;
+  font-size: 2vmax;
   font-family: 'Assistant', sans-serif;
   font-weight: 300;
-  margin-top: 1rem;
+  margin-top: 1vmax;
 }
 
 a {
@@ -70,16 +70,19 @@ a {
 #username,
 #password,
 #tarjetaCredito {
+  display: flex;
+  flex-direction: row;
   position: relative;
+  align-items: center;
 }
+
 
 button {
   width: 100%;
-  margin-top: 1rem;
+  height: 4vmax;
+  margin-top: 1vmax;
   border-radius: 25px;
-}
-
-button {
+  font-size:  1vmax;
   background-color: #002E83;
   cursor: pointer;
   border-radius: 30px;
@@ -98,12 +101,13 @@ button {
 
   #contentContainer,
   #backgroundContainer {
-    padding: 1rem;
+    padding: 1vmax;
     width: 50%;
   }
 
-  input,
-  button {
+  input{
+    width: 10vmax;
+    height: 1vmax;
     border: 2px solid #ccc; 
     border-radius: 25px;
     padding: 10px; 
