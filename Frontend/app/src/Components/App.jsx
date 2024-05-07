@@ -7,15 +7,16 @@ import Gerente from '../Views/Gerente/Gerente.jsx'
 
 function App() {
   return (
-    <Gerente></Gerente>
-    /*<Router>
+    
+    <Router>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/user/:userId" element={<NewUser />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/admin" element={<Registro />} />
+        <Route path="/gerente" element={<Gerente />} />
       </Routes>
-    </Router>*/
+    </Router>
     
   );
 }
