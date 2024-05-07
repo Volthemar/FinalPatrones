@@ -15,41 +15,49 @@ function Registro() {
 
   function login(event) {
     event.preventDefault();
-    if (username.trim() === '' || password.trim() === ''|| tarjetaCredito.trim() =='') {
+    if (username.trim() === '' || password.trim() === '' || tarjetaCredito.trim() == '') {
       alert('Por favor complete todos los campos.');
       return;
     }
-    const userData = {
-      usuario: username,
-      contrasena: password,
-      tarjetaCredito: tarjetaCredito
-    };
-    fetch(URL_POST, {
-      method: 'POST',
-      body: JSON.stringify(userData),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => {
-      if (response.ok) {
-        window.location.href = URL_USER; // Redirect to user profile page on successful login
-      } else {
-        throw new Error('Usuario no válido'); // Throw error to catch block
-      }
-    })
-    .catch(error => {
-      console.error(error);
-      alert('Usuario no válido. Intente nuevamente.'); // Show alert on failed login
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      "nombre": username,
+      "identificacion": password,
+      "correo": tarjetaCredito
     });
-}
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    };
+
+    fetch("http://localhost:3241/registroPersona", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
+    .then(response => {
+        if (response.ok) {
+          window.location.href = URL_USER; // Redirect to user profile page on successful login
+        } else {
+          throw new Error('Usuario no válido'); // Throw error to catch block
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        alert('Usuario no válido. Intente nuevamente.'); // Show alert on failed login
+      });
+  }
 
 
   return (
     <>
       <div id='container'>
         <div id='backgroundContainer'>
-          <img src={backgroundLogin} alt="Background"></img>  
+          <img src={backgroundLogin} alt="Background"></img>
         </div>
         <div id='contentContainer'>
           <img id='logo' src={Logo} alt="Logo"></img>

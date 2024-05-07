@@ -61,9 +61,14 @@ function Login() {
       })
       .then(data => {
         if (data && data.data) {
-          const id = data.data.id;      // Guardar el id
-          localStorage.setItem('userId', id);
+          const mensaje = data.msg;
+          if (mensaje.includes("bloq")){
+            alert('el usuario ha sido bloqueado')
+          }else{
+            const id = data.id;  
+            localStorage.setItem('userId', id);
           promptForAccessCode()
+          }
         } else {
           alert("Usuario o contraseña incorrectos")
         }
@@ -87,7 +92,7 @@ function Login() {
         .then(data => {
           if (data && data.success) {
 
-            localStorage.setItem('Username', data.data.usuario);
+            localStorage.setItem('nombre', data.nombre);
             irAOtraRuta();
           } else {
             irAOtraRuta()
