@@ -4,6 +4,7 @@ public class LoginRequest {
     private String usuario;
     private String contrasena;
 
+    
     /**
      * @return String return the usuario
      */
