@@ -34,6 +34,10 @@ function Sidebar() {
         <div id='usuario'>
             <img src={URL_IMG_USER} alt="" />
             <label>Pedro Navaja</label>
+            <div>
+            <p>Admin</p>
+            </div>
+            
         </div>
         <form>
             <input type='text' id='busqueda' placeholder='Filtrar...'/>

@@ -61,11 +61,11 @@ function Registro() {
               <input type='text' id='inputUsername' value={username} onChange={(e) => setUsername(e.target.value)}></input>
             </div>
             <div id='containerPassword'>
-              <div><label>Contraseña</label></div>
+              <div><label>Identificación</label></div>
               <input type='password' id='inputPassword' value={password} onChange={(e) => setPassword(e.target.value)}></input>
             </div>
             <div id='containerTarjetaCredito'>
-              <div><label>Tarjeta de credito</label></div>
+              <div><label>Correo electrónico</label></div>
               <input type='tarjetaCredito' id='tarjetaCredito' value={tarjetaCredito} onChange={(e) => settarjetaCredito(e.target.value)}></input>
             </div>
             <button type='button' id='btnIngresar' onClick={login}>Registrarse</button>
