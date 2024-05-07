@@ -36,9 +36,6 @@ function Registro() {
     };
 
     fetch("http://localhost:3241/registroPersona", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.error(error));
     .then(response => {
         if (response.ok) {
           window.location.href = URL_USER; // Redirect to user profile page on successful login
