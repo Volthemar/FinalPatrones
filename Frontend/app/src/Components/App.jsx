@@ -5,7 +5,9 @@ import './App.css'
 import NewUser from '../Views/Cliente/NewUser'; // Importando el componente NewUser
 import Registro from './Registro';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Gerente from '../Views/Gerente/Gerente';
+import Codigo from './Codigo';
 
 function Login() {
 
@@ -14,37 +16,38 @@ function Login() {
   const URL_REGISTRO = 'registro'; // Endpoint para registro
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [UserDataName, setUserDataName] = useState('')
+  const [UserDataName, setUserDataName] = useState('');
   const [userId, setUserId] = useState(null);
-  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [iscodigo, setcodigo] = useState(false);
 
   //ir A User
   const irAOtraRuta = () => {
-    navigate('/user/${userId}', { state: { key: userId } });
+    navigate(`/user/${userId}`, { state: { key: userId } });
   };
-  //muchas funciones para el login que luego tienen que separarse
+
+  //primera funcion del login
   function login(event) {
+    //verificar campos
     event.preventDefault();
     if (username.trim() === '' || password.trim() === '') {
       alert('Por favor complete todos los campos.');
       return;
     }
-
+    //cosas del fetch
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-
     const raw = JSON.stringify({
       "usuario": username,
       "contrasena": password
     });
-
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
       body: raw,
       redirect: "follow"
     };
+
     //primer post para usuario y contraseña
     fetch(URL_POST, requestOptions)
       .then(response => {
@@ -54,59 +57,47 @@ function Login() {
           console.log(response);
           alert(response);
           throw new Error('Failed to fetch data'); // Manejamos errores en caso de fallo en la petición
-
         }
       })
       .then(data => {
         if (data && data.data) {
           const id = data.data.id;      // Guardar el id
-          const nombre = data.data.nombre; // Guardar el nombre
-          setUserId(id)
-          //console.log("ID:", id);       // Muestra el ID en consola
-          //console.log("Nombre:", nombre); // Muestra el Nombre en consola
-          // Aquí puedes hacer lo que necesites con `id` y `nombre`
-          // Por ejemplo, guardarlos en el localStorage:
           localStorage.setItem('userId', id);
-          localStorage.setItem('userName', nombre);
-          promptForAccessCode(userId);
-        }
-      })
-      .catch(error => {
-        console.error(error);
-        alert('Usuario no válido. Intente nuevamente.'); // Show alert on failed login
-      });
-      //segundo post para el codigo
-    function promptForAccessCode(userId) {
-      const code = prompt("Escriba el código de acceso:"); 
-      fetch(URL_POST, requestOptions)
-      .then(response => {
-        if (response.ok) {
-          return response.json(); // Procesamos la respuesta JSON si es exitosa
+          promptForAccessCode()
         } else {
-          console.log(response);
-          alert(response);
-          throw new Error('Failed to fetch data'); // Manejamos errores en caso de fallo en la petición
-        }
-      })
-      .then(data => {
-        if (data && data.data) {
-          const id = data.data.id;      // Guardar el id
-          const nombre = data.data.nombre; // Guardar el nombre
-          const cod_verificacion = data.data.cod_verificacion;
-          if (code==cod_verificacion){
-            irAOtraRuta(); // Redireccionar al usuario, modificar según tu necesidad
-          }
-          else{
-            alert('codigo incorrecto');
-          }
+          alert("Usuario o contraseña incorrectos")
         }
       })
       .catch(error => {
         console.error(error);
         alert('Usuario no válido. Intente nuevamente.'); // Show alert on failed login
       });
-      
-    }
+    //segundo fetch
+    const promptForAccessCode = () => {
+      const code = prompt('Ingrese el codigo enviado al correo');
+      const raw = JSON.stringify({ id: 1, codigo: code });  // Ahora usando el estado 'code'
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: raw
+      };
+      //segunda peticion
+      fetch('http://localhost:3241/loginCodigo', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.success) {
+
+            localStorage.setItem('Username', data.data.usuario);
+            irAOtraRuta();
+          } else {
+            irAOtraRuta()
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching data: ', error);
+          alert('Error al procesar la solicitud.');
+        });
+    };
   }
 
 
@@ -120,7 +111,7 @@ function Login() {
           <img id='logo' src={Logo} alt="Logo"></img>
           <h2>Bienvenido!</h2>
           <label>Bienvenido de nuevo, que placer tenerte acá </label>
-          <form>
+          <form id='Datos'>
             <div id='username'>
               <label>Usuario</label>
               <input type='text' id='inputUsername' value={username} onChange={(e) => setUsername(e.target.value)}></input>
@@ -134,6 +125,7 @@ function Login() {
           <p>Aún no tienes una cuenta? <a href={URL_REGISTRO}>Registrate</a></p>
         </div>
       </div>
+      <Codigo isOpen={iscodigo} UserId={userId} />
     </>
   )
 }
@@ -145,7 +137,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/user/:userId" element={<NewUser />} />
         <Route path="/registro" element={<Registro />} />
-        <Route path="/admin" element={<Registro />} />
+        <Route path="/admin" element={<Gerente />} />
+        <Route path="/gerentez" element={<Gerente />} />
       </Routes>
     </Router>
   );

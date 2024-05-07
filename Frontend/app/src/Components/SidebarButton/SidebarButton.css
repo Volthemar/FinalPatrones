@@ -11,6 +11,7 @@
     cursor: pointer;
     transition: background-color 0.2s ease;
     height: 2.7rem;
+    padding-left: 3vmax;
 }
 
 .sidebarButton img{
