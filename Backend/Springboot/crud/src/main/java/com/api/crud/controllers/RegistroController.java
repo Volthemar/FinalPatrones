@@ -35,7 +35,14 @@ public class RegistroController {
         String nombre = registroPersona.getNombre();
         String identificacion = registroPersona.getIdentificacion();
         String correo = registroPersona.getCorreo();
-        String usuario = "PaMon"; // GENERAR USUARIO AUTOMATICAMENTE
+        String nombreAbreviado = nombre.substring(0, 3).toUpperCase();
+
+        String ultimosDigitosIdentificacion = identificacion.substring(identificacion.length() - 2);
+        String[] partesNombre = nombre.split(" ");
+        String apellido = partesNombre[1]; 
+        String abreviaturaApellido = apellido.substring(0, 3).toUpperCase();
+        String usuario = nombreAbreviado + ultimosDigitosIdentificacion + abreviaturaApellido;
+
         String contrasena = "1234"; // GENERAR CONTRASEÑA CON  LOS ESTANDARES 
         
         Date fecha = new Date();
