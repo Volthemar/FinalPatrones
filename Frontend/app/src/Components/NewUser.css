@@ -2,7 +2,6 @@
 
 body {
   color: #333;
-  /* Establece el color de texto predeterminado para toda la página */
 }
 
 .card {
@@ -120,7 +119,7 @@ hr {
   padding: 20px; /* Añade padding interno para un poco de espacio dentro del header */
   box-sizing: border-box;
   align-items: center; /* Centra los elementos verticalmente */
-  justify-content: space-between; /* Distribuye los elementos uniformemente */
+  justify-content: space-around; /* Distribuye los elementos uniformemente */
   margin-bottom: 20px; /* Espacio entre el encabezado y el cuerpo */
   background: #ffffff; /* Fondo blanco, cambia según necesites */
 }
@@ -154,3 +153,8 @@ hr {
   align-items: center;
 }
 
+.UserHeader img{
+  width: 20%;
+  border-radius: 50%;
+  box-shadow: 5px 5px 8px 0 rgba(0, 0, 0, 0.25);
+}
