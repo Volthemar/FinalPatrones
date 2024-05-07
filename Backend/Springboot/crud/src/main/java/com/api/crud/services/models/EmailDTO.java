@@ -5,7 +5,8 @@ public class EmailDTO {
     private String destinatario;
     private String asunto;
     private String mensaje;
-    
+    private String usuario;
+    private String contrasena;
 
     /**
      * @return String return the destinatario
@@ -47,6 +48,34 @@ public class EmailDTO {
      */
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
+    }
+
+    /**
+     * @return String return the usuario
+     */
+    public String getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    /**
+     * @return String return the contrasena
+     */
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    /**
+     * @param contrasena the contrasena to set
+     */
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
 }
