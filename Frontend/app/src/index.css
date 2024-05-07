@@ -1,12 +1,10 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  font-weight: 400;
-
+  font-weight: 10;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -14,15 +12,21 @@
 }
 
 body {
-  margin: 0;
-  display: flex;
+  background-image: url('./assets/patternpad.svg');
+  margin: 0px;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+@media (max-width: 1200px) {
+  html {
+      font-size: 12pt;
+  }
 }
 
+@media (max-width: 1000px) {
+  html {
+      font-size: 6pt;
+  }
+}

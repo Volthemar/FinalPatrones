@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300&display=swap');
+
+.sidebarButton{
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 5px;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    height: 2.7rem;
+}
+
+.sidebarButton img{
+   width: 2rem;
+   height: 2rem;
+   margin-left: 0.3rem;
+}
+.sidebarButton p{ 
+    font-family: 'Assistant', sans-serif;
+    font-size: 1.1rem;
+    margin-left: 0.6rem;
+}
+.sidebarButton:hover{
+    background-color: #E2F22B;
+}

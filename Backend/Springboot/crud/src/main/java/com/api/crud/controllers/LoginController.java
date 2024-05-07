@@ -1,20 +1,22 @@
 package com.api.crud.controllers;
 
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Optional;
-import com.api.crud.models.UsuarioModel;
+
 import com.api.crud.DTO.LoginRequest;
+import com.api.crud.models.UsuarioModel;
 import com.api.crud.services.IEmailService;
 import com.api.crud.services.UsuarioService;
 import com.api.crud.services.models.EmailDTO;
 
 import jakarta.mail.MessagingException;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/login")
@@ -25,6 +27,7 @@ public class LoginController {
     @Autowired
     private IEmailService emailService;
 
+    @CrossOrigin(origins="http://localhost:5173")
     @PostMapping("")
     public Map<String,Object> login(@RequestBody LoginRequest loginRequest) throws MessagingException{
         String usuario = loginRequest.getUsuario();

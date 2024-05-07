@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed&display=swap');
+
+#sidebar{
+    height: 100vh;
+    width: 25%;
+    background-color: rgb(255, 255, 255);
+    height: 100vh;
+    box-shadow: 10px 10px 10px 0 rgba(0, 0, 0, 0.25);
+    color: #121012;
+    padding: 25px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+#sidebar form{
+    width: 80%;
+}
+#usuario{
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#usuario img{ 
+    width: 25%;
+    border-radius: 50%;
+    box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, 0.25);
+}
+
+#usuario label{
+    font-family: 'Encode Sans Condensed', sans-serif;
+    letter-spacing: 3pt;
+    font-size: 1.8rem;
+    margin-left: 5%;
+}
+
+#botones{ 
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.sidebarButton{
+    margin-bottom: 10px;
+}
+
+#logout{
+    margin-top: auto;
+}
+
+#logout .sidebarButton{
+    margin-bottom: 0px;
+}
