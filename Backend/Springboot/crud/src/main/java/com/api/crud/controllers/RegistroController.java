@@ -35,7 +35,7 @@ public class RegistroController {
         String nombre = registroPersona.getNombre();
         String identificacion = registroPersona.getIdentificacion();
         String correo = registroPersona.getCorreo();
-        String usuario = "Da04vid";
+        String usuario = "Da04vid"; // GENERAR USUARIO AUTOMATICAMENTE
         String contrasena = "1234"; // GENERAR CONTRASEÑA CON  LOS ESTANDARES 
         
         Date fecha = new Date();
