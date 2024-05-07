@@ -20,30 +20,18 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-        .code {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffffff;
-            background-color: #4CAF50; /* Green color */
-            padding: 10px;
-            border-radius: 5px;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
         .message {
             font-size: 18px;
             color: #333333;
             margin-bottom: 20px;
         }
-        p {
-            color: #777777;
-        }
+
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="message">¡Hola! Has solicitado un código de inicio de sesión. Utiliza el siguiente código para acceder a tu cuenta:</div>
-        <div class="code" th:text="${mensaje}"></div>
+        <div class="message">¡Hola! Queremos informarte que tu cuenta ha sido bloqueada debido a múltiples intentos fallidos de inicio de sesión.</div>
+        <div class="message">Por favor, ponte en contacto con el gerente del sistema.</div>
     </div>
 </body>
 </html>
