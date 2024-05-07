@@ -2,22 +2,28 @@ import React, { useState } from 'react'
 import Logo from '../assets/logo.png' // Placeholder para el logo
 import backgroundLogin from '../assets/backgroundLogin.svg'
 import './App.css'
-import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NewUser from './NewUser'; // Importando el componente NewUser
 import Registro from './Registro';
-import {useHistory, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 function Login() {
 
   const URL_POST = 'http://localhost:3241/login'; // Endpoint para confirmar datos
-  const URL_USER = 'user'; // Endpoint del perfil de usuario
+  const URL_USER = '/user'; // Endpoint del perfil de usuario
   const URL_REGISTRO = 'registro'; // Endpoint para registro
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [UserDataName, setUserDataName] = useState('')
   const [userId, setUserId] = useState(null);
   const [error, setError] = useState('');
-  let history = useHistory();
+  const navigate = useNavigate();
+
+  //ir A User
+  const irAOtraRuta = () => {
+    navigate('/user/${userId}', { state: { key: userId } });
+  };
+  //muchas funciones para el login que luego tienen que separarse
   function login(event) {
     event.preventDefault();
     if (username.trim() === '' || password.trim() === '') {
@@ -39,14 +45,10 @@ function Login() {
       body: raw,
       redirect: "follow"
     };
-
+    //primer post para usuario y contraseña
     fetch(URL_POST, requestOptions)
       .then(response => {
         if (response.ok) {
-          /*alert('todo ok')
-          setUserId(data.id); // Guardamos el userId en el estado
-          setUserDataName(data.nombre);
-          promptForAccessCode(data.userId);*/ // Función adicional para manejar el código de acceso
           return response.json(); // Procesamos la respuesta JSON si es exitosa
         } else {
           console.log(response);
@@ -59,7 +61,7 @@ function Login() {
         if (data && data.data) {
           const id = data.data.id;      // Guardar el id
           const nombre = data.data.nombre; // Guardar el nombre
-
+          setUserId(id)
           console.log("ID:", id);       // Muestra el ID en consola
           console.log("Nombre:", nombre); // Muestra el Nombre en consola
 
@@ -74,9 +76,9 @@ function Login() {
         console.error(error);
         alert('Usuario no válido. Intente nuevamente.'); // Show alert on failed login
       });
-
+      //segundo post para el codigo
     function promptForAccessCode(userId) {
-      const code = prompt("Escriba el código de acceso:"); // Usamos prompt para simplificar
+      const code = prompt("Escriba el código de acceso:"); 
       fetch(URL_POST, requestOptions)
       .then(response => {
         if (response.ok) {
@@ -93,7 +95,7 @@ function Login() {
           const nombre = data.data.nombre; // Guardar el nombre
           const cod_verificacion = data.data.cod_verificacion;
           if (code==cod_verificacion){
-            history.push('/user'); // Redireccionar al usuario, modificar según tu necesidad
+            irAOtraRuta(); // Redireccionar al usuario, modificar según tu necesidad
           }
           else{
             alert('codigo incorrecto');
@@ -142,7 +144,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/user" element={<NewUser />} />
+        <Route path="/user/:userId" element={<NewUser />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/admin" element={<Registro />} />
       </Routes>

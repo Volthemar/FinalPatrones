@@ -9,9 +9,11 @@ function NewUser() {
   const [hue, setHue] = useState(0)
   const color = `hsl(${hue % 350}deg, 100%, 50%)`
   const [isParqueaderoOpen, setParqueaderoOpen] = useState(false);
-  const [NombreParqueadero, setNombreParqueadero] = useState('')
+  const [NombreParqueadero, setNombreParqueadero] = useState('');
+  const nombre = localStorage.getItem('userName');
+  console.log(nombre)
   const userData = {
-    name: "Juan Perez",
+    name: nombre,
     paymentMethod: "VISA **** 4029",
     paymentNumber: "310 5544 391"
   };
