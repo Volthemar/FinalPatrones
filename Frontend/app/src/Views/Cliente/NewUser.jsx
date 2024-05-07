@@ -78,6 +78,7 @@ function NewUser() {
         <Marker
           width={50}
           anchor={[4.630423, -74.066546]}
+          color={color}
           onClick={() => {
             setParqueaderoOpen(true);
             setNombreParqueadero('Cuatro Parques'); // Esto asume que puedes obtener el nombre del evento
