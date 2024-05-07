@@ -47,7 +47,7 @@ public class LoginController {
                 email.setDestinatario(usuarioLoggeado.get().getCorreo());
                 email.setMensaje(codigo);
                 email.setAsunto("Código de verificación");
-                emailService.enviarCorreo(email);
+                emailService.enviarCorreoCodigo(email);
                 return Map.of("data",
                         Map.of("estado", usuarioLoggeado.get().isEstado(), "id", usuarioLoggeado.get().getId()), "msg",
                         "Usuario habilitado");
@@ -68,7 +68,7 @@ public class LoginController {
                     email.setDestinatario(usuarioLoggeado.get().getCorreo());
                     email.setMensaje("Su cuenta ha sido bloqueada, por favor comuniquese con administración");
                     email.setAsunto("Bloqueo de cuenta");
-                    emailService.enviarCorreo(email);
+                    emailService.enviarCorreoCodigo(email);
                     return Map.of("data", "", "msg", "El usuario ha sido bloqueado por exceso de intentos");
                 } else {
                     return Map.of("data", "", "msg", "Contraseña incorrecta");
@@ -95,7 +95,7 @@ public class LoginController {
             String identificacion = cliente.get().getIdentificacion();
             Boolean estado = cliente.get().isEstado();
             String usuario = cliente.get().getUsuario();
-            return Map.of("data", Map.of("nombre", nombre, "correo", correo, "identificacion", identificacion, "estado",
+            return Map.of("data", Map.of("id",id,"nombre", nombre, "correo", correo, "identificacion", identificacion, "estado",
                     estado, "usuario", usuario), "msg", "Codigo correcto");
         } else {
             return Map.of("msg", "Codigo incorrecto");

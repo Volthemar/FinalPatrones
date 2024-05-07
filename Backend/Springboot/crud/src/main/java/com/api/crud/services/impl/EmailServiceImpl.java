@@ -23,7 +23,7 @@ public class EmailServiceImpl implements IEmailService{
     }
 
     @Override
-    public void enviarCorreo(EmailDTO email) throws MessagingException{
+    public void enviarCorreoCodigo(EmailDTO email) throws MessagingException{
         try{
             MimeMessage mensaje = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mensaje,true,"utf-8");
