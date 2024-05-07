@@ -8,7 +8,7 @@ function SidebarButton({URL_BTN, URL_IMG, nombre}) {
   };
 
   return (
-    <div className="sidebarButton" onClick={handleClick}>
+    <div className="sidebarButton" >
       <img src={URL_IMG} alt="" />
       <p>{nombre}</p>
     </div>

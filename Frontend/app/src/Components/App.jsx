@@ -5,20 +5,26 @@ import './App.css'
 import NewUser from '../Views/Cliente/NewUser'; // Importando el componente NewUser
 import Registro from './Registro';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Gerente from '../Views/Gerente/Gerente';
 
 function Login() {
 
   const URL_POST = 'http://localhost:3241/login'; // Endpoint para confirmar datos
   const URL_USER = '/user'; // Endpoint del perfil de usuario
   const URL_REGISTRO = 'registro'; // Endpoint para registro
+  const [mostrarCod, setMostrarCod] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [cod, setCod] = useState('');
   const [UserDataName, setUserDataName] = useState('')
   const [userId, setUserId] = useState(null);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const toggleVisibility = () => {
+    setMostrarCod(!mostrarCod); // Cambia el estado de visibilidad
+  };
   //ir A User
   const irAOtraRuta = () => {
     navigate('/user/${userId}', { state: { key: userId } });
@@ -59,6 +65,7 @@ function Login() {
       })
       .then(data => {
         if (data && data.data) {
+          toggleVisibility();
           const id = data.data.id;      // Guardar el id
           const nombre = data.data.nombre; // Guardar el nombre
           setUserId(id)
@@ -75,37 +82,37 @@ function Login() {
         console.error(error);
         alert('Usuario no válido. Intente nuevamente.'); // Show alert on failed login
       });
-      //segundo post para el codigo
+    //segundo post para el codigo
     function promptForAccessCode(userId) {
-      const code = prompt("Escriba el código de acceso:"); 
+      const code = prompt("Escriba el código de acceso:");
       fetch(URL_POST, requestOptions)
-      .then(response => {
-        if (response.ok) {
-          return response.json(); // Procesamos la respuesta JSON si es exitosa
-        } else {
-          console.log(response);
-          alert(response);
-          throw new Error('Failed to fetch data'); // Manejamos errores en caso de fallo en la petición
-        }
-      })
-      .then(data => {
-        if (data && data.data) {
-          const id = data.data.id;      // Guardar el id
-          const nombre = data.data.nombre; // Guardar el nombre
-          const cod_verificacion = data.data.cod_verificacion;
-          if (code==cod_verificacion){
-            irAOtraRuta(); // Redireccionar al usuario, modificar según tu necesidad
+        .then(response => {
+          if (response.ok) {
+            return response.json(); // Procesamos la respuesta JSON si es exitosa
+          } else {
+            console.log(response);
+            alert(response);
+            throw new Error('Failed to fetch data'); // Manejamos errores en caso de fallo en la petición
           }
-          else{
-            alert('codigo incorrecto');
+        })
+        .then(data => {
+          if (data && data.data) {
+            const id = data.data.id;      // Guardar el id
+            const nombre = data.data.nombre; // Guardar el nombre
+            const cod_verificacion = data.data.cod_verificacion;
+            if (code == cod_verificacion) {
+              irAOtraRuta(); // Redireccionar al usuario, modificar según tu necesidad
+            }
+            else {
+              alert('codigo incorrecto');
+            }
           }
-        }
-      })
-      .catch(error => {
-        console.error(error);
-        alert('Usuario no válido. Intente nuevamente.'); // Show alert on failed login
-      });
-      
+        })
+        .catch(error => {
+          console.error(error);
+          alert('Usuario no válido. Intente nuevamente.'); // Show alert on failed login
+        });
+
     }
   }
 
@@ -120,7 +127,7 @@ function Login() {
           <img id='logo' src={Logo} alt="Logo"></img>
           <h2>Bienvenido!</h2>
           <label>Bienvenido de nuevo, que placer tenerte acá </label>
-          <form>
+          <form id='Datos'>
             <div id='username'>
               <label>Usuario</label>
               <input type='text' id='inputUsername' value={username} onChange={(e) => setUsername(e.target.value)}></input>
@@ -128,6 +135,14 @@ function Login() {
             <div id='password'>
               <label>Contraseña</label>
               <input type='password' id='inputPassword' value={password} onChange={(e) => setPassword(e.target.value)}></input>
+            </div>
+            <div>
+              {mostrarCod && (
+                <div id='cod'>
+                  <label>Código de acceso</label>
+                  <input type='text' id='inputCod' value={cod} onChange={(e) => setCod(e.target.value)}></input>
+                </div>
+              )}
             </div>
             <button type='button' id='btnIngresar' onClick={login}>Ingresar</button>
           </form>
@@ -145,7 +160,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/user/:userId" element={<NewUser />} />
         <Route path="/registro" element={<Registro />} />
-        <Route path="/admin" element={<Registro />} />
+        <Route path="/admin" element={<Gerente />} />
+        <Route path="/gerentez" element={<Gerente />} />
       </Routes>
     </Router>
   );
