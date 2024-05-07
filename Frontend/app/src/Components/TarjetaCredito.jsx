@@ -1,46 +1,39 @@
-import React from 'react';
-import Cards from 'react-credit-cards';
- 
-export default class PaymentForm extends React.Component {
-  state = {
-    cvc: '',
-    expiry: '',
-    focus: '',
-    name: '',
-    number: '',
-  };
- 
-  handleInputFocus = (e) => {
-    this.setState({ focus: e.target.name });
-  }
-  
-  handleInputChange = (e) => {
-    const { name, value } = e.target;
-    
-    this.setState({ [name]: value });
-  }
-  
-  render() {
+import React, { useState } from 'react';
+import './CreditCardForm.css';
+
+const TarjetaCredito = () => {
+    const [cardInfo, setCardInfo] = useState({
+        number: '',
+        name: '',
+        expiry: '',
+        cvc: ''
+    });
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setCardInfo(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
     return (
-      <div id="PaymentForm">
-        <Cards
-          cvc={this.state.cvc}
-          expiry={this.state.expiry}
-          focused={this.state.focus}
-          name={this.state.name}
-          number={this.state.number}
-        />
-        <form>
-        	<input
-            type="tel"
-            name="number"
-            placeholder="Card Number"
-            onChange={this.handleInputChange}
-            onFocus={this.handleInputFocus}
-          />
-          ...
-        </form>
-      </div>
+        <div className="credit-card-form">
+            <div className="credit-card-display">
+                <div className="credit-card">
+                    <div className="credit-card-number">{cardInfo.number.padEnd(16, '•')}</div>
+                    <div className="credit-card-name">{cardInfo.name || 'YOUR NAME HERE'}</div>
+                    <div className="credit-card-expiry">{cardInfo.expiry}</div>
+                </div>
+            </div>
+            <form>
+                <input type="text" name="number" placeholder="Card Number" value={cardInfo.number} onChange={handleChange} />
+                <input type="text" name="name" placeholder="Name" value={cardInfo.name} onChange={handleChange} />
+                <input type="text" name="expiry" placeholder="Valid Thru" value={cardInfo.expiry} onChange={handleChange} />
+                <input type="text" name="cvc" placeholder="CVC" value={cardInfo.cvc} onChange={handleChange} />
+            </form>
+        </div>
     );
-  }
-}
+};
+
+export default TarjetaCredito;

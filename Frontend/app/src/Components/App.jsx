@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Gerente from '../Views/Gerente/Gerente';
 import Codigo from './Codigo';
+import TarjetaCredito from './TarjetaCredito';
 
 function Login() {
 
@@ -60,18 +61,20 @@ function Login() {
         }
       })
       .then(data => {
-        if (data && data.data) {
+
           const mensaje = data.msg;
+          console.log(data)
           if (mensaje.includes("bloq")){
-            alert('el usuario ha sido bloqueado')
+            alert('El usuario ha sido bloqueado , por favor revisa tu correo')
+          }
+          else if(mensaje.includes('inco')){
+            alert("Usuario o contraseña incorrectos")
           }else{
             const id = data.id;  
             localStorage.setItem('userId', id);
           promptForAccessCode()
           }
-        } else {
-          alert("Usuario o contraseña incorrectos")
-        }
+        
       })
       .catch(error => {
         console.error(error);
@@ -144,6 +147,7 @@ function App() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/admin" element={<Gerente />} />
         <Route path="/gerentez" element={<Gerente />} />
+        <Route path="/Tarjeta" element={<TarjetaCredito />} />
       </Routes>
     </Router>
   );
