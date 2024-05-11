@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './NewUser.css'
-import Persona from './assets/Persona.svg'
+import Persona from '../../assets/Persona.svg'
 import { Map, Marker } from "pigeon-maps"
 import Parqueadero from './Parqueadero';
 

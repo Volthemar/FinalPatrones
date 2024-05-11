@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300&display=swap');
 html{
   height: 100%;
@@ -30,23 +30,22 @@ h2 {
 }
 
 #container {
-  /* Sobreescritura de propiedades específicas */
-  font-family: 'Encode Sans Condensed', sans-serif;  /* Usa una familia de fuentes diferente */
-  line-height: normal; /* Establece un line-height normal */
-  font-weight: normal; /* Peso de la fuente normal */
+  
+  font-family: 'Encode Sans Condensed', sans-serif;  
+  line-height: normal; 
+  font-weight: normal; 
   justify-content: center;
-  color: #000; /* Texto más oscuro para mayor contraste con el fondo claro */
-  background-color: #ffffff; /* Fondo blanco en lugar de oscuro */
-  text-rendering: auto; /* Restablece a la configuración predeterminada del navegador */
-  -webkit-font-smoothing: auto; /* Desactiva la suavización de fuentes de WebKit */
-  -moz-osx-font-smoothing: auto; /* Desactiva la suavización de fuentes de Mozilla */
-  /* Otras propiedades como antes */
+  color: #000;
+  background-color: #ffffff;
+  text-rendering: auto; 
+  -webkit-font-smoothing: auto; 
+  -moz-osx-font-smoothing: auto; 
   display: flex;
   flex-direction: column;
   width: 95%;
-  min-height: 90vh; /* Asegurando que ocupa todo el alto disponible */
+  min-height: 90vh; 
   box-shadow: 10px 10px 10px 0 rgba(0, 0, 0, 0.25);
-  box-sizing: border-box; /* Asegura que el padding no afecte las dimensiones */
+  box-sizing: border-box; 
   border-radius: 3%;
 }
 
@@ -67,8 +66,8 @@ h2 {
   margin-top: 5%;
   align-items: center; 
   flex-direction: column;
-  align-items: center; /* Asegura que todos los hijos estén centrados horizontalmente */
-  justify-content: center; /* Opcional: si también quieres centrarlos verticalmente */
+  align-items: center; 
+  justify-content: center;
   box-sizing: border-box;
   padding: 3rem;
   height: 100%;
@@ -138,4 +137,4 @@ button {
     margin: 5px;
     margin-bottom: 5px;
   }
-}
+}*/

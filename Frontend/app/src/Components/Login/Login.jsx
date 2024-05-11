@@ -1,8 +1,14 @@
+import { useState, useNavigate } from 'react'
+import Logo from '../../assets/logo.png'
+import backgroundLogin from '../../assets/backgroundLogin.svg'
+import './Login.css'
+
 function Login() {
 
   const URL_POST = 'http://localhost:3241/login'; // Endpoint para confirmar datos
   const URL_USER = '/user'; // Endpoint del perfil de usuario
   const URL_REGISTRO = 'registro'; // Endpoint para registro
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [UserDataName, setUserDataName] = useState('')
@@ -14,6 +20,7 @@ function Login() {
   const irAOtraRuta = () => {
     navigate('/user/${userId}', { state: { key: userId } });
   };
+
   //muchas funciones para el login que luego tienen que separarse
   function login(event) {
     event.preventDefault();
@@ -45,7 +52,6 @@ function Login() {
           console.log(response);
           alert(response);
           throw new Error('Failed to fetch data'); // Manejamos errores en caso de fallo en la petición
-
         }
       })
       .then(data => {
@@ -66,6 +72,7 @@ function Login() {
         console.error(error);
         alert('Usuario no válido. Intente nuevamente.'); // Show alert on failed login
       });
+      
       //segundo post para el codigo
     function promptForAccessCode(userId) {
       const code = prompt("Escriba el código de acceso:"); 
@@ -100,7 +107,6 @@ function Login() {
     }
   }
 
-
   return (
     <>
       <div id='container'>
@@ -132,3 +138,5 @@ function Login() {
     </>
   )
 }
+
+export default Login;
