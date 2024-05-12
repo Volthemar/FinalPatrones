@@ -10,7 +10,7 @@ function NewUser() {
   const color = `hsl(${hue % 350}deg, 100%, 50%)`
   const [isParqueaderoOpen, setParqueaderoOpen] = useState(false);
   const [NombreParqueadero, setNombreParqueadero] = useState('');
-  const nombre = localStorage.getItem('userName');
+  const nombre = localStorage.getItem('nombre');
   console.log(nombre)
   const userData = {
     name: nombre,

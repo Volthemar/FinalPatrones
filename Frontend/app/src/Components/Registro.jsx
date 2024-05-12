@@ -5,6 +5,7 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NewUser from '../Views/Cliente/NewUser'; // Importando el componente NewUser
 import { useNavigate } from 'react-router-dom';
+import tarjetaCredito from './TarjetaCredito';
 
 function Registro() {
   const URL_POST = 'http://localhost:3241/registroPersona'; // Endpoint para confirmar datos
@@ -44,6 +45,7 @@ function Registro() {
       .then(data => {
         console.log("algo bueno");
         console.log(data);
+        //navigate(`/`);
       })
       .catch(error => {
         console.error("algo malo");
@@ -101,7 +103,7 @@ function Registro() {
             </div>
             <div id='containerPassword'>
               <div><label>Identificación</label></div>
-              <input type='password' id='inputPassword' value={password} onChange={(e) => setPassword(e.target.value)}></input>
+              <input type='containerPassword' id='inputPassword' value={password} onChange={(e) => setPassword(e.target.value)}></input>
             </div>
             <div id='containerTarjetaCredito'>
               <div><label>Correo electrónico</label></div>
