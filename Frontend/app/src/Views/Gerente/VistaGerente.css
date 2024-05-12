@@ -3,8 +3,7 @@
   top: 0;
   left: 0;
   transition: transform 0.3s ease;
-  transform: translateX(-80%);
-  background-color: aliceblue;
+  transform: translateX(-85%);
 }
 #sidebar:hover{
     transform: translateX(0);

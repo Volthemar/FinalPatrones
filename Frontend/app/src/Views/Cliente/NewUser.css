@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400&display=swap");
 
-body {
-  color: #333;
-}
-
 .card {
   display: flex;
   flex-direction: column;

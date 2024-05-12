@@ -1,48 +1,49 @@
-import { useState, useNavigate } from 'react'
+import { useState } from 'react'
 import Logo from '../../assets/logo.png'
 import backgroundLogin from '../../assets/backgroundLogin.svg'
-import './Login.css'
+import './LoginDiv.css'
 
 function Login() {
-
-  const URL_POST = 'http://localhost:3241/login'; // Endpoint para confirmar datos
-  const URL_USER = '/user'; // Endpoint del perfil de usuario
-  const URL_REGISTRO = 'registro'; // Endpoint para registro
-
+  const URL_POST = 'http://localhost:3241/login';
+  const URL_USER = '/user'; 
+  const URL_REGISTRO = 'registro';
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [UserDataName, setUserDataName] = useState('')
   const [userId, setUserId] = useState(null);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
-  //ir A User
   const irAOtraRuta = () => {
-    navigate('/user/${userId}', { state: { key: userId } });
+    window.location.href = URL_USER + '/' + userId;
   };
 
-  //muchas funciones para el login que luego tienen que separarse
+//muchas funciones para el login que luego tienen que separarse
   function login(event) {
     event.preventDefault();
+
     if (username.trim() === '' || password.trim() === '') {
       alert('Por favor complete todos los campos.');
       return;
     }
-
-    const myHeaders = new Headers();
+    
+    let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-
-    const raw = JSON.stringify({
+    
+    let raw = JSON.stringify({
       "usuario": username,
       "contrasena": password
     });
 
-    const requestOptions = {
+    let requestOptions = {
       method: "POST",
       headers: myHeaders,
       body: raw,
       redirect: "follow"
     };
+
+    
+    
+    
     //primer post para usuario y contraseña
     fetch(URL_POST, requestOptions)
       .then(response => {
@@ -56,13 +57,9 @@ function Login() {
       })
       .then(data => {
         if (data && data.data) {
-          const id = data.data.id;      // Guardar el id
-          const nombre = data.data.nombre; // Guardar el nombre
+          const id = data.data.id;
+          const nombre = data.data.nombre;
           setUserId(id)
-          //console.log("ID:", id);       // Muestra el ID en consola
-          //console.log("Nombre:", nombre); // Muestra el Nombre en consola
-          // Aquí puedes hacer lo que necesites con `id` y `nombre`
-          // Por ejemplo, guardarlos en el localStorage:
           localStorage.setItem('userId', id);
           localStorage.setItem('userName', nombre);
           promptForAccessCode(userId);
@@ -101,7 +98,7 @@ function Login() {
       })
       .catch(error => {
         console.error(error);
-        alert('Usuario no válido. Intente nuevamente.'); // Show alert on failed login
+        alert('Usuario no válido. Intente nuevamente.');
       });
       
     }
@@ -127,7 +124,7 @@ function Login() {
               <input type='password' id='inputPassword' value={password} onChange={(e) => setPassword(e.target.value)}></input>
             </div>
             <div id='cod'>
-              <label>cod</label>
+              <label>Codigo</label>
               <input type='cod' id='inputPassword' value={password} onChange={(e) => setPassword(e.target.value)}></input>
             </div>
             <button type='button' id='btnIngresar' onClick={login}>Ingresar</button>
