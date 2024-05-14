@@ -78,8 +78,19 @@ public class DataBase {
             return null;
         }
     }
-    
-    public boolean crearIpConUsuario(String direccionIp,int usuarioFk){
+
+    public void saveIpAddress(Ip ip) throws SQLException {
+        String sql = "INSERT INTO Ip (Direccion_ip, Usuario_fk) VALUES (?, ?)";
+        PreparedStatement statement = conexio.prepareStatement(sql);
+        statement.setString(1, ip.getDireccionIp());
+        if (ip.getUsuarioFk() != null) {
+            statement.setInt(2, ip.getUsuarioFk());
+        } else {
+            statement.setNull(2, java.sql.Types.INTEGER);
+        }
+        statement.executeUpdate();
+    }
+/*   public boolean crearIpConUsuario(String direccionIp,int usuarioFk){
         conectar();
         try{
             String sqlInsercion = "INSERT INTO ip (Direccion_ip, Usuario_fk) VALUES (?, ?)";
@@ -105,7 +116,7 @@ public class DataBase {
         }catch(Exception e){
             return false;
         }
-    }
+    }*/
 
     public boolean tieneResultados(ResultSet rs) {
         try {
