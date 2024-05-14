@@ -4,7 +4,6 @@ public class Ip {
     private Integer usuarioFk;
     private Date fechaCreacion;
 
-    // Getters and setters for each field
     public int getId() {
         return id;
     }
