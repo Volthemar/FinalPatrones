@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Gerente from '../Views/Gerente/VistaGerente';
 import LogIn from '../Views/Login/VistaLogin'
 import Codigo from '../Components/Codigo/Codigo';
-import TarjetaCredito from './TarjetaCredito';
+import TarjetaCredito from './Registro/TarjetaCredito';
 
 function App() {
   return (
