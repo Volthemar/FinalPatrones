@@ -2,7 +2,7 @@ import React from 'react';
 import './Admin.css'; // Import the Admin specific styles
 import '../../Index.css'; // Import the global styles
 
-const ViewComponent = () => {
+const Admin = () => {
     return (
         <div className="container">
             <div className="sidebar">
@@ -10,7 +10,7 @@ const ViewComponent = () => {
                     <img src="../../assets/Persona.png" alt="User Profile" />
                     <div>Pedro Navaja</div>
                     <button>
-                        <img src="../../assets/LogoTrazabilidad.svg" alt="Report Icon" />
+                        <img src="../../assets/LogoRentabilidad.svg" alt="Report Icon" />
                         Reporte del parqueadero
                     </button>
                     <button>
@@ -37,4 +37,4 @@ const ViewComponent = () => {
     );
 };
 
-export default ViewComponent;
+export default Admin;
