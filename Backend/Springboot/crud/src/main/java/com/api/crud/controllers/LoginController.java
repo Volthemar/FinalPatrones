@@ -19,6 +19,7 @@ import com.api.crud.services.models.EmailDTO;
 import com.api.crud.services.CodigoLogin;
 
 import jakarta.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("")
@@ -29,6 +30,9 @@ public class LoginController {
     @Autowired
     private IEmailService emailService;
 
+    @Autowired 
+    private IpService ipService;
+
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody LoginRequest loginRequest) throws MessagingException {
@@ -36,7 +40,10 @@ public class LoginController {
         String contrasena = loginRequest.getContrasena();
         EmailDTO email = new EmailDTO();
         Optional<UsuarioModel> usuarioLoggeado = this.userService.login(usuario, contrasena);
+        String ipAddress = request.getRemoteAddr();
+        
         if (!usuarioLoggeado.isEmpty()) {
+                
 
             if (usuarioLoggeado.get().isEstado()) {
                 usuarioLoggeado.get().setNum_intentos(0);
@@ -44,6 +51,7 @@ public class LoginController {
                 String codigo = lc.generarCodigo();
                 usuarioLoggeado.get().setCod_verificacion(codigo);
                 userService.guardarUsuario(usuarioLoggeado.get());
+                ipService.saveIpAddress(ipAddress, usuarioLoggeado.get().getId()); // Guardado de la dirección IP
                 email.setDestinatario(usuarioLoggeado.get().getCorreo());
                 email.setMensaje(codigo);
                 email.setAsunto("Código de verificación");
@@ -65,6 +73,7 @@ public class LoginController {
                 if (intentos >= 3) {
                     usuarioExiste.get().setEstado(false);
                     userService.guardarUsuario(usuarioExiste.get());
+                    ipService.saveIpAddress(ipAddress, usuarioLoggeado.get().getId()); // Guardadio de la dirección IP
                     email.setDestinatario(usuarioExiste.get().getCorreo());
                     email.setMensaje("Su cuenta ha sido bloqueada, por favor comuniquese con administración");
                     email.setAsunto("Bloqueo de cuenta");
