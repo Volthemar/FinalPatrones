@@ -4,7 +4,7 @@ import backgroundLogin from '../../assets/backgroundLogin.svg'
 import '../Login/LoginDiv.css'
 import { useNavigate } from 'react-router-dom';
 
-function Registro() {
+function RegistroDiv() {
   const URL_POST = 'http://localhost:3241/registroPersona'; // Endpoint para confirmar datos
   const URL_USER = 'user'; // Endpoint del perfil de usuario
   const URL_REGISTRO = '/'; // Endpoint para registro
@@ -13,7 +13,7 @@ function Registro() {
   const [correo, setCorreo] = useState('');
   const navigate = useNavigate();
 
-  function login(event) {
+  function registrar(event) {
     event.preventDefault();
     if (nombre.trim() === '' || identificacion.trim() === '' || correo.trim() == '') {
       alert('Por favor complete todos los campos.');
@@ -72,7 +72,7 @@ function Registro() {
               <div><label>Correo electrónico</label></div>
               <input type='correo' id='correo' value={correo} onChange={(e) => setCorreo(e.target.value)}></input>
             </div>
-            <button type='button' id='btnIngresar' onClick={login}>Registrarse</button>
+            <button type='button' id='btnIngresar' onClick={registrar}>Registrarse</button>
           </form>
           <p>¿Ya tienes una cuenta?   <a href="/">Inicia sesión</a></p>
         </div>
@@ -81,5 +81,4 @@ function Registro() {
   )
 }
 
-
-export default Registro;
+export default RegistroDiv;

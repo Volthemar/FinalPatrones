@@ -1,5 +1,5 @@
 import './App.css'
-import NewUser from '../Views/Cliente/NewUser'; // Importando el componente NewUser
+import Cliente from '../Views/Cliente/PerfilCliente'; // Importando el componente NewUser
 import Registro from '../Views/Registro/VistaRegistro';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Gerente from '../Views/Gerente/VistaGerente';
@@ -12,7 +12,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LogIn />} />
-        <Route path="/user/:userId" element={<NewUser />} />
+        <Route path="/user/:userId" element={<Cliente />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/admin" element={<Gerente />} />
         <Route path="/gerente" element={<Gerente />} />

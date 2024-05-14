@@ -3,7 +3,7 @@ import Logo from '../../assets/logo.png'
 import backgroundLogin from '../../assets/backgroundLogin.svg'
 import './LoginDiv.css'
 
-function Login() {
+function LoginDiv() {
   const URL_POST = 'http://localhost:3241/login';
   const URL_USER = '/user'; 
   const URL_REGISTRO = 'registro';
@@ -42,8 +42,7 @@ function Login() {
     };
 
     
-    
-    
+  
     //primer post para usuario y contraseña
     fetch(URL_POST, requestOptions)
       .then(response => {
@@ -103,7 +102,6 @@ function Login() {
       
     }
   }
-
   return (
     <>
       <div id='container'>
@@ -125,7 +123,7 @@ function Login() {
             </div>
             <div id='cod'>
               <label>Codigo</label>
-              <input type='cod' id='inputPassword' value={password} onChange={(e) => setPassword(e.target.value)}></input>
+              <input type='cod' id='inputUserId' value={userId} onChange={(e) => setUserId(e.target.value)}></input>
             </div>
             <button type='button' id='btnIngresar' onClick={login}>Ingresar</button>
           </form>
@@ -136,4 +134,4 @@ function Login() {
   )
 }
 
-export default Login;
+export default LoginDiv;
