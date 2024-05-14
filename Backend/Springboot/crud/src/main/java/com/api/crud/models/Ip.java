@@ -1,7 +1,17 @@
 public class Ip {
+
+    @Id
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
+    @Column(name = "direccion_ip", nullable = false)
     private String direccionIp;
+
+    @Column(name = "usuario_fk")
     private Integer usuarioFk;
+
+    @Column
     private Date fechaCreacion;
 
     public int getId() {
