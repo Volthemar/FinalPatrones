@@ -35,7 +35,7 @@ public class LoginController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody LoginRequest loginRequest) throws MessagingException {
+    public Map<String, Object> login(@RequestBody LoginRequest loginRequestm HttpServletRequest request) throws MessagingException {
         String usuario = loginRequest.getUsuario();
         String contrasena = loginRequest.getContrasena();
         EmailDTO email = new EmailDTO();
