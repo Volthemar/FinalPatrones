@@ -3,6 +3,7 @@ package com.api.crud.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.api.crud.DTO.*;
 import com.api.crud.services.CupoService;
 import java.util.Optional;
 
