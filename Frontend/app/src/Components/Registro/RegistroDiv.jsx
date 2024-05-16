@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Logo from '../../assets/logo.png' // Placeholder para el logo
 import backgroundLogin from '../../assets/backgroundLogin.svg'
+import TarjetaCredito from './TarjetaCredito'
 import '../Login/LoginDiv.css'
 import { useNavigate } from 'react-router-dom';
 
@@ -12,8 +13,14 @@ function RegistroDiv() {
   const [identificacion, setIdentificacion] = useState('');
   const [correo, setCorreo] = useState('');
   const navigate = useNavigate();
-
+  const [isTarjetaOpen, setTarjetaOpen] = useState(false);
+  
+  const irAOtraRuta = (url) => {
+    window.location.href = url ;
+  };
   function registrar(event) {
+    setTarjetaOpen(true);
+    return true
     event.preventDefault();
     if (nombre.trim() === '' || identificacion.trim() === '' || correo.trim() == '') {
       alert('Por favor complete todos los campos.');
@@ -40,6 +47,7 @@ function RegistroDiv() {
         return response.json();
       })
       .then(data => {
+        irAOtraRuta('http://localhost:5173/')
         console.log("algo bueno");
         console.log(data);
       })
@@ -75,6 +83,7 @@ function RegistroDiv() {
             <button type='button' id='btnIngresar' onClick={registrar}>Registrarse</button>
           </form>
           <p>¿Ya tienes una cuenta?   <a href="/">Inicia sesión</a></p>
+          <TarjetaCredito isOpen={isTarjetaOpen}/>
         </div>
       </div>
     </>

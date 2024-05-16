@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './CreditCardForm.css';
 
-const TarjetaCredito = () => {
+export default function TarjetaCredito({ isOpen }) {
+    if (!isOpen) return null;
     const [cardInfo, setCardInfo] = useState({
         number: '',
         name: '',
@@ -26,6 +27,8 @@ const TarjetaCredito = () => {
                             <div className='tipo-tarjeta'>
                                 <div className='rccs__chip'></div>
                                 <div className='rccs__card--visa'></div>
+                                
+
                             </div>
                             <div className="rccs__number">{cardInfo.number.padEnd(16, '•')}</div>
                             <div className='parte-abajo'>
@@ -57,11 +60,9 @@ const TarjetaCredito = () => {
                         <input type="text" name="expiry" placeholder="Valid Thru" value={cardInfo.expiry} onChange={handleChange} />
                         <input type="text" name="cvc" placeholder="CVC" value={cardInfo.cvc} onChange={handleChange} />
                     </form>
+                    <button>Validar</button>
                 </div>
             </div>
         </div>
-
     );
 };
-
-export default TarjetaCredito;
