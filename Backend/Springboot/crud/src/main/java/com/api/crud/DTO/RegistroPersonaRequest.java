@@ -5,9 +5,6 @@ public class RegistroPersonaRequest {
     private String identificacion;
     private String correo;
 
-    
-
-
     /**
      * @return String return the nombre
      */
