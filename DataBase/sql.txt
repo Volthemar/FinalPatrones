@@ -13,7 +13,8 @@ CREATE TABLE Usuario (
     Usuario VARCHAR(50) NOT NULL,
     Fecha_creacion DATE DEFAULT (CURRENT_DATE),
     Num_intentos INT NOT NULL,
-    Cod_verificacion VARCHAR(6) NOT NULL
+    Cod_verificacion VARCHAR(6) NOT NULL,
+    Puntos INT NOT NULL DEFAULT 0
 );
 
 -- Creación de la tabla Tarjeta_credito
@@ -46,4 +47,76 @@ CREATE TABLE Ip (
     FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id)
 );
 
+CREATE TABLE Ciudad (
+    Id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(255) NOT NULL,
+    Coordenada VARCHAR(50) ,
+    Fecha_registro DATE DEFAULT (CURRENT_DATE)
+);
 
+CREATE TABLE Tipo_parqueadero (
+    Id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Tipo VARCHAR(255) NOT NULL,
+    Fecha_registro DATE DEFAULT (CURRENT_DATE)
+);
+
+CREATE TABLE Vehiculo (
+    Id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Tipo VARCHAR(255),
+    Fecha_registro DATE DEFAULT (CURRENT_DATE)
+);
+
+CREATE TABLE Parqueadero (
+    Id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(255),
+    Cupo_moto_total INT NOT NULL DEFAULT 0,
+    Cupo_carro_total INT NOT NULL DEFAULT 0,
+    Cupo_bici_total INT NOT NULL DEFAULT 0,
+    Ciudad_fk INT UNSIGNED,
+    Tipo_fk INT UNSIGNED,
+    Coordenada VARCHAR(50),
+    Cupo_uti_moto INT NOT NULL DEFAULT 0,
+    Cupo_uti_carro INT NOT NULL DEFAULT 0,
+    Cupo_uti_bici INT NOT NULL DEFAULT 0,
+    Fecha_registro DATE DEFAULT (CURRENT_DATE),
+    FOREIGN KEY (Ciudad_fk) REFERENCES Ciudad(Id),
+    FOREIGN KEY (Tipo_fk) REFERENCES Tipo_parqueadero(Id)
+);
+
+CREATE TABLE Cupo (
+    Id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Usuario_fk INT UNSIGNED,
+    Parqueadero_fk INT UNSIGNED,
+    Vehiculo_fk INT UNSIGNED,
+    Pagado BOOLEAN DEFAULT FALSE,
+    Hora_llegada DATE,
+    Hora_salida DATE,
+    horas_pedidas INT,
+    Fecha_registro DATE DEFAULT (CURRENT_DATE),
+    FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id),
+    FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
+    FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
+);
+
+CREATE TABLE Cupo_offline (
+    Id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Parqueadero_fk INT UNSIGNED,
+    Vehiculo_fk INT UNSIGNED,
+    Pagado BOOLEAN DEFAULT FALSE,
+    Hora_llegada DATE,
+    Hora_salida DATE,
+    Fecha_registro DATE DEFAULT (CURRENT_DATE),
+    FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
+    FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
+);
+
+CREATE TABLE Tarifa (
+    Id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Valor_ordinario INT,
+    Parqueadero_fk INT UNSIGNED,
+    Vehiculo_fk INT UNSIGNED,
+    Valor_mora INT,
+    Fecha_registro DATE DEFAULT (CURRENT_DATE),
+    FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
+    FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
+);
