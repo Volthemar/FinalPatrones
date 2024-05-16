@@ -3,6 +3,7 @@ package com.api.crud.models;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+@Table(name = "Cupo")
 @Entity
 public class Cupo {
     @Id
