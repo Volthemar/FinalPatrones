@@ -1,3 +1,10 @@
+package com.api.crud.models;
+
+import javax.persistance.*;
+import java.sql.Timestamp;
+
+@Entity
+@Table(name = "Ip")    
 public class Ip {
 
     @Id
