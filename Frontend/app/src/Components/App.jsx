@@ -6,6 +6,7 @@ import Gerente from '../Views/Gerente/VistaGerente';
 import LogIn from '../Views/Login/VistaLogin'
 import Codigo from '../Components/Codigo/Codigo';
 import TarjetaCredito from './Registro/TarjetaCredito';
+import Ciudad from './utilsAdmin/ciudad';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/gerente" element={<Gerente />} />
         <Route path="/tarjeta" element={<TarjetaCredito />} />
         <Route path="/codigo" element={<Codigo />} />
+        <Route path="/admin/ciudad" element={<Ciudad />} />
       </Routes>
     </Router>
   );

@@ -8,6 +8,7 @@ export default function Parqueadero({ isOpen, onClose, name }) {
     <div className="backdrop">
       <div className="parqueadero">
         <h1>{name}</h1>
+        <h2>Cubierto o no cubierto</h2>
         <div className="cupos">
           <ul>
             <li>Cupos Carro: <span >7</span>
