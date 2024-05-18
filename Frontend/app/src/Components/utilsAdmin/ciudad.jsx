@@ -41,16 +41,21 @@ const Ciudad = () => {
     return (
         <div>
             <Sidebar></Sidebar>
-            <div className="card">
+            <div className="card2">
 
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label>Tipo Parqueadero</label>
-                        <input
-                            type="text"
+                        <select
                             value={parkingType}
                             onChange={(e) => setParkingType(e.target.value)}
-                        />
+                        >
+                            <option value="">Seleccione una opción</option>
+                            <option value="cubierto">Cubierto</option>
+                            <option value="descubierto">Descubierto</option>
+                            <option value="con_suscripcion">Con suscripción</option>
+                            <option value="sin_suscripcion">Sin suscripción</option>
+                        </select>
                     </div>
                     <div>
                         <label>N CARROS</label>

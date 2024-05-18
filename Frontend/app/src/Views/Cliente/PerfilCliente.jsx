@@ -3,7 +3,7 @@ import './PerfilCliente.css'
 
 function PerfilCliente() {
   return (
-      <div id='vista-usuario'>
+      <div className='vista-usuario'>
         <NuevoUsuario />
       </div>
   )

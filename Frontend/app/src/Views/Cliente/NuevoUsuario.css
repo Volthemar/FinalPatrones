@@ -1,24 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wdth,wght@75..125,100..900&display=swap');
 
-.card {
+.card-user {
+  margin: 5%;
+  margin-bottom: 1%;
   width: 80%;
   border-radius: 25px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   background-color: #f4f5f7;
   padding: 2%;
-  box-sizing: border-box;
+  font-size: 1vmax;
 }
-
-.card header{
+.imagen{
+  width: 25%;
+  border-radius: 50%;
+  margin-right: 20px; /* Add margin-right to separate image from profile */
+  display: contents;
+  margin: 5%;
+  padding: 5%;
+}
+.card-user header{
   position: relative;
   display: flex;
+  flex-direction: row;
 }
 
-.card .perfil-usuario{
-  margin-left: 45%;
-  width: 50%;
+.card-user .perfil-usuario{
+  margin-left: 5%;
+  width: 100%;
 }
 
 .perfil-usuario h1{
@@ -41,108 +51,37 @@
   margin: 0 ;
 }
 
-#imagen-usuario{
+.imagen-usuario{
   width: 18rem;
   border-radius: 50%;
   box-shadow: 5px 5px 8px 0 rgba(0, 0, 0, 0.25);
-  position: absolute;
+  position: relative;
   bottom: 0rem;
   left: 2.5rem;
+  top: -20%;
 }
-/*
-overflow: hidden;
-  display: flex;
-  flex-direction: column;
-
-.UserProfile {
-  display: flex;
-  flex-direction: column;
-  align-items:baseline;
-  width: 70%;
-}
-
-.botones {
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-  margin: 5px;
-
-  .Configuracion {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-}
-
-.botones .Salir {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.mapa{
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  height: 100%;
+  overflow: hidden;
 
 }
-
-.UserPaymentInfo p {
-  margin: 5px 0;
+.container{
+  height: 100%;
+  overflow: hidden;
 }
-
-.UserHeader {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  margin: 0; 
-  padding: 20px; 
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: space-around;
-  margin-bottom: 20px; 
-  background: #ffffff; 
+#city{
+  font-size: 2rem;
 }
-.UserImage {
-  width: 30%;          
-  height: 20%;         
-  border-radius: 50%;  
-  margin-right: 10px;  
-  object-fit: contain; 
+.Configuracion{
+  width: 10%;
+  height: 5%;
+  margin-right: 7%;
+  background-color: #5eec89;
 }
-
-.card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+.Salir{
+  width: 10%;
+  height: 5%;
+  background-color: #ff3a3a;
 }
-
-.card-image {
-  border-radius: 4px;
-  width: 1px;
-  align-self: center;
-}
-
-.card-content {
-  padding: 20px;
-  align-items: center;
-}
-
-.card-title {
-  margin: 0;
-  color: #333;
-  font-size: 24px;
-  align-items: center;
-}
-
-.card-description {
-  color: #666;
-  font-size: 16px;
-  line-height: 1.5;
-  align-items: center;
-}
-
-.UserHeader img{
-  width: 20%;
-  border-radius: 50%;
-  box-shadow: 5px 5px 8px 0 rgba(0, 0, 0, 0.25);
-}
-*/
