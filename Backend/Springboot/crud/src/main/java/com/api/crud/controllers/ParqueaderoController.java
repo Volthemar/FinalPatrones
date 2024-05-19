@@ -9,6 +9,8 @@ import com.api.crud.models.ParqueaderoModel;
 import com.api.crud.services.ParqueaderoService;
 import com.api.crud.services.TipoParqueaderoService;
 import java.util.Optional;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.Vector;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,13 +55,13 @@ public class ParqueaderoController {
             int disponibilidad_total = total_carro+total_bici+total_moto;
             int utilizado_total = utilizado_carro+utilizado_bici+utilizado_moto;
 
-            double porcentaje_disponibilidad = ((double) disponibilidad_total / (double) (disponibilidad_total + utilizado_total));
+            double porcentaje_ocupado = ((double) utilizado_total / (double) (disponibilidad_total ));
 
-            if (porcentaje_disponibilidad > 0 && porcentaje_disponibilidad < 0.6){
+            if (porcentaje_ocupado >= 0 && porcentaje_ocupado < 0.6){
                 parqueadero_parcial.setColor("VERDE");
-            }else if(porcentaje_disponibilidad >= 0.6 && porcentaje_disponibilidad < 1){
+            }else if(porcentaje_ocupado >= 0.6 && porcentaje_ocupado < 1){
                 parqueadero_parcial.setColor("AMARILLO");
-            }else if(porcentaje_disponibilidad == 1){
+            }else if(porcentaje_ocupado == 1){
                 parqueadero_parcial.setColor("NEGRO");
             }
 
@@ -92,5 +94,29 @@ public class ParqueaderoController {
         return Map.of("data", parquedaeros.get(), "msg", "Parqueaderos");
     }
     
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PostMapping("/guardarParqueadero")
+    public Map<String,Object> guardarParqueadero(@RequestBody ParqueaderoRequest parqueadero){
+        ParqueaderoModel parqueaderoGuardado = new ParqueaderoModel();
+        parqueaderoGuardado.setNombre(parqueadero.getNombre());
+        parqueaderoGuardado.setCupo_bici_total(parqueadero.getCupo_bici_total());
+        parqueaderoGuardado.setCupo_carro_total(parqueadero.getCupo_carro_total());
+        parqueaderoGuardado.setCupo_moto_total(parqueadero.getCupo_moto_total());
+        parqueaderoGuardado.setCiudad_fk(parqueadero.getCiudad_fk());
+        parqueaderoGuardado.setTipo_fk(parqueadero.getTipo_fk());
+        parqueaderoGuardado.setLongitud(parqueadero.getLongitud());
+        parqueaderoGuardado.setLatitud(parqueadero.getLatitud());
+        parqueaderoGuardado.setCupo_uti_bici(0);
+        parqueaderoGuardado.setCupo_uti_carro(0);
+        parqueaderoGuardado.setCupo_uti_moto(0);
+        Date fecha = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        calendar.add(Calendar.HOUR_OF_DAY,-5);
+        Date fechaColombia = calendar.getTime();
+        parqueaderoGuardado.setFecha_creacion(fechaColombia);
+        parqueaderoService.guardarParqueadero(parqueaderoGuardado);
+        return Map.of("data", parqueaderoGuardado, "msg", "Parqueaderos");
+    }
 
 }

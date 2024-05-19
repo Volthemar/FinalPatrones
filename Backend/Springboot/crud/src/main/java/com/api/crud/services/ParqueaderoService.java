@@ -21,4 +21,8 @@ public class ParqueaderoService {
     public Optional<ParqueaderoModel> obtenerParqueadero(Long parqueadero){
         return parqueaderoRepository.findById(parqueadero);
     }
+
+    public ParqueaderoModel guardarParqueadero(ParqueaderoModel parqueadero){
+        return parqueaderoRepository.save(parqueadero);
+    }
 }
