@@ -11,5 +11,5 @@ import com.api.crud.models.TarjetaCreditoModel;
 @Repository
 public interface ITarjetaCreditoRepository extends JpaRepository<TarjetaCreditoModel, Long> {
     @Query(value = "Select * from tarjeta_credito where Usuario_fk = ?1", nativeQuery = true)
-    Vector<TarjetaCreditoModel> findByUsuario(Long Usuario);
+    Vector<TarjetaCreditoModel> findByUsuario(Long usuario);
 }

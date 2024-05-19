@@ -1,6 +1,6 @@
-drop database parqueadero;
-create database parqueadero;
-use parqueadero;
+drop database fourParks;
+create database fourParks;
+use fourParks;
 
 -- Creación de la tabla Usuario
 CREATE TABLE Usuario (
