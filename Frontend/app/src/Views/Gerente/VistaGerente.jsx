@@ -1,7 +1,7 @@
 import Sidebar from '../../Components/Sidebar/Sidebar.jsx'
-import './Gerente.css'
+import './VistaGerente.css'
 
-function Gerente() {
+function VistaGerente() {
     return (
         <>
             <Sidebar></Sidebar>
@@ -24,4 +24,4 @@ function Gerente() {
         </>
     );
 }
-export default Gerente;
+export default VistaGerente;

@@ -1,0 +1,118 @@
+.landing-page {
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .logo {
+    height: 50px;
+  }
+  
+  .login-link {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .hero-section {
+    text-align: center;
+    padding: 50px;
+    background: url('hero-bg.jpg') no-repeat center center/cover;
+    color: #fff;
+  }
+  
+  .hero-section h1 {
+    font-size: 3em;
+  }
+  
+  .hero-section p {
+    font-size: 1.5em;
+  }
+  
+  .hero-section button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+  
+  .parking-options {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .parking-options h2 {
+    font-size: 2em;
+  }
+  
+  .locations {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .location {
+    text-align: center;
+  }
+  
+  .location img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .registration-form, .contact-form {
+    text-align: center;
+    padding: 50px;
+    background-color: #f9f9f9;
+  }
+  
+  .registration-form h2, .contact-form h2 {
+    font-size: 2em;
+  }
+  
+  .registration-form form, .contact-form form {
+    display: inline-block;
+    max-width: 400px;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .registration-form input, .contact-form input, .contact-form textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 1em;
+  }
+  
+  .contact-form textarea {
+    height: 100px;
+  }
+  
+  .registration-form button, .contact-form button {
+    padding: 10px 20px;
+    font-size: 1em;
+  }
+  
+  .footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .footer p {
+    margin: 0;
+  }
+  
+  .social-media a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+  }
+  

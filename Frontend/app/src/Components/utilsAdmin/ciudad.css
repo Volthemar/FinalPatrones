@@ -1,0 +1,29 @@
+.card2 {
+    margin: 10%;
+    width: 60%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+input {
+    width: 10vmax;
+    height: 1vmax;
+    border: 2px solid #ccc; 
+    border-radius: 25px;
+    padding: 10px; 
+    outline: none;
+    margin: 5px;
+    margin-bottom: 5px;
+
+}
+button {
+    font-size: 1rem;
+    background-color: yellow;
+    border: 1px solid #cedad1;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 1rem;
+    border-radius: 25px;
+  }

@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&display=swap');
+
+.historial-usuario {
+    font-family: 'Assistant', sans-serif;
+    margin-bottom: 3vh;
+}
+
+.historial-usuario h2 {
+    font-family: 'Encode Sans Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    letter-spacing: 0.1rem;
+}
+
+.historial-usuario .registro {
+    margin-left: 4%;
+}
+
+.historial-usuario .fecha {
+    color: rgba(18, 16, 18, 0.5);
+    font-size: 1.1rem;
+}
+
+.historial-usuario .ubicacion{
+    margin-left: 1%;
+    width: 57%;
+    display: inline-block;
+}
+
+.historial-usuario .tiempo{
+    width: 20%;
+    display: inline-block;
+}
+
+.historial-usuario .costo{
+    width: 20%;
+    display: inline-block;
+}
+
+.historial-usuario hr {
+    border-color: rgba(18, 16, 18, 0.2);
+}
+
+.historial-usuario .statusFinalizado {
+    background-color: rgba(78, 169, 59, 0.5);
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.historial-usuario .statusActivo {
+    background-color: rgba(0, 130, 89, 0.5);
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.historial-usuario ul {
+    font-weight: 400;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.historial-usuario li label {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: rgba(18, 16, 18, 0.7);
+}
+
+.historial-usuario ul:last-child {
+    border-bottom: none;
+}

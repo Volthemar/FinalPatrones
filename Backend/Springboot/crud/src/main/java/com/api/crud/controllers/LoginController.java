@@ -19,6 +19,7 @@ import com.api.crud.services.models.EmailDTO;
 import com.api.crud.services.CodigoLogin;
 
 import jakarta.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("")
@@ -29,14 +30,19 @@ public class LoginController {
     @Autowired
     private IEmailService emailService;
 
+    @Autowired 
+    private IpService ipService;
+
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody LoginRequest loginRequest) throws MessagingException {
         String usuario = loginRequest.getUsuario();
         String contrasena = loginRequest.getContrasena();
         EmailDTO email = new EmailDTO();
-        Optional<UsuarioModel> usuarioLoggeado = this.userService.login(usuario, contrasena);
+        Optional<UsuarioModel> usuarioLoggeado = this.userService.login(usuario, contrasena);        
+        
         if (!usuarioLoggeado.isEmpty()) {
+                
 
             if (usuarioLoggeado.get().isEstado()) {
                 usuarioLoggeado.get().setNum_intentos(0);
@@ -83,7 +89,7 @@ public class LoginController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/loginCodigo")
-    public Map<String, Object> loginCodigo(@RequestBody LoginCodigoRequest loginCodigoRequest) {
+    public Map<String, Object> loginCodigo(@RequestBody LoginCodigoRequest loginCodigoRequest,  HttpServletRequest request) {
         Long id = loginCodigoRequest.getId();
         String codigo = loginCodigoRequest.getCodigo();
         String codigoUsuario = this.userService.codigoUsuario(id);
@@ -95,9 +101,11 @@ public class LoginController {
             String identificacion = cliente.get().getIdentificacion();
             Boolean estado = cliente.get().isEstado();
             String usuario = cliente.get().getUsuario();
+            ipService.captureIp(new IpCaptureRequest(request.getRemoteAddr(), usuarioLoggeado.get().getId()));
             return Map.of("data", Map.of("id",id,"nombre", nombre, "correo", correo, "identificacion", identificacion, "estado",
                     estado, "usuario", usuario), "msg", "Codigo correcto");
         } else {
+            ipService.captureIp(new IpCaptureRequest(request.getRemoteAddr(), usuarioExiste.get().getId()));
             return Map.of("msg", "Codigo incorrecto");
         }
 
