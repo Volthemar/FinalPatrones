@@ -7,12 +7,13 @@ import LogIn from '../Views/Login/VistaLogin'
 import Codigo from '../Components/Codigo/Codigo';
 import TarjetaCredito from './Registro/TarjetaCredito';
 import Ciudad from './utilsAdmin/ciudad';
-
+import LandingPage from './LangingPage/LandingPage';
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LogIn />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/user/:userId" element={<Cliente />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/admin" element={<Gerente />} />
