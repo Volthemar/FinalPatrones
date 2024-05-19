@@ -122,19 +122,19 @@ function LoginDiv() {
         <div id='contentContainer'>
           <img id='logo' src={Logo} alt="Logo"></img>
           <h2>Bienvenido!</h2>
-          <label>Bienvenido de nuevo, que placer tenerte acá </label>
-          <form>
+          <label className='label'>Que placer tenerte acá </label>
+          <form id='form-login'>
             <div id='username'>
-              <label>Usuario</label>
+              <label className='label'>Usuario</label>
               <input type='text' id='inputUsername' value={username} onChange={(e) => setUsername(e.target.value)}></input>
             </div>
             <div id='password'>
-              <label>Contraseña</label>
+              <label className='label'>Contraseña</label>
               <input type='password' id='inputPassword' value={password} onChange={(e) => setPassword(e.target.value)}></input>
             </div>
             <button type='button' id='btnIngresar' onClick={login}>Ingresar</button>
           </form>
-          <p>Aún no tienes una cuenta? <a href={URL_REGISTRO}>Registrate</a></p>
+          <p className='p'>Aún no tienes una cuenta? <a className='a' href={URL_REGISTRO}>Registrate</a></p>
         </div>
       </div>
     </>

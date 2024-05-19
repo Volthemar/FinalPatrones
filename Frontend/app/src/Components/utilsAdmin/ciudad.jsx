@@ -43,10 +43,10 @@ const Ciudad = () => {
             <Sidebar></Sidebar>
             <div className="card2">
 
-                <form onSubmit={handleSubmit}>
-                    <div>
+                <form className='form-ciudades' onSubmit={handleSubmit}>
+                    <div className='div-select-ciudades'>
                         <label>Tipo Parqueadero</label>
-                        <select
+                        <select className='select-ciudades'
                             value={parkingType}
                             onChange={(e) => setParkingType(e.target.value)}
                         >
@@ -57,48 +57,54 @@ const Ciudad = () => {
                             <option value="sin_suscripcion">Sin suscripción</option>
                         </select>
                     </div>
-                    <div>
+                    <div className='div-input-ciudades'>
                         <label>N CARROS</label>
-                        <input
+                        <input className='input-ciudades'
                             type="number"
                             value={numCars}
                             onChange={(e) => setNumCars(e.target.value)}
-                        />                    </div>
-                    <div>                        <label>N MOTOS</label>
-                        <input
+                        /></div>
+                    <div className='div-input-ciudades'>
+                        <label>N MOTOS</label>
+                        <input className='input-ciudades'
                             type="number"
                             value={numMotorcycles}
                             onChange={(e) => setNumMotorcycles(e.target.value)}
                         />
-                    </div>                    <div>                        <label>N BICICLETAS</label>
-                        <input
+                    </div>
+                    <div className='div-input-ciudades'>
+                        <label>N BICICLETAS</label>
+                        <input className='input-ciudades'
                             type="number"
                             value={numBicycles}
                             onChange={(e) => setNumBicycles(e.target.value)}
                         />
-                    </div>                    <div>                        <label>Altitud</label>
-                        <input
+                    </div>
+                    <div className='div-input-ciudades'>
+                        <label>Altitud</label>
+                        <input className='input-ciudades'
                             type="number"
                             value={altitude}
                             onChange={(e) => setAltitude(e.target.value)}
                         />
-                    </div>                    <div>
+                    </div>
+                    <div className='div-input-ciudades'>
                         <label>Latitud</label>
-                        <input
+                        <input className='input-ciudades'
                             type="number"
                             value={latitude}
                             onChange={(e) => setLatitude(e.target.value)}
                         />
                     </div>
-                    <div>
+                    <div className='div-input-ciudades'>
                         <label>Ciudad</label>
-                        <input
+                        <input className='input-ciudades'
                             type="text"
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
                         />
                     </div>
-                    <button type="submit">Enviar</button>
+                    <button className='button-ciudades' type="submit">Enviar</button>
                 </form>
             </div>
         </div>
