@@ -12,16 +12,6 @@
   height: 20%;
   align-self: center;
 }
-#inputUsername, #inputPassword ,#inputCorreo{
-  width: 100%;
-  border: 2px solid #ccc;
-  border-radius: 25px;
-  padding: 10px;
-  outline: none;
-  margin: 5%;
-  max-width: 250px;
-  margin-bottom: 5px;
-}
 
 #container {
   display: flex;
@@ -32,7 +22,9 @@
   justify-content: space-around;
   box-shadow: 10px 10px 10px 0 rgba(0, 0, 0, 0.25);
 }
-
+#containerTarjetaCredito{
+  display: contents;
+}
 #backgroundContainer {
   width: 50%;
   height: auto;
@@ -45,12 +37,7 @@
   height: 100%;
   display: block;
 }
-#username, #password{
-  display: flex;
-  flex-direction: column;
-  margin: 3%;
-}
-#form-login{
+#form-registro{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -66,6 +53,7 @@
 }
 #contentContainer {
   text-align: center;
+  justify-content: center;
   display: flex;
   flex-direction:column;
   box-sizing: border-box;
@@ -80,7 +68,7 @@
   font-size: 2vmax;
   font-family: 'Assistant', sans-serif;
   font-weight: 300;
-  margin: 1rem;
+  margin-top: 1rem;
 }
 
 .a {
@@ -89,10 +77,11 @@
   font-weight: 700;
 }
 
-#contentContainer #btnIngresar {
+#contentContainer #btnRegistro {
   border: 1px solid #ced4da;
   box-sizing: border-box;
   width: 100%;
+  height: 3rem;
   margin-top: 1rem;
   border-radius: 25px;
   font-family: 'Assistant', sans-serif;
@@ -101,11 +90,10 @@
   cursor: pointer;
   border-radius: 30px;
   border: none;
-  height: 3rem;
   transition: background-color 0.3s ease;
 }
 
-#contentContainer #btnIngresar:hover{
+#contentContainer #btnRegistro:hover{
   background-color: #89a1d4;
 
 }

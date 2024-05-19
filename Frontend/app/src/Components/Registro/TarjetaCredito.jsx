@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CreditCardForm.css';
+import './TarjetaCredito.css';
 
 export default function TarjetaCredito({ isOpen }) {
     if (!isOpen) return null;
@@ -18,49 +18,108 @@ export default function TarjetaCredito({ isOpen }) {
         }));
     };
 
+    const formatCardNumber = (number) => {
+        return number.replace(/(.{4})/g, '$1 ').trim();
+    };
+
+    const formatExpiryDate = (expiry) => {
+        return expiry.replace(/^(\d{2})(\d{0,4})$/, '$1/$2');
+    };
+
+    const validateData = () => {
+        const { number, name, expiry, cvc } = cardInfo;
+        if (
+            number.length !== 16 ||
+            !/^\d{16}$/.test(number.replace(/\s/g, '')) ||
+            name.trim() === '' ||
+            !/^\d{2}\/\d{4}$/.test(expiry) ||
+            cvc.length !== 4 ||
+            !/^\d{4}$/.test(cvc)
+        ) {
+            alert('Datos erróneos, por favor verificar.');
+            return false;
+        }
+        alert('Datos válidos.');
+        return true;
+    };
+
     return (
-        <div className="credit-card-form" >
+        <div className="credit-card-form">
             <div className='credit-card-card'>
                 <div className='tarjetas'>
-                    <div className="credit-card-front" >
+                    <div className="credit-card-front">
                         <div className="credit-card">
                             <div className='tipo-tarjeta'>
                                 <div className='rccs__chip'></div>
                                 <div className='rccs__card--visa'></div>
-                                
-
                             </div>
-                            <div className="rccs__number">{cardInfo.number.padEnd(16, '•')}</div>
+                            <div className="rccs__number">
+                                {formatCardNumber(cardInfo.number.padEnd(16, '•'))}
+                            </div>
                             <div className='parte-abajo'>
                                 <div className="rccs__name">{cardInfo.name || 'YOUR NAME HERE'}</div>
-                                <div className='rccs__exp' >
+                                <div className='rccs__exp'>
                                     <p>valid true</p>
-                                    <div className="rccs__expiry__valid">{cardInfo.expiry}</div>
+                                    <div className="rccs__expiry__valid">
+                                        {formatExpiryDate(cardInfo.expiry.padEnd(6, '•'))}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="credit-card-back">
-                        <div class="rccs__cardback">
-                            <div class="rccs__card__background">
-                                <div class="rccs__issuer"></div>
-                                <div class="rccs__stripe"></div>
-                                <div class="rccs__signature">
-                                    <div class="rccs__cvc-text">CVC</div>
-                                    <div className="rccs__cvc">{cardInfo.cvc}</div>
+                        <div className="rccs__cardback">
+                            <div className="rccs__card__background">
+                                <div className="rccs__issuer"></div>
+                                <div className="rccs__stripe"></div>
+                                <div className="rccs__signature">
+                                    <div className="rccs__cvc-text">CVC</div>
+                                    <div className="rccs__cvc">{cardInfo.cvc.padEnd(4, '•')}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className='formulario'>
-                    <form>
-                        <input type="text" name="number" placeholder="Card Number" value={cardInfo.number} onChange={handleChange} />
-                        <input type="text" name="name" placeholder="Name" value={cardInfo.name} onChange={handleChange} />
-                        <input type="text" name="expiry" placeholder="Valid Thru" value={cardInfo.expiry} onChange={handleChange} />
-                        <input type="text" name="cvc" placeholder="CVC" value={cardInfo.cvc} onChange={handleChange} />
+                    <p className='texto'>Ingresa los datos de tu tarjeta para poder continuar </p>
+                    <form className='campos'>
+                        <input
+                            type="text"
+                            className='input-Tarjeta'
+                            name="number"
+                            placeholder="Card Number"
+                            value={cardInfo.number}
+                            onChange={handleChange}
+                            maxLength={16}
+                        />
+                        <input
+                            type="text"
+                            className='input-Tarjeta'
+                            name="name"
+                            placeholder="Name"
+                            value={cardInfo.name}
+                            onChange={handleChange}
+                        />
+                        <input
+                            type="text"
+                            className='input-Tarjeta'
+                            name="expiry"
+                            placeholder="Valid Thru (MM/YYYY)"
+                            value={cardInfo.expiry}
+                            onChange={handleChange}
+                            maxLength={7}
+                        />
+                        <input
+                            type="text"
+                            className='input-Tarjeta'
+                            name="cvc"
+                            placeholder="CVC"
+                            value={cardInfo.cvc}
+                            onChange={handleChange}
+                            maxLength={4}
+                        />
                     </form>
-                    <button>Validar</button>
+                    <button onClick={validateData}>Validar</button>
                 </div>
             </div>
         </div>

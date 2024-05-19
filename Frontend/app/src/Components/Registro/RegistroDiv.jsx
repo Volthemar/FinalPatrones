@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Logo from '../../assets/logo.png' // Placeholder para el logo
 import backgroundLogin from '../../assets/backgroundLogin.svg'
 import TarjetaCredito from './TarjetaCredito'
-import '../Login/LoginDiv.css'
+import './RegistroDiv.css'
 import { useNavigate } from 'react-router-dom';
 
 function RegistroDiv() {
@@ -14,9 +14,9 @@ function RegistroDiv() {
   const [correo, setCorreo] = useState('');
   const navigate = useNavigate();
   const [isTarjetaOpen, setTarjetaOpen] = useState(false);
-  
+
   const irAOtraRuta = (url) => {
-    window.location.href = url ;
+    window.location.href = url;
   };
   function registrar(event) {
     setTarjetaOpen(true);
@@ -66,24 +66,24 @@ function RegistroDiv() {
         <div id='contentContainer'>
           <img id='logo' src={Logo} alt="Logo"></img>
           <h2>Registrate!</h2>
-          <label>Un gusto que te unas a nosotros!</label>
-          <form>
+          <label className='label'>Un gusto que te unas a nosotros!</label>
+          <form id='form-registro'>
             <div id='containerUsername'>
-              <div><label>Nombre</label></div>
+              <div><label className='label'>Nombre</label></div>
               <input type='text' id='inputUsername' value={nombre} onChange={(e) => setNombre(e.target.value)}></input>
             </div>
             <div id='containerPassword'>
-              <div><label>Identificación</label></div>
+              <div><label className='label'>Identificación</label></div>
               <input type='identificacion' id='inputPassword' value={identificacion} onChange={(e) => setIdentificacion(e.target.value)}></input>
             </div>
             <div id='containerTarjetaCredito'>
-              <div><label>Correo electrónico</label></div>
-              <input type='correo' id='correo' value={correo} onChange={(e) => setCorreo(e.target.value)}></input>
+              <div><label className='label'>Correo electrónico</label></div>
+              <input type='correo' id='inputCorreo' value={correo} onChange={(e) => setCorreo(e.target.value)}></input>
             </div>
-            <button type='button' id='btnIngresar' onClick={registrar}>Registrarse</button>
+            <button type='button' id='btnRegistro' onClick={registrar}>Registrarse</button>
           </form>
-          <p>¿Ya tienes una cuenta?   <a href="/">Inicia sesión</a></p>
-          <TarjetaCredito isOpen={isTarjetaOpen}/>
+          <p className='p'>¿Ya tienes una cuenta?   <a className='a' href="/">Inicia sesión</a></p>
+          <TarjetaCredito isOpen={isTarjetaOpen} />
         </div>
       </div>
     </>
