@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código de Inicio de Sesión</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .code {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #4CAF50; /* Green color */
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 18px;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="message">¡Hola! Queremos informarte que tu tarjeta de credito con número</div>
+        <div class="code" th:text="${tarjeta}">Tarjeta</div>
+        <div class="message">ha sido registrada dentro de nuestra aplicación.</div>
+    </div>
+</body>
+</html>
