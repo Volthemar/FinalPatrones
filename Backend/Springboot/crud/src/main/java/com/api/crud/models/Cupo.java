@@ -1,18 +1,28 @@
 package com.api.crud.models;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.util.Date;
 
-@Table(name = "Cupo")
 @Entity
+@Table(name = "Cupo")
 public class Cupo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String status;
+    
+    @Column
     private Long userId;
-    private Timestamp reservedAt;
+    
+    @Column
+    private Date reservedAt;
 
     // Getters and Setters
     public Long getId() {
@@ -39,11 +49,11 @@ public class Cupo {
         this.userId = userId;
     }
 
-    public Timestamp getReservedAt() {
+    public Date getReservedAt() {
         return reservedAt;
     }
 
-    public void setReservedAt(Timestamp reservedAt) {
+    public void setReservedAt(Date reservedAt) {
         this.reservedAt = reservedAt;
     }
 }

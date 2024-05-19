@@ -1,7 +1,14 @@
 package com.api.crud.models;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.util.Date;
+
 
 @Entity
 @Table(name = "Cupo_Offline")
@@ -10,9 +17,14 @@ public class CupoOffline {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String status;
+    
+    @Column
     private String walkInUser;
-    private Timestamp occupiedAt;
+    
+    @Column
+    private Date occupiedAt;
 
     // Getters and Setters
     public Long getId() {
@@ -39,11 +51,11 @@ public class CupoOffline {
         this.walkInUser = walkInUser;
     }
 
-    public Timestamp getOccupiedAt() {
+    public Date getOccupiedAt() {
         return occupiedAt;
     }
 
-    public void setOccupiedAt(Timestamp occupiedAt) {
+    public void setOccupiedAt(Date occupiedAt) {
         this.occupiedAt = occupiedAt;
     }
 }

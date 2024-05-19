@@ -1,6 +1,5 @@
 package com.api.crud.models;
 
-import org.springframework.data.geo.Point;
 import java.util.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,13 +18,17 @@ public class CiudadModel {
     @Column
     private String nombre;
 
-    @Column(name = "coordenada", columnDefinition = "POINT")
-    private Point coordenada;
+    @Column
+    private double longitud;
+
+    @Column
+    private double latitud;
     
     @Column
     private Date fecha_creacion;
 
     
+
 
     /**
      * @return long return the id
@@ -56,17 +59,31 @@ public class CiudadModel {
     }
 
     /**
-     * @return Point return the coordenada
+     * @return double return the longitud
      */
-    public Point getCoordenada() {
-        return coordenada;
+    public double getLongitud() {
+        return longitud;
     }
 
     /**
-     * @param coordenada the coordenada to set
+     * @param longitud the longitud to set
      */
-    public void setCoordenada(Point coordenada) {
-        this.coordenada = coordenada;
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    /**
+     * @return double return the latitud
+     */
+    public double getLatitud() {
+        return latitud;
+    }
+
+    /**
+     * @param latitud the latitud to set
+     */
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
     }
 
     /**

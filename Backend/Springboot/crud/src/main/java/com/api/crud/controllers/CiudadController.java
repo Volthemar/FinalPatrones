@@ -1,7 +1,6 @@
 package com.api.crud.controllers;
 
 import java.util.Map;
-import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +19,9 @@ public class CiudadController {
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/obenerCiudades")
     public Map<String,Object> obenerCiudades(){
+
+        
+
         return Map.of("data", ciudadService.obtenerCiudades(), "msg", "Ciudades");
     }
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.api.crud.models.CiudadModel;
 
 @Repository
-public interface ICiudadRepository extends JpaRepository<CiudadModel, Long>{
+public interface ICiudadRepository extends JpaRepository<CiudadModel,Long>{
 
 }

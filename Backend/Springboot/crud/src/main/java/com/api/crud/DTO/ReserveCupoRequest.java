@@ -1,4 +1,4 @@
-package com.api.crud.dto;
+package com.api.crud.DTO;
 
 public class ReserveCupoRequest {
     private Long userId;
