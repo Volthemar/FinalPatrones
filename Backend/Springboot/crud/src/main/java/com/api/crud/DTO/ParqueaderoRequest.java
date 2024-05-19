@@ -1,8 +1,5 @@
 package com.api.crud.DTO;
 
-import java.util.Date;
-
-import jakarta.persistence.Column;
 
 public class ParqueaderoRequest {
     private long parqueadero_id;
