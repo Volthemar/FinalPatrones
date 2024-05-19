@@ -2,12 +2,13 @@ package com.api.crud.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.api.crud.DTO.ParqueaderoBasicoResponse;
 import com.api.crud.DTO.ParqueaderoRequest;
 import com.api.crud.DTO.ParqueaderoResponse;
 import com.api.crud.models.ParqueaderoModel;
 import com.api.crud.services.ParqueaderoService;
 import com.api.crud.services.TipoParqueaderoService;
-
+import java.util.Optional;
 import java.util.Map;
 import java.util.Vector;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ParqueaderoController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/parqueaderoCiudad")
-    public Map<String,Object> registroPersona(@RequestBody ParqueaderoRequest ciudad){
+    public Map<String,Object> parqueaderoCiudad(@RequestBody ParqueaderoRequest ciudad){
         Vector<ParqueaderoModel> parquedaeros = parqueaderoService.obtenerParqueaderoCiudad(ciudad.getCiudad_fk());
         Vector<ParqueaderoResponse> parqueaderos_disponibles = new Vector<>();
         for(int i=0;i<parquedaeros.size();i++){
@@ -69,4 +70,27 @@ public class ParqueaderoController {
         
         return Map.of("data", parqueaderos_disponibles, "msg", "Parqueaderos");
     }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PostMapping("/parqueaderoCiudadBasico")
+    public Map<String,Object> parqueaderoCiudadBasico(@RequestBody ParqueaderoRequest ciudad){
+        Vector<ParqueaderoModel> parquedaeros = parqueaderoService.obtenerParqueaderoCiudad(ciudad.getCiudad_fk());
+        Vector<ParqueaderoBasicoResponse> parqueaderos_disponibles = new Vector<>();
+        for(int i=0;i<parquedaeros.size();i++){
+            ParqueaderoBasicoResponse parqueadero_parcial = new ParqueaderoBasicoResponse();
+            parqueadero_parcial.setId(parquedaeros.get(i).getId());
+            parqueadero_parcial.setNombre(parquedaeros.get(i).getNombre());
+            parqueaderos_disponibles.add(parqueadero_parcial);
+        }
+        return Map.of("data", parqueaderos_disponibles, "msg", "Parqueaderos");
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PostMapping("/obtenerParqueadero")
+    public Map<String,Object> obtenerParqueadero(@RequestBody ParqueaderoRequest parqueadero){
+        Optional<ParqueaderoModel> parquedaeros = parqueaderoService.obtenerParqueadero(parqueadero.getParqueadero_id());
+        return Map.of("data", parquedaeros.get(), "msg", "Parqueaderos");
+    }
+    
+
 }
