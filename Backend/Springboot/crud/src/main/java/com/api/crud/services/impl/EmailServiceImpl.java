@@ -1,5 +1,6 @@
 package com.api.crud.services.impl;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,23 @@ public class EmailServiceImpl implements IEmailService{
             helper.setSubject(email.getAsunto());
             Context context = new Context();
             String contenidoHTML = templateEngine.process("enviarBloqueo", context);
+            helper.setText(contenidoHTML,true);
+            javaMailSender.send(mensaje);
+        }catch (Exception e){
+            throw new RuntimeException("Error al enviar el correo: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void enviarCorreoTarjeta(EmailDTO email){
+        try{
+            MimeMessage mensaje = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mensaje,true,"utf-8");
+            helper.setTo(email.getDestinatario());
+            helper.setSubject(email.getAsunto());
+            Context context = new Context();
+            context.setVariable("tarjeta", email.getNumeroTarjeta());
+            String contenidoHTML = templateEngine.process("enviarTarjeta", context);
             helper.setText(contenidoHTML,true);
             javaMailSender.send(mensaje);
         }catch (Exception e){

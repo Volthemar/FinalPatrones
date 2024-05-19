@@ -2,6 +2,7 @@ package com.api.crud.controllers;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,10 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.crud.DTO.TarjetaRequest;
 import com.api.crud.models.TarjetaCreditoModel;
+import com.api.crud.models.UsuarioModel;
 import com.api.crud.services.IEmailService;
 import com.api.crud.services.TarjetaCreditoService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.api.crud.services.UsuarioService;
+import com.api.crud.services.models.EmailDTO;
+
+import jakarta.mail.MessagingException;
+
 import java.util.Vector;
 
 @RestController
@@ -25,11 +30,14 @@ public class TarjetaCreditoController {
     private TarjetaCreditoService tarjetaCreditoService;
 
     @Autowired
+    private UsuarioService userService;
+
+    @Autowired
     private IEmailService emailService;
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/guardarTarjeta")
-    public Map<String, Object> guardarTarjeta(@RequestBody TarjetaRequest tarjeta){
+    public Map<String, Object> guardarTarjeta(@RequestBody TarjetaRequest tarjeta) throws MessagingException{
         TarjetaCreditoModel tarjetaCredito = new TarjetaCreditoModel();
         Date fecha = new Date();
         Calendar calendar = Calendar.getInstance();
@@ -43,6 +51,12 @@ public class TarjetaCreditoController {
         tarjetaCredito.setCvc(tarjeta.getCvc());
         tarjetaCredito.setFecha_vencimiento(tarjeta.getFecha_vencimiento());
         tarjetaCreditoService.guardarTarjetaCredito(tarjetaCredito);
+        Optional<UsuarioModel> usuario = userService.getPorId(tarjeta.getUsuario());
+        EmailDTO email = new EmailDTO();
+        email.setNumeroTarjeta(tarjeta.getNumero());
+        email.setAsunto("Registro de tarjeta de credito");
+        email.setDestinatario(usuario.get().getCorreo());
+        emailService.enviarCorreoTarjeta(email);
         return Map.of("data", tarjetaCredito, "msg", "Tarjeta agregada");
     }
 
