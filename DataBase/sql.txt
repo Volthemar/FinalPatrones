@@ -50,20 +50,20 @@ CREATE TABLE Ip (
 CREATE TABLE Ciudad (
     Id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Nombre VARCHAR(255) NOT NULL,
-    Coordenada VARCHAR(50) ,
-    Fecha_registro DATE DEFAULT (CURRENT_DATE)
+    Coordenada POINT,
+    Fecha_creacion DATE DEFAULT (CURRENT_DATE)
 );
 
 CREATE TABLE Tipo_parqueadero (
     Id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Tipo VARCHAR(255) NOT NULL,
-    Fecha_registro DATE DEFAULT (CURRENT_DATE)
+    Fecha_creacion DATE DEFAULT (CURRENT_DATE)
 );
 
 CREATE TABLE Vehiculo (
     Id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Tipo VARCHAR(255),
-    Fecha_registro DATE DEFAULT (CURRENT_DATE)
+    Fecha_creacion DATE DEFAULT (CURRENT_DATE)
 );
 
 CREATE TABLE Parqueadero (
@@ -74,18 +74,17 @@ CREATE TABLE Parqueadero (
     Cupo_bici_total INT NOT NULL DEFAULT 0,
     Ciudad_fk INT UNSIGNED,
     Tipo_fk INT UNSIGNED,
-    Coordenada VARCHAR(50),
+    Coordenada POINT,
     Cupo_uti_moto INT NOT NULL DEFAULT 0,
     Cupo_uti_carro INT NOT NULL DEFAULT 0,
     Cupo_uti_bici INT NOT NULL DEFAULT 0,
-    Fecha_registro DATE DEFAULT (CURRENT_DATE),
+    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
     FOREIGN KEY (Ciudad_fk) REFERENCES Ciudad(Id),
     FOREIGN KEY (Tipo_fk) REFERENCES Tipo_parqueadero(Id)
 );
 
 CREATE TABLE Cupo (
     Id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    status ENUM('DISPONIBLE', 'RESERVADO', 'OCUPADO') NOT NULL DEFAULT 'DISPONIBLE',
     Usuario_fk INT UNSIGNED,
     Parqueadero_fk INT UNSIGNED,
     Vehiculo_fk INT UNSIGNED,
@@ -93,7 +92,7 @@ CREATE TABLE Cupo (
     Hora_llegada DATE,
     Hora_salida DATE,
     horas_pedidas INT,
-    Fecha_registro DATE DEFAULT (CURRENT_DATE),
+    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
     FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id),
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
@@ -107,7 +106,7 @@ CREATE TABLE Cupo_offline (
     Pagado BOOLEAN DEFAULT FALSE,
     Hora_llegada DATE,
     Hora_salida DATE,
-    Fecha_registro DATE DEFAULT (CURRENT_DATE),
+    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
 );
@@ -118,7 +117,7 @@ CREATE TABLE Tarifa (
     Parqueadero_fk INT UNSIGNED,
     Vehiculo_fk INT UNSIGNED,
     Valor_mora INT,
-    Fecha_registro DATE DEFAULT (CURRENT_DATE),
+    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
 );
