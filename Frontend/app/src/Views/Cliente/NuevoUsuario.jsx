@@ -31,7 +31,7 @@ function NuevoUsuario() {
           redirect: "follow"
         };
 
-        const response = await fetch("http://localhost:3241/obenerCiudades", requestOptions);
+        const response = await fetch("http://localhost:3241/obtenerCiudades", requestOptions);
         const result = await response.json();
         setCities(result.data);
         

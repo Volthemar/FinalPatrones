@@ -21,7 +21,7 @@ const CrearParqueadero = () => {
                     redirect: "follow"
                 };
 
-                const response = await fetch("http://localhost:3241/obenerCiudades", requestOptions);
+                const response = await fetch("http://localhost:3241/obtenerCiudades", requestOptions);
                 const result = await response.json();
                 setCities(result.data);
             } catch (error) {
@@ -120,14 +120,6 @@ const CrearParqueadero = () => {
                         />
                     </div>
                     <div className='div-input-ciudades'>
-                        <label>Altitud</label>
-                        <input className='input-ciudades'
-                            type="number"
-                            value={altitude}
-                            onChange={(e) => setAltitude(e.target.value)}
-                        />
-                    </div>
-                    <div className='div-input-ciudades'>
                         <label>Latitud</label>
                         <input className='input-ciudades'
                             type="number"
@@ -135,6 +127,15 @@ const CrearParqueadero = () => {
                             onChange={(e) => setLatitude(e.target.value)}
                         />
                     </div>
+                    <div className='div-input-ciudades'>
+                        <label>Altitud</label>
+                        <input className='input-ciudades'
+                            type="number"
+                            value={altitude}
+                            onChange={(e) => setAltitude(e.target.value)}
+                        />
+                    </div>
+                    
 
                     <div className='div-select-ciudades'>
                         <label>Ciudad</label>

@@ -3,6 +3,7 @@ import './TarjetaCredito.css';
 
 export default function TarjetaCredito({ isOpen }) {
     if (!isOpen) return null;
+
     const [cardInfo, setCardInfo] = useState({
         number: '',
         name: '',
@@ -41,6 +42,39 @@ export default function TarjetaCredito({ isOpen }) {
         }
         alert('Datos válidos.');
         return true;
+    };
+
+    const handleSubmit = async () => {
+        if (!validateData()) return;
+
+        const { number, name, expiry, cvc } = cardInfo;
+        const formattedExpiry = `20${expiry.split('/')[1]}-${expiry.split('/')[0]}-01`;
+
+        const data = {
+            numero: number,
+            nombre_propietario: name,
+            cvc: cvc,
+            fecha_vencimiento: formattedExpiry,
+            usuario: 1 // This should be replaced with the actual user ID
+        };
+
+        try {
+            const requestOptions = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data),
+                redirect: "follow"
+            };
+
+            const response = await fetch("http://localhost:3241/guardarTarjeta", requestOptions);
+            const result = await response.json();
+            console.log('Response from server:', result);
+            // Handle success, maybe reset form or show a message
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }
     };
 
     return (
@@ -119,9 +153,9 @@ export default function TarjetaCredito({ isOpen }) {
                             maxLength={4}
                         />
                     </form>
-                    <button onClick={validateData}>Validar</button>
+                    <button onClick={handleSubmit}>Validar</button>
                 </div>
             </div>
         </div>
     );
-};
+}
