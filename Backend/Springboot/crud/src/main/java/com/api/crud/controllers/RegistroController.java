@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api.crud.DTO.RegistroPersonaRequest;
 import com.api.crud.models.UsuarioModel;
 import com.api.crud.services.IEmailService;
+import com.api.crud.services.ManejarFechas;
 import com.api.crud.services.UsuarioService;
 import com.api.crud.services.models.EmailDTO;
 
@@ -67,12 +68,6 @@ public class RegistroController {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-
-        Date fecha = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fecha);
-        calendar.add(Calendar.HOUR_OF_DAY, -5);
-        Date fechaColombia = calendar.getTime();
         UsuarioModel usuarioModel = new UsuarioModel();
         usuarioModel.setUsuario(usuario);
         usuarioModel.setContrasena(contrasenaEncriptada);
@@ -82,7 +77,7 @@ public class RegistroController {
         usuarioModel.setIdentificacion(identificacion);
         usuarioModel.setNum_intentos(0);
         usuarioModel.setEstado(true);
-        usuarioModel.setFecha_creacion(fechaColombia);
+        usuarioModel.setFecha_creacion(ManejarFechas.obtenerFechaActual());
         userService.guardarUsuario(usuarioModel);
 
         EmailDTO email = new EmailDTO();

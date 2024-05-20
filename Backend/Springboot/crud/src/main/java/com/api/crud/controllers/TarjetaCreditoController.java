@@ -15,6 +15,7 @@ import com.api.crud.DTO.TarjetaRequest;
 import com.api.crud.models.TarjetaCreditoModel;
 import com.api.crud.models.UsuarioModel;
 import com.api.crud.services.IEmailService;
+import com.api.crud.services.ManejarFechas;
 import com.api.crud.services.TarjetaCreditoService;
 import com.api.crud.services.UsuarioService;
 import com.api.crud.services.models.EmailDTO;
@@ -39,12 +40,7 @@ public class TarjetaCreditoController {
     @PostMapping("/guardarTarjeta")
     public Map<String, Object> guardarTarjeta(@RequestBody TarjetaRequest tarjeta) throws MessagingException{
         TarjetaCreditoModel tarjetaCredito = new TarjetaCreditoModel();
-        Date fecha = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fecha);
-        calendar.add(Calendar.HOUR_OF_DAY,-5);
-        Date fechaColombia = calendar.getTime();
-        tarjetaCredito.setFecha_creacion(fechaColombia);
+        tarjetaCredito.setFecha_creacion(ManejarFechas.obtenerFechaActual());
         tarjetaCredito.setNumero(tarjeta.getNumero());
         tarjetaCredito.setNombre_propietario(tarjeta.getNombre_propietario());
         tarjetaCredito.setUsuario_fk(tarjeta.getUsuario());

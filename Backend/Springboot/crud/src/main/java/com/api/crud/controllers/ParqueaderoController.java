@@ -6,11 +6,10 @@ import com.api.crud.DTO.ParqueaderoBasicoResponse;
 import com.api.crud.DTO.ParqueaderoRequest;
 import com.api.crud.DTO.ParqueaderoResponse;
 import com.api.crud.models.ParqueaderoModel;
+import com.api.crud.services.ManejarFechas;
 import com.api.crud.services.ParqueaderoService;
 import com.api.crud.services.TipoParqueaderoService;
 import java.util.Optional;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 import java.util.Vector;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,12 +108,7 @@ public class ParqueaderoController {
         parqueaderoGuardado.setCupo_uti_bici(0);
         parqueaderoGuardado.setCupo_uti_carro(0);
         parqueaderoGuardado.setCupo_uti_moto(0);
-        Date fecha = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fecha);
-        calendar.add(Calendar.HOUR_OF_DAY,-5);
-        Date fechaColombia = calendar.getTime();
-        parqueaderoGuardado.setFecha_creacion(fechaColombia);
+        parqueaderoGuardado.setFecha_creacion(ManejarFechas.obtenerFechaActual());
         parqueaderoService.guardarParqueadero(parqueaderoGuardado);
         return Map.of("data", parqueaderoGuardado, "msg", "Parqueaderos");
     }
