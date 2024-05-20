@@ -6,8 +6,9 @@ import Gerente from '../Views/Gerente/VistaGerente';
 import LogIn from '../Views/Login/VistaLogin'
 import Codigo from '../Components/Codigo/Codigo';
 import TarjetaCredito from './Registro/TarjetaCredito';
-import Ciudad from './utilsAdmin/ciudad';
+import CrearParqueadero from './utilsAdmin/CrearParqueadero';
 import LandingPage from './LangingPage/LandingPage';
+import CrearCiudad from './utilsAdmin/CrearCiudad';
 function App() {
   return (
     <Router>
@@ -20,7 +21,8 @@ function App() {
         <Route path="/gerente" element={<Gerente />} />
         <Route path="/tarjeta" element={<TarjetaCredito />} />
         <Route path="/codigo" element={<Codigo />} />
-        <Route path="/admin/ciudad" element={<Ciudad />} />
+        <Route path="/admin/CrearParqueadero" element={<CrearParqueadero />} />        
+        <Route path="/admin/CrearCiudad" element={<CrearCiudad />} />
       </Routes>
     </Router>
   );
