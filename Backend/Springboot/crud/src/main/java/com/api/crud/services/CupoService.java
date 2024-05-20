@@ -1,36 +1,21 @@
 package com.api.crud.services;
 
-import java.sql.Timestamp;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.api.crud.models.CupoModel;
-import com.api.crud.models.CupoOfflineModel;
+import com.api.crud.repositories.ICupoRepository;
 
 
 @Service
 public class CupoService {
     
-    // @Autowired
-    // private CupoRepository cupoRepository;
-    
-    // @Autowired
-    // private CupoOfflineRepository cupoOfflineRepository;
+    @Autowired
+    private ICupoRepository cupoRepository;
 
-    // public boolean reserveCupo(Long userId) {
-    //     int availableSpots = cupoRepository.countByStatus("available");
-    //     if (availableSpots > 0) {
-    //         Cupo cupo = new Cupo();
-    //         cupo.setStatus("reserved");
-    //         cupo.setUserId(userId);
-    //         cupo.setReservedAt(new Timestamp(System.currentTimeMillis()));
-    //         cupoRepository.save(cupo);
-    //         return true;
-    //     }
-    //     return false;
-    // }
+    public CupoModel reservarCupo(CupoModel cupo) {
+        return cupoRepository.save(cupo);
+    }
 
     // public boolean occupyCupo(Long cupoId) {
     //     Optional<Cupo> reservedCupo = cupoRepository.findByIdAndStatus(cupoId, "reserved");

@@ -1,28 +1,40 @@
 package com.api.crud.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.api.crud.DTO.*;
+import com.api.crud.DTO.Request.ReservarCupoRequest;
+import com.api.crud.models.CupoModel;
 import com.api.crud.services.CupoService;
+import com.api.crud.services.ManejarFechas;
+
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/cupos")
+@RequestMapping("")
 public class CupoController {
     
     @Autowired
     private CupoService cupoService;
-
-    // @PostMapping("/reserve")
-    // public ResponseEntity<?> reserveCupo(@RequestBody ReserveCupoRequest request) {
-    //     boolean isReserved = cupoService.reserveCupo(request.getUserId());
-    //     if (isReserved) {
-    //         return ResponseEntity.ok("Cupo reservado con éxito.");
-    //     } else {
-    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No hay cupos disponibles.");
-    //     }
-    // }
+    
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PostMapping("/reservarCupo")
+    public Map<String,Object> reserveCupo(@RequestBody ReservarCupoRequest cupo) {
+        CupoModel cupoNuevo = new CupoModel();
+        cupoNuevo.setUsuario_fk(cupo.getUsuario_fk());
+        cupoNuevo.setVehiculo_fk(cupo.getVehiculo_fk());
+        cupoNuevo.setParqueadero_fk(cupo.getParqueadero_fk());
+        cupoNuevo.setHora_llegada(cupo.getHora_llegada());
+        cupoNuevo.setHoras_pedidas(cupo.getHoras_pedidas());
+        cupoNuevo.setFecha_creacion(ManejarFechas.obtenerFechaActual());
+        cupoNuevo.setPagado(true);
+        cupoService.reservarCupo(cupoNuevo);
+        return Map.of("data", cupoNuevo, "msg", "cupo agregado");
+    }
 
     // @PostMapping("/occupy")
     // public ResponseEntity<?> occupyCupo(@RequestBody OccupyCupoRequest request) {
