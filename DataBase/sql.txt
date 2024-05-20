@@ -101,6 +101,7 @@ CREATE TABLE Cupo (
     Hora_llegada DATE,
     Hora_salida DATE,
     horas_pedidas INT,
+    Estado VARCHAR(25),
     Fecha_creacion DATE DEFAULT (CURRENT_DATE),
     FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id),
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
@@ -128,4 +129,32 @@ CREATE TABLE Tarifa (
     Fecha_creacion DATE DEFAULT (CURRENT_DATE),
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
+);
+
+CREATE TABLE Factura(
+    Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Valor_pagado DECIMAL(15, 2),
+    Cupo_fk BIGINT UNSIGNED,
+    Vehiculo_fk BIGINT UNSIGNED,
+    Parqueadero_fk BIGINT UNSIGNED,
+    Usuario_fk BIGINT UNSIGNED,
+    Tarjeta_credito_fk BIGINT UNSIGNED,
+    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
+    FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
+    FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id),
+    FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id),
+    FOREIGN KEY (Tarjeta_credito_fk) REFERENCES Tarjeta_credito(Id),
+    FOREIGN KEY (Cupo_fk) REFERENCES Cupo(Id)
+);
+
+CREATE TABLE Factura_offline(
+    Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Valor_pagado DECIMAL(15, 2),
+    Cupo_offline_fk BIGINT UNSIGNED,
+    Vehiculo_fk BIGINT UNSIGNED,
+    Parqueadero_fk BIGINT UNSIGNED,
+    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
+    FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
+    FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id),
+    FOREIGN KEY (Cupo_offline_fk) REFERENCES Cupo_offline(Id)
 );
