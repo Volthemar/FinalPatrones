@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.api.crud.models.Cupo;
-import com.api.crud.models.CupoOffline;
+import com.api.crud.models.CupoModel;
+import com.api.crud.models.CupoOfflineModel;
 
 
 @Service
