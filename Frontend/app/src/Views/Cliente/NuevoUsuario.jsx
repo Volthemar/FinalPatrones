@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './NuevoUsuario.css';
 import Persona from '../../assets/Persona.svg';
 import { Map, Marker } from "pigeon-maps";
@@ -7,11 +7,13 @@ import Historial from '../../Components/Historial/Historial';
 
 function NuevoUsuario() {
   const [hue, setHue] = useState(0);
-  const color = `hsl(${hue % 350}deg, 100%, 50%)`;
   const [isParqueaderoOpen, setParqueaderoOpen] = useState(false);
-  const [NombreParqueadero, setNombreParqueadero] = useState('');
+  const [selectedParqueadero, setSelectedParqueadero] = useState({});
   const [selectedCity, setSelectedCity] = useState('');
   const [mapKey, setMapKey] = useState(0); // Estado para forzar la recarga del mapa
+  const [cities, setCities] = useState([]);
+  const [cityCoordinates, setCityCoordinates] = useState({});
+  const [parqueaderos, setParqueaderos] = useState([]);
   const nombre = localStorage.getItem('userName');
 
   const userData = {
@@ -20,39 +22,108 @@ function NuevoUsuario() {
     paymentNumber: "310 5544 391"
   };
 
-  const cityCoordinates = {
-    bogota: [4.7110, -74.0721],
-    medellin: [6.2442, -75.5812],
-    cali: [3.4516, -76.5320]
+  useEffect(() => {
+    // Fetch city data
+    const fetchCities = async () => {
+      try {
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow"
+        };
+
+        const response = await fetch("http://localhost:3241/obenerCiudades", requestOptions);
+        const result = await response.json();
+        setCities(result.data);
+        
+        // Set city coordinates for use in the map
+        const coordinates = {};
+        result.data.forEach(city => {
+          coordinates[city.nombre.toLowerCase()] = [city.latitud, city.longitud];
+        });
+        setCityCoordinates(coordinates);
+      } catch (error) {
+        console.error('Error fetching cities:', error);
+      }
+    };
+
+    fetchCities();
+  }, []);
+
+  const fetchParqueaderos = async (cityId) => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify({
+        "ciudad_fk": cityId
+      });
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+      };
+
+      const response = await fetch("http://localhost:3241/parqueaderoCiudad", requestOptions);
+      const result = await response.json();
+
+      // Map the colors
+      const mappedParqueaderos = result.data.map(parqueadero => {
+        return {
+          ...parqueadero,
+          color: mapColor(parqueadero.color)
+        };
+      });
+
+      setParqueaderos(mappedParqueaderos);
+    } catch (error) {
+      console.error('Error fetching parqueaderos:', error);
+    }
+  };
+
+  const mapColor = (color) => {
+    switch (color) {
+      case 'NEGRO':
+        return `hsl(120deg, 100%, 50%)`;
+      case 'VERDE':
+        return 'hsl(120deg, 100%, 50%)'; // Green
+      case 'AMARILLO':
+        return 'hsl(60deg, 100%, 50%)'; // Yellow
+      default:
+        return 'hsl(0deg, 0%, 50%)'; // Default to gray
+    }
   };
 
   const handleCityChange = (e) => {
-    setSelectedCity(e.target.value);
+    const selectedCityName = e.target.value;
+    setSelectedCity(selectedCityName);
     setMapKey(prevKey => prevKey + 1); // Cambiar la clave del mapa para forzar la recarga
+
+    // Fetch parqueaderos for the selected city
+    const selectedCity = cities.find(city => city.nombre.toLowerCase() === selectedCityName.toLowerCase());
+    if (selectedCity) {
+      fetchParqueaderos(selectedCity.id);
+    }
   };
 
-  const parqueaderos = {
-    "parqueadero1": {
-      "nombre": "Cuatro Parques",
-      "altitud": 4.7110,
-      "latitud": -74.0721
-    },
-    "parqueadero2": {
-      "nombre": "Tres Parques",
-      "altitud": 6.2442,
-      "latitud": -75.5812
-    },
-    "parqueadero3": {
-      "nombre": "Tres Parques",
-      "altitud": 3.4516,
-      "latitud": -76.5320
-    }
+  const handleMarkerClick = (parqueadero) => {
+    setSelectedParqueadero(parqueadero);
+    setParqueaderoOpen(true);
   };
 
   return (
     <div className="card-user">
       <div className='container'>
-        <Parqueadero isOpen={isParqueaderoOpen} onClose={() => setParqueaderoOpen(false)} name={NombreParqueadero} />
+        <Parqueadero 
+          isOpen={isParqueaderoOpen} 
+          onClose={() => setParqueaderoOpen(false)} 
+          name={selectedParqueadero.nombre} 
+          cupoCarro={selectedParqueadero.cupo_disponible_carro}
+          cupoMoto={selectedParqueadero.cupo_disponible_moto}
+          cupoBici={selectedParqueadero.cupo_disponible_bici}
+          tipo={selectedParqueadero.tipo}
+        />
         <header>
           <div className='imagen'>
             <img src={Persona} alt="Perfil" className='imagen-usuario' />
@@ -71,36 +142,36 @@ function NuevoUsuario() {
           </div>
         </header>
 
-        <Historial />
+        
         <div className='contenedor-mapa'>
           <div className='city-select'>
             <label htmlFor="city">Selecciona una ciudad:</label>
             <select id="city" value={selectedCity} onChange={handleCityChange}>
               <option value="">Seleccione una ciudad</option>
-              <option value="bogota">Bogotá</option>
-              <option value="medellin">Medellín</option>
-              <option value="cali">Cali</option>
+              {cities.map((city) => (
+                <option key={city.id} value={city.nombre.toLowerCase()}>
+                  {city.nombre}
+                </option>
+              ))}
             </select>
           </div>
-          {selectedCity && (
+          {selectedCity && cityCoordinates[selectedCity] && (
             <div className='mapa'>
               <Map key={mapKey} defaultCenter={cityCoordinates[selectedCity]} defaultZoom={18} minHeight={300}>
-                {Object.keys(parqueaderos).map(key => (
+                {parqueaderos.map(parqueadero => (
                   <Marker
-                    key={key}
+                    key={parqueadero.id}
                     width={50}
-                    anchor={[parqueaderos[key].altitud, parqueaderos[key].latitud]}
-                    color={color}
-                    onClick={() => {
-                      setParqueaderoOpen(true);
-                      setNombreParqueadero(parqueaderos[key].nombre);
-                    }}
+                    anchor={[parqueadero.latitud, parqueadero.longitud]}
+                    color={parqueadero.color}
+                    onClick={() => handleMarkerClick(parqueadero)}
                   />
                 ))}
               </Map>
             </div>
           )}
         </div>
+        <Historial />
       </div>
     </div>
   );

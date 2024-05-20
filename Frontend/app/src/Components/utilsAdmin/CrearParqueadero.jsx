@@ -1,48 +1,80 @@
-import React, { useState } from 'react';
-import './ciudad.css'
+import React, { useState, useEffect } from 'react';
+import './CrearParqueadero.css';
 import Sidebar from '../Sidebar/Sidebar';
-const Ciudad = () => {
+
+const CrearParqueadero = () => {
     const [parkingType, setParkingType] = useState('');
+    const [nombreParqueadero, setnombreParqueadero] = useState('');
     const [numCars, setNumCars] = useState('');
     const [numMotorcycles, setNumMotorcycles] = useState('');
     const [numBicycles, setNumBicycles] = useState('');
     const [altitude, setAltitude] = useState('');
     const [latitude, setLatitude] = useState('');
     const [city, setCity] = useState('');
+    const [cities, setCities] = useState([]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const data = {
-            parkingType,
-            numCars,
-            numMotorcycles,
-            numBicycles,
-            altitude,
-            latitude,
-            city
+    useEffect(() => {
+        const fetchCities = async () => {
+            try {
+                const requestOptions = {
+                    method: "GET",
+                    redirect: "follow"
+                };
+
+                const response = await fetch("http://localhost:3241/obenerCiudades", requestOptions);
+                const result = await response.json();
+                setCities(result.data);
+            } catch (error) {
+                console.error('Error fetching cities:', error);
+            }
         };
 
-        fetch('https://your-server-endpoint.com/api/parking', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => response.json())
-            .then(result => {
-                console.log('Success:', result);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        fetchCities();
+    }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const selectedCity = cities.find(c => c.nombre === city);
+        if (!selectedCity) {
+            alert('Please select a valid city');
+            return;
+        }
+
+        const data = {
+            nombre: nombreParqueadero,
+            ciudad_fk: selectedCity.id,
+            cupo_carro_total: parseInt(numCars, 10),
+            cupo_moto_total: parseInt(numMotorcycles, 10),
+            cupo_bici_total: parseInt(numBicycles, 10),
+            tipo_fk: parkingType === 'cubierto' ? 1 : parkingType === 'descubierto' ? 2 : parkingType === 'con_suscripcion' ? 3 : 4,
+            longitud: parseFloat(altitude),
+            latitud: parseFloat(latitude)
+        };
+
+        try {
+            const requestOptions = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data),
+                redirect: "follow"
+            };
+
+            const response = await fetch("http://localhost:3241/guardarParqueadero", requestOptions);
+            const result = await response.json();
+            console.log('Response from server:', result);
+            // Handle success, maybe reset form or show a message
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }
     };
 
     return (
         <div>
-            <Sidebar></Sidebar>
+            <Sidebar />
             <div className="card2">
-
                 <form className='form-ciudades' onSubmit={handleSubmit}>
                     <div className='div-select-ciudades'>
                         <label>Tipo Parqueadero</label>
@@ -58,14 +90,21 @@ const Ciudad = () => {
                         </select>
                     </div>
                     <div className='div-input-ciudades'>
-                        <label>N CARROS</label>
+                        <label>Nombre del parqueadero</label>
+                        <input className='input-ciudades'
+                            type="text"
+                            value={nombreParqueadero}
+                            onChange={(e) => setnombreParqueadero(e.target.value)}
+                        /></div>
+                    <div className='div-input-ciudades'>
+                        <label>Disponibilidad de carros</label>
                         <input className='input-ciudades'
                             type="number"
                             value={numCars}
                             onChange={(e) => setNumCars(e.target.value)}
                         /></div>
                     <div className='div-input-ciudades'>
-                        <label>N MOTOS</label>
+                        <label>Disponibilidad Motos</label>
                         <input className='input-ciudades'
                             type="number"
                             value={numMotorcycles}
@@ -73,7 +112,7 @@ const Ciudad = () => {
                         />
                     </div>
                     <div className='div-input-ciudades'>
-                        <label>N BICICLETAS</label>
+                        <label>Disponibilidad Bicicletas</label>
                         <input className='input-ciudades'
                             type="number"
                             value={numBicycles}
@@ -96,20 +135,26 @@ const Ciudad = () => {
                             onChange={(e) => setLatitude(e.target.value)}
                         />
                     </div>
-                    <div className='div-input-ciudades'>
+
+                    <div className='div-select-ciudades'>
                         <label>Ciudad</label>
-                        <input className='input-ciudades'
-                            type="text"
+                        <select className='select-ciudades'
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
-                        />
+                        >
+                            <option value="">Seleccione una ciudad</option>
+                            {cities.map((city) => (
+                                <option key={city.id} value={city.nombre}>
+                                    {city.nombre}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <button className='button-ciudades' type="submit">Enviar</button>
                 </form>
             </div>
         </div>
-
     );
 };
 
-export default Ciudad;
+export default CrearParqueadero;
