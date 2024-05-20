@@ -85,11 +85,11 @@ function NuevoUsuario() {
   const mapColor = (color) => {
     switch (color) {
       case 'NEGRO':
-        return `hsl(120deg, 100%, 50%)`;
+        return `hsl(48, 100%, 0%, 1)`;
       case 'VERDE':
-        return 'hsl(120deg, 100%, 50%)'; // Green
+        return 'hsl(86, 100%, 43%, 1'; // Green
       case 'AMARILLO':
-        return 'hsl(60deg, 100%, 50%)'; // Yellow
+        return 'hsl(48, 100%, 48%, 1)'; // Yellow
       default:
         return 'hsl(0deg, 0%, 50%)'; // Default to gray
     }
@@ -157,7 +157,7 @@ function NuevoUsuario() {
           </div>
           {selectedCity && cityCoordinates[selectedCity] && (
             <div className='mapa'>
-              <Map key={mapKey} defaultCenter={cityCoordinates[selectedCity]} defaultZoom={18} minHeight={300}>
+              <Map key={mapKey} defaultCenter={cityCoordinates[selectedCity]} defaultZoom={10} minHeight={300}>
                 {parqueaderos.map(parqueadero => (
                   <Marker
                     key={parqueadero.id}

@@ -34,8 +34,8 @@ export default function TarjetaCredito({ isOpen }) {
             !/^\d{16}$/.test(number.replace(/\s/g, '')) ||
             name.trim() === '' ||
             !/^\d{2}\/\d{4}$/.test(expiry) ||
-            cvc.length !== 4 ||
-            !/^\d{4}$/.test(cvc)
+            cvc.length !== 3 ||
+            !/^\d{3}$/.test(cvc)
         ) {
             alert('Datos erróneos, por favor verificar.');
             return false;
@@ -48,14 +48,16 @@ export default function TarjetaCredito({ isOpen }) {
         if (!validateData()) return;
 
         const { number, name, expiry, cvc } = cardInfo;
-        const formattedExpiry = `20${expiry.split('/')[1]}-${expiry.split('/')[0]}-01`;
+        const [month, year] = expiry.split('/');
+        const formattedExpiry = `${year}-${month}-01`;
+        const usuario = localStorage.getItem('userId'); // Make sure 'userId' is stored in localStorage
 
         const data = {
             numero: number,
             nombre_propietario: name,
             cvc: cvc,
             fecha_vencimiento: formattedExpiry,
-            usuario: 1 // This should be replaced with the actual user ID
+            usuario: usuario // This should be the actual user ID from localStorage
         };
 
         try {
@@ -108,7 +110,7 @@ export default function TarjetaCredito({ isOpen }) {
                                 <div className="rccs__stripe"></div>
                                 <div className="rccs__signature">
                                     <div className="rccs__cvc-text">CVC</div>
-                                    <div className="rccs__cvc">{cardInfo.cvc.padEnd(4, '•')}</div>
+                                    <div className="rccs__cvc">{cardInfo.cvc.padEnd(3, '•')}</div>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +152,7 @@ export default function TarjetaCredito({ isOpen }) {
                             placeholder="CVC"
                             value={cardInfo.cvc}
                             onChange={handleChange}
-                            maxLength={4}
+                            maxLength={3}
                         />
                     </form>
                     <button onClick={handleSubmit}>Validar</button>
