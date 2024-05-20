@@ -21,8 +21,8 @@ function App() {
         <Route path="/gerente" element={<Gerente />} />
         <Route path="/tarjeta" element={<TarjetaCredito />} />
         <Route path="/codigo" element={<Codigo />} />
-        <Route path="/admin/CrearParqueadero" element={<CrearParqueadero />} />        
-        <Route path="/admin/CrearCiudad" element={<CrearCiudad />} />
+        <Route path="/gerente/CrearParqueadero" element={<CrearParqueadero />} />        
+        <Route path="/gerente/CrearCiudad" element={<CrearCiudad />} />
       </Routes>
     </Router>
   );
