@@ -33,16 +33,23 @@ CREATE TABLE Tarjeta_credito (
 CREATE TABLE Tipo_usuario (
     Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Tipo VARCHAR(30) NOT NULL,
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
+    Fecha_creacion DATE DEFAULT (CURRENT_DATE)
+);
+
+CREATE TABLE Tipo_usuario_usuario (
+    Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Tipo_usuario_fk BIGINT UNSIGNED,
     Usuario_fk BIGINT UNSIGNED,
+    FOREIGN KEY (Tipo_usuario_fk) REFERENCES Tipo_usuario(Id),
     FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id)
 );
+
 
 -- Creación de la tabla Ip
 CREATE TABLE Ip (
     Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Direccion_ip VARCHAR(50) NOT NULL,
-    Usuario_fk BIGINT ,
+    Usuario_fk BIGINT UNSIGNED,
     Fecha_creacion DATE NOT NULL DEFAULT (CURRENT_DATE),
     FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id)
 );
