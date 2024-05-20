@@ -2,9 +2,9 @@ package com.api.crud.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.crud.DTO.ParqueaderoBasicoResponse;
-import com.api.crud.DTO.ParqueaderoRequest;
-import com.api.crud.DTO.ParqueaderoResponse;
+import com.api.crud.DTO.Request.ParqueaderoRequest;
+import com.api.crud.DTO.Response.ParqueaderoBasicoResponse;
+import com.api.crud.DTO.Response.ParqueaderoResponse;
 import com.api.crud.models.ParqueaderoModel;
 import com.api.crud.services.ManejarFechas;
 import com.api.crud.services.ParqueaderoService;

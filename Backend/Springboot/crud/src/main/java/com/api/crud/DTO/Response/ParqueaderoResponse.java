@@ -1,4 +1,4 @@
-package com.api.crud.DTO;
+package com.api.crud.DTO.Response;
 
 public class ParqueaderoResponse {
     private long id;

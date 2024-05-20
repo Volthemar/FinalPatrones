@@ -3,7 +3,7 @@ package com.api.crud.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.api.crud.DTO.IpCaptureRequest;
+import com.api.crud.DTO.Request.IpCaptureRequest;
 import com.api.crud.services.IpService;
 
 // import javax.servlet.http.HttpServletRequest;
