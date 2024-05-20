@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.Date;
 
-import com.api.crud.DTO.IpCaptureRequest;
+import com.api.crud.DTO.Request.IpCaptureRequest;
 import com.api.crud.models.Ip;
 import com.api.crud.repositories.IpRepository;
 

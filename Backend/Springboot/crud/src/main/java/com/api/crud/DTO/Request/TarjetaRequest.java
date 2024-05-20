@@ -1,4 +1,4 @@
-package com.api.crud.DTO;
+package com.api.crud.DTO.Request;
 import java.util.Date;
 
 public class TarjetaRequest {

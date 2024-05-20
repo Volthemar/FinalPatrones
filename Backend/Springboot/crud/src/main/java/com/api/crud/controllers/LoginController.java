@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.crud.DTO.LoginRequest;
+import com.api.crud.DTO.Request.LoginRequest;
 import com.api.crud.models.UsuarioModel;
 import com.api.crud.services.IEmailService;
 import com.api.crud.services.UsuarioService;

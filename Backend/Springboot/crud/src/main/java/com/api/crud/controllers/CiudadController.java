@@ -5,10 +5,15 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.api.crud.DTO.Request.CiudadRequest;
+import com.api.crud.models.CiudadModel;
 import com.api.crud.services.CiudadService;
+import com.api.crud.services.ManejarFechas;
 
 @RestController
 @RequestMapping("")
@@ -21,4 +26,17 @@ public class CiudadController {
     public Map<String,Object> obenerCiudades(){
         return Map.of("data", ciudadService.obtenerCiudades(), "msg", "Ciudades");
     }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PostMapping("/crearCiudad")
+    public Map<String,Object> crearCiudad(@RequestBody CiudadRequest ciudad){
+        CiudadModel ciudadNueva = new CiudadModel();
+        ciudadNueva.setFecha_creacion(ManejarFechas.obtenerFechaActual());
+        ciudadNueva.setLatitud(ciudad.getLatitud());
+        ciudadNueva.setLongitud(ciudad.getLongitud());
+        ciudadNueva.setNombre(ciudad.getNombre());
+        return Map.of("data", ciudadService.guardarCiudad(ciudadNueva), "msg", "Ciudades");
+    }
+
+
 }
