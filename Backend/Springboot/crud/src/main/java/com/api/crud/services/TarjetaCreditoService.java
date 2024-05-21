@@ -10,14 +10,14 @@ import com.api.crud.repositories.ITarjetaCreditoRepository;
 
 @Service
 public class TarjetaCreditoService {
-    @Autowired 
+    @Autowired
     ITarjetaCreditoRepository tarjetaCreditoRepository;
 
-    public TarjetaCreditoModel guardarTarjetaCredito(TarjetaCreditoModel tarjeta){
+    public TarjetaCreditoModel guardarTarjetaCredito(TarjetaCreditoModel tarjeta) {
         return tarjetaCreditoRepository.save(tarjeta);
     }
 
-    public Vector<TarjetaCreditoModel> obtenerTarjetas(Long usuario){
+    public Vector<TarjetaCreditoModel> obtenerTarjetas(Long usuario) {
         return tarjetaCreditoRepository.findByUsuario(usuario);
     }
 
