@@ -8,6 +8,8 @@ import Codigo from '../Components/Codigo/Codigo';
 import TarjetaCredito from './Registro/TarjetaCredito';
 import Ciudad from './utilsAdmin/ciudad';
 
+import Impacto from '../Components/Impacto/Impacto.jsx'
+
 function App() {
   return (
     <Router>
@@ -16,7 +18,8 @@ function App() {
         <Route path="/user/:userId" element={<Cliente />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/admin" element={<Gerente />} />
-        <Route path="/gerente" element={<Gerente />} />
+        <Route path="/gerente" element={<Gerente />}/>
+        <Route path="gerente/Impacto" element={<Impacto/>}/>
         <Route path="/tarjeta" element={<TarjetaCredito />} />
         <Route path="/codigo" element={<Codigo />} />
         <Route path="/admin/ciudad" element={<Ciudad />} />
