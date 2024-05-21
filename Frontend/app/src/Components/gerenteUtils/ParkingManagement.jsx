@@ -85,6 +85,7 @@ const ParkingManagement = () => {
           <p>Loading...</p>
         )}
       </div>
+      <p>{parkingData}</p>
     </div>
   );
 };
