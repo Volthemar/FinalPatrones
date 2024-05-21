@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import './TarjetaCredito.css';
-import { Link, useHistory } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 export default function TarjetaCredito({ isOpen }) {
-    const history = useHistory();
-
     if (!isOpen) return null;
 
     const [cardInfo, setCardInfo] = useState({
@@ -77,7 +74,6 @@ export default function TarjetaCredito({ isOpen }) {
             const result = await response.json();
             console.log('Response from server:', result);
             // Handle success, maybe reset form or show a message
-            history.push('/login'); // Redirect to login page on success
         } catch (error) {
             console.error('Error submitting data:', error);
         }
