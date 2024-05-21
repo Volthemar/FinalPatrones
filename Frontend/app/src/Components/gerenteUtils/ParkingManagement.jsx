@@ -33,7 +33,7 @@ const ParkingManagement = () => {
 
   return (
     <div className="parking-management-container">
-        <Sidebar></Sidebar>
+        <Sidebar vista = {'Administrador'}></Sidebar>
       <h1 id="title-parkingManagement">Administración de cupos</h1>
       <div className="buttons-parkingManagement">
         <button
