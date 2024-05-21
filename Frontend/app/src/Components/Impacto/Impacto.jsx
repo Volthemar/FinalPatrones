@@ -69,27 +69,7 @@ function Impacto() {
     <>
       <Sidebar vista={'Gerente'}></Sidebar>
       <div id="contenidoImpacto">
-        <div id='seleccionar'>
-          <h2>Estadísticas de uso</h2>
-          <label htmlFor="ciudades">Seleccione una ciudad:</label>
-          {datosCiudades && (
-            <select id="ciudades" name="ciudades" value={ciudadSeleccionada} onChange={handleChange}>
-              {datosCiudades.data.map(ciudad => (
-                <option key={ciudad.id} value={ciudad.id}>{ciudad.nombre}</option>
-              ))}
-            </select>
-          )}
-          {visibilidadSegundoSelect && (
-            <>
-              <label htmlFor="parqueaderos">Seleccione un parqueadero:</label>
-              <select id="parqueaderos" name="parqueaderos" onChange={handleChangeParking}>
-              {datosParqueaderos.data.map(parqueadero => (
-                <option key={parqueadero.id} value={parqueadero.id}>{parqueadero.nombre}</option>
-              ))}
-              </select>
-            </>
-          )}
-        </div>
+        
         <Chart></Chart>
       </div>
     </>

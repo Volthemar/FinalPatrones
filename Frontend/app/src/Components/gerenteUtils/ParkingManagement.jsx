@@ -52,7 +52,6 @@ const ParkingManagement = () => {
           Ver Cupos Reservados
         </button>
         <button className="button-parkingManagement blue-parkingManagement">Reservar cupo</button>
-        <button className="button-parkingManagement yellow-parkingManagement">Vista General del Parqueadero</button>
       </div>
       
       <div className="data-container-parkingManagement">
@@ -63,7 +62,7 @@ const ParkingManagement = () => {
               <thead>
                 <tr>
                   <th>Vehículo </th>
-                  <th>{disponible ? 'Cupos Utilizados' : 'Cupos Totales'}</th>
+                  <th>{disponible ? 'Cupos Disponibles' : 'Cupos Totales'}</th>
                 </tr>
               </thead>
               <tbody>

@@ -96,8 +96,6 @@ const CrearParqueadero = () => {
                             <option value="">Seleccione una opción</option>
                             <option value="cubierto">Cubierto</option>
                             <option value="descubierto">Descubierto</option>
-                            <option value="con_suscripcion">Con suscripción</option>
-                            <option value="sin_suscripcion">Sin suscripción</option>
                         </select>
                     </div>
                     <div className='div-input-ciudades'>

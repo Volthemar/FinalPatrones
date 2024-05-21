@@ -54,6 +54,7 @@ function LoginDiv() {
       .then(data => {
         if (data && data.data) {
           const id = data.data.id;
+          
           setUserId(id);
           console.log(id);
           localStorage.setItem('userId', id);
@@ -95,8 +96,10 @@ function LoginDiv() {
         .then(data => {
           if (data && data.data) {
             const userId = data.data.id;
+            const name = data.data.nombre;
+            localStorage.setItem('userName', name);
             const userType = data.data.tipo;
-            let redirectUrl = URL_USER + '/' ;
+            let redirectUrl = URL_USER + '/' + '1';
 
             // Prioridad para los tipos 2 y 3
             let foundType = false;
