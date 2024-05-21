@@ -45,8 +45,8 @@ function Sidebar({vista, handleClick}) {
         <div id='botones'>
             {vista === 'Gerente' && (
                 <>
-                    <SidebarButton URL_BTN='/Impacto' nombre='Impacto' URL_IMG={URL_IMPACTO}></SidebarButton>
-                    <SidebarButton URL_BTN='/verComo' nombre='Ver como' URL_IMG={URL_VER_COMO}></SidebarButton>
+                    <SidebarButton URL_BTN='/Gerente' nombre='Impacto' URL_IMG={URL_IMPACTO}></SidebarButton>
+                    <SidebarButton URL_BTN='/user/1' nombre='Ver como' URL_IMG={URL_VER_COMO}></SidebarButton>
                     <SidebarButton URL_BTN='/Cuentas' nombre='Cuentas' URL_IMG={URL_CUENTAS}></SidebarButton>
                     <SidebarButton URL_BTN='/Modificaciones' nombre='Modificaciones' URL_IMG={URL_MODIFICACIONES}></SidebarButton>
                     <SidebarButton URL_BTN='/Trazabilidad' nombre='Trazabilidad' URL_IMG={URL_TRAZABILIDAD}></SidebarButton>
