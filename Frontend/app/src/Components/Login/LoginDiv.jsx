@@ -101,7 +101,7 @@ function LoginDiv() {
           if (data && data.data) {
             const id = data.id;      // Guardar el id
             const nombre = data.data.nombre;
-
+            
             localStorage.setItem('userName', nombre);
             irAOtraRuta(); // Redireccionar al usuario, modificar según tu necesidad
           }
