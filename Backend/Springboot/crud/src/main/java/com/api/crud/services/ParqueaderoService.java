@@ -14,15 +14,19 @@ public class ParqueaderoService {
     @Autowired
     IParqueaderoRepository parqueaderoRepository;
 
-    public Vector<ParqueaderoModel> obtenerParqueaderoCiudad(Long ciudad){
+    public Vector<ParqueaderoModel> obtenerParqueaderoCiudad(Long ciudad) {
         return parqueaderoRepository.findByCiudad(ciudad);
     }
 
-    public Optional<ParqueaderoModel> obtenerParqueadero(Long parqueadero){
+    public Optional<ParqueaderoModel> obtenerParqueadero(Long parqueadero) {
         return parqueaderoRepository.findById(parqueadero);
     }
 
-    public ParqueaderoModel guardarParqueadero(ParqueaderoModel parqueadero){
+    public ParqueaderoModel guardarParqueadero(ParqueaderoModel parqueadero) {
         return parqueaderoRepository.save(parqueadero);
+    }
+
+    public Optional<ParqueaderoModel> obtenerParqueaderoPorUsuario(long usuario_FK) {
+        return parqueaderoRepository.findByUsuario_FK(usuario_FK);
     }
 }

@@ -250,4 +250,5 @@ public class ParqueaderoModel {
     public void setUsuario_fk(long usuario_fk) {
         this.usuario_fk = usuario_fk;
     }
+
 }

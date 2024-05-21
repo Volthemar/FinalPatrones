@@ -13,7 +13,10 @@ import java.util.Optional;
 import java.util.Map;
 import java.util.Vector;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,10 +32,10 @@ public class ParqueaderoController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/parqueaderoCiudad")
-    public Map<String,Object> parqueaderoCiudad(@RequestBody ParqueaderoRequest ciudad){
+    public Map<String, Object> parqueaderoCiudad(@RequestBody ParqueaderoRequest ciudad) {
         Vector<ParqueaderoModel> parquedaeros = parqueaderoService.obtenerParqueaderoCiudad(ciudad.getCiudad_fk());
         Vector<ParqueaderoResponse> parqueaderos_disponibles = new Vector<>();
-        for(int i=0;i<parquedaeros.size();i++){
+        for (int i = 0; i < parquedaeros.size(); i++) {
             ParqueaderoResponse parqueadero_parcial = new ParqueaderoResponse();
             parqueadero_parcial.setId(parquedaeros.get(i).getId());
             parqueadero_parcial.setNombre(parquedaeros.get(i).getNombre());
@@ -47,20 +50,20 @@ public class ParqueaderoController {
             int utilizado_bici = parquedaeros.get(i).getCupo_uti_bici();
             int utilizado_moto = parquedaeros.get(i).getCupo_uti_moto();
 
-            parqueadero_parcial.setCupo_disponible_carro(total_carro-utilizado_carro);
-            parqueadero_parcial.setCupo_disponible_bici(total_bici-utilizado_bici);
-            parqueadero_parcial.setCupo_disponible_moto(total_moto-utilizado_moto);
+            parqueadero_parcial.setCupo_disponible_carro(total_carro - utilizado_carro);
+            parqueadero_parcial.setCupo_disponible_bici(total_bici - utilizado_bici);
+            parqueadero_parcial.setCupo_disponible_moto(total_moto - utilizado_moto);
 
-            int disponibilidad_total = total_carro+total_bici+total_moto;
-            int utilizado_total = utilizado_carro+utilizado_bici+utilizado_moto;
+            int disponibilidad_total = total_carro + total_bici + total_moto;
+            int utilizado_total = utilizado_carro + utilizado_bici + utilizado_moto;
 
-            double porcentaje_ocupado = ((double) utilizado_total / (double) (disponibilidad_total ));
+            double porcentaje_ocupado = ((double) utilizado_total / (double) (disponibilidad_total));
 
-            if (porcentaje_ocupado >= 0 && porcentaje_ocupado < 0.6){
+            if (porcentaje_ocupado >= 0 && porcentaje_ocupado < 0.6) {
                 parqueadero_parcial.setColor("VERDE");
-            }else if(porcentaje_ocupado >= 0.6 && porcentaje_ocupado < 1){
+            } else if (porcentaje_ocupado >= 0.6 && porcentaje_ocupado < 1) {
                 parqueadero_parcial.setColor("AMARILLO");
-            }else if(porcentaje_ocupado == 1){
+            } else if (porcentaje_ocupado == 1) {
                 parqueadero_parcial.setColor("NEGRO");
             }
 
@@ -68,16 +71,16 @@ public class ParqueaderoController {
 
             parqueaderos_disponibles.add(parqueadero_parcial);
         }
-        
+
         return Map.of("data", parqueaderos_disponibles, "msg", "Parqueaderos");
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/parqueaderoCiudadBasico")
-    public Map<String,Object> parqueaderoCiudadBasico(@RequestBody ParqueaderoRequest ciudad){
+    public Map<String, Object> parqueaderoCiudadBasico(@RequestBody ParqueaderoRequest ciudad) {
         Vector<ParqueaderoModel> parquedaeros = parqueaderoService.obtenerParqueaderoCiudad(ciudad.getCiudad_fk());
         Vector<ParqueaderoBasicoResponse> parqueaderos_disponibles = new Vector<>();
-        for(int i=0;i<parquedaeros.size();i++){
+        for (int i = 0; i < parquedaeros.size(); i++) {
             ParqueaderoBasicoResponse parqueadero_parcial = new ParqueaderoBasicoResponse();
             parqueadero_parcial.setId(parquedaeros.get(i).getId());
             parqueadero_parcial.setNombre(parquedaeros.get(i).getNombre());
@@ -88,14 +91,15 @@ public class ParqueaderoController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/obtenerParqueadero")
-    public Map<String,Object> obtenerParqueadero(@RequestBody ParqueaderoRequest parqueadero){
-        Optional<ParqueaderoModel> parquedaeros = parqueaderoService.obtenerParqueadero(parqueadero.getParqueadero_id());
+    public Map<String, Object> obtenerParqueadero(@RequestBody ParqueaderoRequest parqueadero) {
+        Optional<ParqueaderoModel> parquedaeros = parqueaderoService
+                .obtenerParqueadero(parqueadero.getParqueadero_id());
         return Map.of("data", parquedaeros.get(), "msg", "Parqueaderos");
     }
-    
+
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/guardarParqueadero")
-    public Map<String,Object> guardarParqueadero(@RequestBody ParqueaderoRequest parqueadero){
+    public Map<String, Object> guardarParqueadero(@RequestBody ParqueaderoRequest parqueadero) {
         ParqueaderoModel parqueaderoGuardado = new ParqueaderoModel();
         parqueaderoGuardado.setNombre(parqueadero.getNombre());
         parqueaderoGuardado.setCupo_bici_total(parqueadero.getCupo_bici_total());
@@ -111,6 +115,16 @@ public class ParqueaderoController {
         parqueaderoGuardado.setFecha_creacion(ManejarFechas.obtenerFechaActual());
         parqueaderoService.guardarParqueadero(parqueaderoGuardado);
         return Map.of("data", parqueaderoGuardado, "msg", "Parqueaderos");
+    }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<ParqueaderoModel> getParqueaderoByUsuarioId(@PathVariable("usuarioId") long usuarioId) {
+        Optional<ParqueaderoModel> parqueadero = parqueaderoService.obtenerParqueaderoPorUsuario(usuarioId);
+        if (parqueadero.isPresent()) {
+            return ResponseEntity.ok(parqueadero.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
