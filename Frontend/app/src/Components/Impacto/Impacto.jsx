@@ -5,12 +5,13 @@ import Chart from '../gerenteUtils/Chart';
 function Impacto() {
 
   /*
-  Ya quedo el consumo de ciudades y de parqueaderos por ciudad, El endpoint de un parqueadero
+  Ya quedó el consumo de ciudades y de parqueaderos por ciudad, El endpoint de un parqueadero
   específico parece no estar funcionando ni se ha definido cuales son los datos a proporcionar
   para generar las graficas por tanto hace falta 
 
   1. consumir los datos del parqueadero específico y generar las graficas.
   */
+
   const URL_CIUDADES = "http://localhost:3241/obtenerCiudades"
   const URL_PARQUEADEROS = "http://localhost:3241/parqueaderoCiudadBasico"
   const [datosCiudades, setDatosCiudades] = useState(null);
