@@ -1,11 +1,11 @@
 package com.api.crud.DTO.Request;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class ReservarCupoRequest {
     private long usuario_fk;
     private long parqueadero_fk;
     private long vehiculo_fk;
-    private Date hora_llegada;
+    private Timestamp hora_llegada;
     private int horas_pedidas;
     
 
@@ -54,14 +54,14 @@ public class ReservarCupoRequest {
     /**
      * @return Date return the hora_llegada
      */
-    public Date getHora_llegada() {
+    public Timestamp getHora_llegada() {
         return hora_llegada;
     }
 
     /**
      * @param hora_llegada the hora_llegada to set
      */
-    public void setHora_llegada(Date hora_llegada) {
+    public void setHora_llegada(Timestamp hora_llegada) {
         this.hora_llegada = hora_llegada;
     }
     

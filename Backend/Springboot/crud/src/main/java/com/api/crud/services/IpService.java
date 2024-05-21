@@ -2,8 +2,7 @@ package com.api.crud.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import com.api.crud.DTO.Request.IpCaptureRequest;
 import com.api.crud.models.Ip;
@@ -17,10 +16,10 @@ public class IpService {
 
     public void captureIp(IpCaptureRequest request) {
         Ip ip = new Ip();
-        // ip.setDireccionIp(request.getIpAddress());
-        // ip.setUserId(request.getUserId());
-        // ip.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-        // ipRepository.save(ip);
+        ip.setDireccionIp(request.getIpAddress());
+         ip.setUsuarioFk(request.getUserId());
+         ip.setFechaCreacion(new Timestamp(System.currentTimeMillis()));
+         ipRepository.save(ip);
     }
 }
 

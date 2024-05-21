@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.api.crud.DTO.Request.LoginRequest;
+import com.api.crud.DTO.Request.LoginCodigoRequest;
+import com.api.crud.DTO.Request.IpCaptureRequest;
 import com.api.crud.models.UsuarioModel;
 import com.api.crud.services.IEmailService;
+import com.api.crud.services.IpService;
 import com.api.crud.services.UsuarioService;
 import com.api.crud.services.models.EmailDTO;
 import com.api.crud.services.CodigoLogin;
@@ -29,6 +33,9 @@ public class LoginController {
 
     @Autowired
     private IEmailService emailService;
+
+    @Autowired
+    private IpService ipService;
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/login")
@@ -104,32 +111,36 @@ public class LoginController {
             throw new RuntimeException("Error encriptando la contra", e);
         }
     }
+
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PostMapping("/loginCodigo")
+    public Map<String, Object> loginCodigo(@RequestBody LoginCodigoRequest
+    loginCodigoRequest, HttpServletRequest request) {
+        Long id = loginCodigoRequest.getId();
+        String codigo = loginCodigoRequest.getCodigo();
+        String codigoUsuario = this.userService.codigoUsuario(id);
+
+        if (codigo.equals(codigoUsuario)) {
+            Optional<UsuarioModel> cliente = this.userService.getPorId(id);
+            String nombre = cliente.get().getNombre();
+            String correo = cliente.get().getCorreo();
+            String identificacion = cliente.get().getIdentificacion();
+            Boolean estado = cliente.get().isEstado();
+            String usuario = cliente.get().getUsuario();
+            IpCaptureRequest ipCaptureRequest = new IpCaptureRequest();
+            ipCaptureRequest.setIpAddress(request.getRemoteAddr());
+            ipCaptureRequest.setUserId(cliente.get().getId());
+            ipService.captureIp(ipCaptureRequest);
+            return Map.of("data", Map.of("id",id,"nombre", nombre, "correo", correo,
+            "identificacion", identificacion, "estado",
+            estado, "usuario", usuario), "msg", "Codigo correcto");
+        } else {
+            IpCaptureRequest ipCaptureRequest = new IpCaptureRequest();
+            ipCaptureRequest.setIpAddress(request.getRemoteAddr());
+            ipService.captureIp(ipCaptureRequest);
+            return Map.of("msg", "Codigo incorrecto");
+        }
+
+    }
 }
-
-// @CrossOrigin(origins = "http://localhost:5173")
-// @PostMapping("/loginCodigo")
-// public Map<String, Object> loginCodigo(@RequestBody LoginCodigoRequest
-// loginCodigoRequest, HttpServletRequest request) {
-// Long id = loginCodigoRequest.getId();
-// String codigo = loginCodigoRequest.getCodigo();
-// String codigoUsuario = this.userService.codigoUsuario(id);
-
-// if (codigo.equals(codigoUsuario)) {
-// Optional<UsuarioModel> cliente = this.userService.getPorId(id);
-// String nombre = cliente.get().getNombre();
-// String correo = cliente.get().getCorreo();
-// String identificacion = cliente.get().getIdentificacion();
-// Boolean estado = cliente.get().isEstado();
-// String usuario = cliente.get().getUsuario();
-// ipService.captureIp(new IpCaptureRequest(request.getRemoteAddr(),
-// usuarioLoggeado.get().getId()));
-// return Map.of("data", Map.of("id",id,"nombre", nombre, "correo", correo,
-// "identificacion", identificacion, "estado",
-// estado, "usuario", usuario), "msg", "Codigo correcto");
-// } else {
-// ipService.captureIp(new IpCaptureRequest(request.getRemoteAddr(),
-// usuarioExiste.get().getId()));
-// return Map.of("msg", "Codigo incorrecto");
-// }
-
-// }

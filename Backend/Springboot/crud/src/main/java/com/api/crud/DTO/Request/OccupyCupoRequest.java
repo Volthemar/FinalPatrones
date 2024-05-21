@@ -1,6 +1,6 @@
 package com.api.crud.DTO.Request;
 
-public class OccupyCupoRequest {
+public class OccupyCupoRequest{
     private Long cupoId;
 
     // Getters and Setters

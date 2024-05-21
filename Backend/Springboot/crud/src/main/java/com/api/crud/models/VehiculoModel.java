@@ -1,11 +1,13 @@
 package com.api.crud.models;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -20,7 +22,7 @@ public class VehiculoModel {
     private String tipo;
 
     @Column
-    private Date fecha_creacion;
+    private Timestamp fecha_creacion;
 
 
     /**
@@ -52,17 +54,22 @@ public class VehiculoModel {
     }
 
     /**
-     * @return Date return the fecha_creacion
+     * @return Timestamp return the fecha_creacion
      */
-    public Date getFecha_creacion() {
+    public Timestamp getFecha_creacion() {
         return fecha_creacion;
     }
 
     /**
      * @param fecha_creacion the fecha_creacion to set
      */
-    public void setFecha_creacion(Date fecha_creacion) {
+    public void setFecha_creacion(Timestamp fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
     }
 
+    /*public enum Tipo{
+        CARRO,
+        MOTO,
+        BICI
+    }*/
 }

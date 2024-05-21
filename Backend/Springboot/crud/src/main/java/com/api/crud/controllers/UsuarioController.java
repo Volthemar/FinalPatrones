@@ -4,9 +4,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.crud.services.IEmailService;
 import com.api.crud.services.UsuarioService;
-import com.api.crud.services.models.EmailDTO;
-
-import jakarta.mail.MessagingException;
 
 import com.api.crud.models.UsuarioModel;
 
@@ -17,7 +14,6 @@ import java.util.Optional;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

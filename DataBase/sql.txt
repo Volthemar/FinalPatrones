@@ -11,7 +11,7 @@ CREATE TABLE Usuario (
     Correo VARCHAR(50) NOT NULL,
     Estado BOOLEAN NOT NULL DEFAULT TRUE,
     Usuario VARCHAR(50) NOT NULL,
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
+    Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     Num_intentos INT NOT NULL,
     Cod_verificacion VARCHAR(6) NOT NULL,
     Puntos INT NOT NULL DEFAULT 0
@@ -23,9 +23,9 @@ CREATE TABLE Tarjeta_credito (
     Numero VARCHAR(50) NOT NULL,
     Nombre_propietario VARCHAR(50) NOT NULL,
     CVC VARCHAR(3) NOT NULL,
-    Fecha_vencimiento DATE NOT NULL,
+    Fecha_vencimiento TIMESTAMP NOT NULL,
     Usuario_fk BIGINT UNSIGNED,
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
+    Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id)
 );
 
@@ -33,7 +33,7 @@ CREATE TABLE Tarjeta_credito (
 CREATE TABLE Tipo_usuario (
     Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Tipo VARCHAR(30) NOT NULL,
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE)
+    Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Tipo_usuario_usuario (
@@ -50,7 +50,7 @@ CREATE TABLE Ip (
     Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Direccion_ip VARCHAR(50) NOT NULL,
     Usuario_fk BIGINT UNSIGNED,
-    Fecha_creacion DATE NOT NULL DEFAULT (CURRENT_DATE),
+    Fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id)
 );
 
@@ -59,19 +59,19 @@ CREATE TABLE Ciudad (
     Nombre VARCHAR(255) NOT NULL,
     Longitud DECIMAL(9,6) NOT NULL,
     Latitud DECIMAL(9,6) NOT NULL,
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE)
+    Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Tipo_parqueadero (
     Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Tipo VARCHAR(255) NOT NULL,
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE)
+    Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Vehiculo (
     Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    Tipo VARCHAR(255),
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE)
+    Tipo ENUM('CARRO', 'MOTO','BICI'),
+    Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Parqueadero (
@@ -87,7 +87,7 @@ CREATE TABLE Parqueadero (
     Cupo_uti_moto INT NOT NULL DEFAULT 0,
     Cupo_uti_carro INT NOT NULL DEFAULT 0,
     Cupo_uti_bici INT NOT NULL DEFAULT 0,
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
+    Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     Usuario_fk BIGINT UNSIGNED,
     FOREIGN KEY (Ciudad_fk) REFERENCES Ciudad(Id),
     FOREIGN KEY (Tipo_fk) REFERENCES Tipo_parqueadero(Id),
@@ -100,11 +100,11 @@ CREATE TABLE Cupo (
     Parqueadero_fk BIGINT UNSIGNED,
     Vehiculo_fk BIGINT UNSIGNED,
     Pagado BOOLEAN DEFAULT FALSE,
-    Hora_llegada DATE,
-    Hora_salida DATE,
+    Hora_llegada TIMESTAMP,
+    Hora_salida TIMESTAMP,
     horas_pedidas INT,
-    Estado VARCHAR(25),
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
+    Estado ENUM('RESERVADO','OCUPADO') NOT NULL DEFAULT 'RESERVADO',
+    Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id),
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
@@ -115,9 +115,10 @@ CREATE TABLE Cupo_offline (
     Parqueadero_fk BIGINT UNSIGNED,
     Vehiculo_fk BIGINT UNSIGNED,
     Pagado BOOLEAN DEFAULT FALSE,
-    Hora_llegada DATE,
-    Hora_salida DATE,
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
+    Hora_llegada TIMESTAMP,
+    Hora_salida TIMESTAMP,
+    Nombre_cliente VARCHAR(255),
+    Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
 );
@@ -128,7 +129,7 @@ CREATE TABLE Tarifa (
     Parqueadero_fk BIGINT UNSIGNED,
     Vehiculo_fk BIGINT UNSIGNED,
     Valor_mora INT,
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
+    Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
 );
@@ -141,7 +142,7 @@ CREATE TABLE Factura(
     Parqueadero_fk BIGINT UNSIGNED,
     Usuario_fk BIGINT UNSIGNED,
     Tarjeta_credito_fk BIGINT UNSIGNED,
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
+    Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id),
     FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id),
@@ -155,7 +156,7 @@ CREATE TABLE Factura_offline(
     Cupo_offline_fk BIGINT UNSIGNED,
     Vehiculo_fk BIGINT UNSIGNED,
     Parqueadero_fk BIGINT UNSIGNED,
-    Fecha_creacion DATE DEFAULT (CURRENT_DATE),
+    Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id),
     FOREIGN KEY (Cupo_offline_fk) REFERENCES Cupo_offline(Id)
