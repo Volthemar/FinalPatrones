@@ -10,6 +10,7 @@ import CrearParqueadero from './utilsAdmin/CrearParqueadero';
 import LandingPage from './LangingPage/LandingPage';
 import CrearCiudad from './utilsAdmin/CrearCiudad';
 import ParkingManagement from './gerenteUtils/ParkingManagement';
+import Admin from '../Views/Admin/Admin';
 function App() {
   return (
     <Router>
@@ -18,7 +19,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/user/:userId" element={<Cliente />} />
         <Route path="/registro" element={<Registro />} />
-        <Route path="/admin" element={<Gerente />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/gerente" element={<Gerente />} />
         <Route path="/tarjeta" element={<TarjetaCredito />} />
         <Route path="/codigo" element={<Codigo />} />

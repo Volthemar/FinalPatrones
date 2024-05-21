@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ParkingManagement.css'; // Importar los estilos CSS
-
+import Sidebar from '../Sidebar/Sidebar';
 const fetchParkingLot = async (parkingLotId) => {
   try {
     const response = await fetch('http://localhost:3241/obtenerParqueadero', {
@@ -33,6 +33,7 @@ const ParkingManagement = () => {
 
   return (
     <div className="parking-management-container">
+        <Sidebar></Sidebar>
       <h1 id="title-parkingManagement">Administración de cupos</h1>
       <div className="buttons-parkingManagement">
         <button
@@ -62,7 +63,7 @@ const ParkingManagement = () => {
             <table className="parking-table" id="parking-table">
               <thead>
                 <tr>
-                  <th>Vehiculo</th>
+                  <th>Vehículo </th>
                   <th>{disponible ? 'Cupos Utilizados' : 'Cupos Totales'}</th>
                 </tr>
               </thead>
