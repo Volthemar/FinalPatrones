@@ -1,0 +1,54 @@
+.parqueadero-detalles {
+    margin-top: 20px;
+  }
+  
+  .tabla-detalles {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .tabla-detalles td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .tabla-detalles tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .tabla-detalles tr:hover {
+    background-color: #ddd;
+  }
+  
+  .acciones-detalles {
+    margin-top: 20px;
+  }
+  
+  .accion-editar,
+  .accion-mostrar,
+  .accion-eliminar {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    color: white;
+  }
+  
+  .accion-editar {
+    background-color: #4CAF50;
+  }
+  
+  .accion-mostrar {
+    background-color: #008CBA;
+  }
+  
+  .accion-eliminar {
+    background-color: #f44336;
+  }
+  
+  .accion-editar:hover,
+  .accion-mostrar:hover,
+  .accion-eliminar:hover {
+    opacity: 0.8;
+  }
+  

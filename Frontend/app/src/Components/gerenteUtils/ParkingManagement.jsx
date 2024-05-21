@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ParkingManagement.css'; // Importar los estilos CSS
 import Sidebar from '../Sidebar/Sidebar';
+
 const fetchParkingLot = async (parkingLotId) => {
   try {
     const response = await fetch('http://localhost:3241/obtenerParqueadero', {
@@ -24,7 +25,7 @@ const ParkingManagement = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchParkingLot(1);
+      const data = await fetchParkingLot(1); // Change the ID if needed
       setParkingData(data);
     };
 
@@ -33,7 +34,7 @@ const ParkingManagement = () => {
 
   return (
     <div className="parking-management-container">
-        <Sidebar vista = {'Administrador'}></Sidebar>
+      <Sidebar vista={'Administrador'} />
       <h1 id="title-parkingManagement">Administración de cupos</h1>
       <div className="buttons-parkingManagement">
         <button
@@ -85,7 +86,6 @@ const ParkingManagement = () => {
           <p>Loading...</p>
         )}
       </div>
-      <p>{parkingData}</p>
     </div>
   );
 };
