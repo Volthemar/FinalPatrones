@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './GerenteParqueaderos.css';
 import Sidebar from '../Sidebar/Sidebar';
+import DetalleParqueadero from './DetalleParqueadero';
 
 function GerenteParqueaderos() {
   const URL_CIUDADES = "http://localhost:3241/obtenerCiudades";
@@ -9,8 +10,7 @@ function GerenteParqueaderos() {
   const [ciudadSeleccionada, setCiudadSeleccionada] = useState("");
   const [ciudades, setCiudades] = useState([]);
   const [parqueaderos, setParqueaderos] = useState([]);
-  const [parqueaderoSeleccionado, setParqueaderoSeleccionado] = useState("");
-  const [parqueaderoDetalles, setParqueaderoDetalles] = useState(null);
+  const [parqueaderoSeleccionado, setParqueaderoSeleccionado] = useState(null);
 
   // Fetch cities on component mount
   useEffect(() => {
@@ -34,8 +34,7 @@ function GerenteParqueaderos() {
   const handleChangeCiudad = async (event) => {
     const ciudad = event.target.value;
     setCiudadSeleccionada(ciudad);
-    setParqueaderoSeleccionado("");
-    setParqueaderoDetalles(null);
+    setParqueaderoSeleccionado(null);
 
     try {
       const response = await fetch(URL_PARQUEADEROS_CIUDAD, {
@@ -57,12 +56,8 @@ function GerenteParqueaderos() {
     }
   };
 
-  const handleChangeParqueadero = (event) => {
-    const parqueaderoId = event.target.value;
-    setParqueaderoSeleccionado(parqueaderoId);
-
-    const selectedParqueadero = parqueaderos.find(parqueadero => parqueadero.id === parseInt(parqueaderoId));
-    setParqueaderoDetalles(selectedParqueadero);
+  const handleSelectParqueadero = (parqueadero) => {
+    setParqueaderoSeleccionado(parqueadero);
   };
 
   return (
@@ -80,49 +75,43 @@ function GerenteParqueaderos() {
               </option>
             ))}
           </select>
-
-          {ciudadSeleccionada && (
-            <>
-              <label htmlFor="parqueaderos">Selecciona un parqueadero:</label>
-              <select id="parqueaderos" name="parqueaderos" value={parqueaderoSeleccionado} onChange={handleChangeParqueadero} className="select-parqueaderos">
-                <option value="">Selecciona un parqueadero</option>
-                {parqueaderos.map((parqueadero) => (
-                  <option key={parqueadero.id} value={parqueadero.id}>
-                    {parqueadero.nombre} - {parqueadero.tipo}
-                  </option>
-                ))}
-              </select>
-            </>
-          )}
         </div>
 
+        {ciudadSeleccionada && parqueaderos.length > 0 && (
+          <table className="tabla-parqueaderos">
+            <thead>
+              <tr className='tr'>
+                <th className='th'>Nombre</th>
+                <th className='th'>Tipo</th>
+                <th className='th'>Imágenes</th>
+                <th className='th'>Acciones</th>
+              </tr >
+            </thead>
+            <tbody>
+              {parqueaderos.map((parqueadero) => (
+                <tr key={parqueadero.id}>
+                  <td>{parqueadero.nombre}</td>
+                  <td>{parqueadero.tipo}</td>
+                  <td>
+                    {parqueadero.imagenes && parqueadero.imagenes.length > 0 ? (
+                      parqueadero.imagenes.slice(0, 3).map((imagen, index) => (
+                        <img key={index} src={imagen} alt={`Imagen ${index + 1}`} className="imagen-parqueadero" />
+                      ))
+                    ) : (
+                      <span>No hay imágenes</span>
+                    )}
+                  </td>
+                  <td>
+                    <button className="accion-mostrar" onClick={() => handleSelectParqueadero(parqueadero)}>Mostrar</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
 
-        {parqueaderoDetalles && (
-          <div className="parqueadero-detalles">
-            <h3>Detalles del Parqueadero</h3>
-            <form className='form-gerenteParqueadero'>
-
-              <label htmlFor="cupo_carro">Cupo Total carro:</label>
-              <input type="number" id="cupo_carro" value={parqueaderoDetalles.cupo_disponible_carro} readOnly className="input-detalle" />
-
-              <label htmlFor="cupo_moto">Cupo Total moto:</label>
-              <input type="number" id="cupo_moto" value={parqueaderoDetalles.cupo_disponible_moto} readOnly className="input-detalle" />
-
-              <label htmlFor="cupo_bici">Cupo Total bici:</label>
-              <input type="number" id="cupo_bici" value={parqueaderoDetalles.cupo_disponible_bici} readOnly className="input-detalle" />
-
-              <label htmlFor="tipo">Tipo:</label>
-              <input type="text" id="tipo" value={parqueaderoDetalles.tipo} readOnly className="input-detalle" />
-
-              <label htmlFor="longitud">Longitud:</label>
-              <input type="text" id="longitud" value={parqueaderoDetalles.longitud} readOnly className="input-detalle" />
-
-              <label htmlFor="latitud">Latitud:</label>
-              <input type="text" id="latitud" value={parqueaderoDetalles.latitud} readOnly className="input-detalle" />
-              <button className='sumbitGerenteParqueadero'>enviar</button>
-            </form>
-            
-          </div>
+        {parqueaderoSeleccionado && (
+          <DetalleParqueadero parqueaderoDetalles={parqueaderoSeleccionado} />
         )}
       </div>
     </>

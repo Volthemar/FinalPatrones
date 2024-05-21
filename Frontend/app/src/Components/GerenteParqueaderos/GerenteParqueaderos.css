@@ -1,40 +1,76 @@
-/* Gerente.css */
 #contenidoGerente {
-    margin: 1%;
-    height: fit-content;
-    margin-left: 7%;
-    padding: 20px;
-    border-radius: 25px;
-  }
-  
-  .select-ciudades, .select-parqueaderos {
-    margin: 1%;
-    margin-bottom: 20px;
-    padding: 10px;
-    font-size: 16px;
-    height: 5%;
-    border-radius: 25px;
-  }
-  
-  .parqueadero-detalles {
-    margin-top: 20px;
-  }
-  
-  .input-detalle {
-    display: block;
-    margin-bottom: 10px;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 25px;
-    margin: 1%;
-  }
-  .form-gerenteParqueadero{
-    display: flex;
-    flex-direction: column;
-    align-items: centers;
-  }
-  .infoParqueaderos{
-    display: flex;
-    flex-direction: column;
-  }
-  
+  padding: 20px;
+}
+
+.infoParqueaderos {
+  margin-bottom: 20px;
+}
+
+.select-ciudades {
+  margin-left: 10px;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.tabla-parqueaderos {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.tabla-parqueaderos .th,
+.tabla-parqueaderos .td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.tabla-parqueaderos .th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.tabla-parqueaderos .tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.tabla-parqueaderos .tr:hover {
+  background-color: #ddd;
+}
+
+.imagen-parqueadero {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 5px;
+}
+
+.accion-editar,
+.accion-mostrar,
+.accion-eliminar {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.accion-editar {
+  background-color: #4CAF50;
+}
+
+.accion-mostrar {
+  background-color: #008CBA;
+}
+
+.accion-eliminar {
+  background-color: #f44336;
+}
+
+.accion-editar:hover,
+.accion-mostrar:hover,
+.accion-eliminar:hover {
+  opacity: 0.8;
+}
