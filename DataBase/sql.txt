@@ -88,9 +88,15 @@ CREATE TABLE Parqueadero (
     Cupo_uti_carro INT NOT NULL DEFAULT 0,
     Cupo_uti_bici INT NOT NULL DEFAULT 0,
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    Usuario_fk BIGINT UNSIGNED,
     FOREIGN KEY (Ciudad_fk) REFERENCES Ciudad(Id),
-    FOREIGN KEY (Tipo_fk) REFERENCES Tipo_parqueadero(Id),
+    FOREIGN KEY (Tipo_fk) REFERENCES Tipo_parqueadero(Id)
+);
+
+CREATE TABLE Parqueadero_usuario(
+	Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Parqueaero_fk BIGINT UNSIGNED,
+    Usuario_fk BIGINT UNSIGNED,
+	FOREIGN KEY (Parqueaero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id)
 );
 
