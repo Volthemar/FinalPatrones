@@ -66,7 +66,7 @@ public class UsuarioService {
     }
 
     public List<UsuarioModel> getUsuariosPorEstado(boolean estado) {
-        return IUsuarioRepository.findEstado(estado);
+        return IUsuarioRepository.findByEstado(estado);
     }
 
     public List<UsuarioModel> getUsuarios() {

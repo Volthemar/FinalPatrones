@@ -1,6 +1,5 @@
 package com.api.crud.models;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GenerationType;
@@ -9,25 +8,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.Date;
 
-
 @Entity
-@Table(name = "Ip")    
+@Table(name = "Ip")
 public class Ip {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
+
     @Column()
     private String direccionIp;
 
     @Column()
-    private Integer usuarioFk;
+    private Long usuarioFk;
 
     @Column
     private Date fechaCreacion;
 
-    
     /**
      * @return Long return the id
      */
@@ -59,14 +56,14 @@ public class Ip {
     /**
      * @return Integer return the usuarioFk
      */
-    public Integer getUsuarioFk() {
+    public Long getUsuarioFk() {
         return usuarioFk;
     }
 
     /**
      * @param usuarioFk the usuarioFk to set
      */
-    public void setUsuarioFk(Integer usuarioFk) {
+    public void setUsuarioFk(Long usuarioFk) {
         this.usuarioFk = usuarioFk;
     }
 

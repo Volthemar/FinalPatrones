@@ -20,6 +20,6 @@ public interface IUsuarioRepository extends JpaRepository<UsuarioModel, Long> {
     @Query(value = "Select Cod_verificacion from usuario where Id = ?1", nativeQuery = true)
     String findCodigoForId(Long id);
 
-    List<UsuarioModel> findEstado(boolean estado);
+    List<UsuarioModel> findByEstado(boolean estado);
 
 }
