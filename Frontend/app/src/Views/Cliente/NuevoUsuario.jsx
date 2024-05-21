@@ -157,7 +157,7 @@ function NuevoUsuario() {
           </div>
           {selectedCity && cityCoordinates[selectedCity] && (
             <div className='mapa'>
-              <Map key={mapKey} defaultCenter={cityCoordinates[selectedCity]} defaultZoom={10} minHeight={300}>
+              <Map key={mapKey} defaultCenter={cityCoordinates[selectedCity]} defaultZoom={12} minHeight={300}>
                 {parqueaderos.map(parqueadero => (
                   <Marker
                     key={parqueadero.id}

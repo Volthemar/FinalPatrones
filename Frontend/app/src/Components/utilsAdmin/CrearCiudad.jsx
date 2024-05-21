@@ -4,19 +4,39 @@ import Sidebar from '../Sidebar/Sidebar';
 
 const CrearCiudad = () => {
     const [cityName, setCityName] = useState('');
-    const [altitude, setAltitude] = useState('');
+    const [longitude, setLongitude] = useState('');
     const [latitude, setLatitude] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const data = {
-            cityName,
-            altitude,
-            latitude
+            nombre: cityName,
+            longitud: parseFloat(longitude),
+            latitud: parseFloat(latitude)
         };
 
         console.log('Form data submitted:', data);
-        // Handle form submission, such as sending data to a server
+
+        try {
+            const response = await fetch('http://localhost:3241/crearCiudad', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.json();
+            console.log('Response from server:', result);
+            // Optionally, handle the response, e.g., show a success message or redirect
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            // Optionally, handle the error, e.g., show an error message
+        }
     };
 
     return (
@@ -33,11 +53,11 @@ const CrearCiudad = () => {
                         />
                     </div>
                     <div className='div-input-ciudades'>
-                        <label>Altitud</label>
+                        <label>Longitud</label>
                         <input className='input-ciudades'
                             type="number"
-                            value={altitude}
-                            onChange={(e) => setAltitude(e.target.value)}
+                            value={longitude}
+                            onChange={(e) => setLongitude(e.target.value)}
                         />
                     </div>
                     <div className='div-input-ciudades'>
