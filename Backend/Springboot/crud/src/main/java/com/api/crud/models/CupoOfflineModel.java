@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 @Entity
@@ -18,7 +18,7 @@ public class CupoOfflineModel {
     private Long id;
 
     @Column
-    private Long parqueader_fk;
+    private long parqueadero_fk;
 
     @Column
     private Long vehiculo_fk;
@@ -27,13 +27,16 @@ public class CupoOfflineModel {
     private boolean pagado;
 
     @Column
-    private Date hora_llegada;
+    private Timestamp hora_llegada;
 
     @Column
-    private Date hora_salida;
+    private Timestamp hora_salida;
 
     @Column
-    private Date fecha_creacion;
+    private Timestamp fecha_creacion;
+
+    @Column
+    private String nombre_cliente;
 
     
     /**
@@ -53,15 +56,15 @@ public class CupoOfflineModel {
     /**
      * @return Long return the parqueader_fk
      */
-    public Long getParqueader_fk() {
-        return parqueader_fk;
+    public Long getParqueadero_fk() {
+        return parqueadero_fk;
     }
 
     /**
      * @param parqueader_fk the parqueader_fk to set
      */
-    public void setParqueader_fk(Long parqueader_fk) {
-        this.parqueader_fk = parqueader_fk;
+    public void setParqueadero_fk(Long parqueadero_fk) {
+        this.parqueadero_fk = parqueadero_fk;
     }
 
     /**
@@ -93,45 +96,53 @@ public class CupoOfflineModel {
     }
 
     /**
-     * @return Date return the hora_llegada
+     * @return Timestamp return the hora_llegada
      */
-    public Date getHora_llegada() {
+    public Timestamp getHora_llegada() {
         return hora_llegada;
     }
 
     /**
      * @param hora_llegada the hora_llegada to set
      */
-    public void setHora_llegada(Date hora_llegada) {
+    public void setHora_llegada(Timestamp hora_llegada) {
         this.hora_llegada = hora_llegada;
     }
 
     /**
-     * @return Date return the hora_salida
+     * @return Timestamp return the hora_salida
      */
-    public Date getHora_salida() {
+    public Timestamp getHora_salida() {
         return hora_salida;
     }
 
     /**
      * @param hora_salida the hora_salida to set
      */
-    public void setHora_salida(Date hora_salida) {
+    public void setHora_salida(Timestamp hora_salida) {
         this.hora_salida = hora_salida;
     }
 
     /**
-     * @return Date return the fecha_creacion
+     * @return Timestamp return the fecha_creacion
      */
-    public Date getFecha_creacion() {
+    public Timestamp getFecha_creacion() {
         return fecha_creacion;
     }
 
     /**
      * @param fecha_creacion the fecha_creacion to set
      */
-    public void setFecha_creacion(Date fecha_creacion) {
+    public void setFecha_creacion(Timestamp fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
+    }
+
+    public String getNombre_Cliente(){
+        return nombre_cliente;
+    }
+
+    public void setNombre_Cliente(String nombre_cliente){
+        this.nombre_cliente = nombre_cliente;
     }
 
 }

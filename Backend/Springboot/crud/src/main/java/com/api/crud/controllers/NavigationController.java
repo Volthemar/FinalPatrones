@@ -6,20 +6,20 @@ import org.springframework.web.bind.annotation.*;
 import com.api.crud.DTO.Request.IpCaptureRequest;
 import com.api.crud.services.IpService;
 
-// import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/navigation")
+@RequestMapping("")
 public class NavigationController {
 
-    // @Autowired
-    // private IpService ipService;
+     @Autowired
+     private IpService ipService;
 
-    // @GetMapping("/track")
-    // public void trackVisitor(HttpServletRequest request) {
-    //     String clientIp = request.getRemoteAddr();
-    //     IpCaptureRequest ipCaptureRequest = new IpCaptureRequest();
-    //     ipCaptureRequest.setIpAddress(clientIp);
-    //     ipService.captureIp(ipCaptureRequest);
-    // }
+     @GetMapping("/track")
+     public void trackVisitor(HttpServletRequest request) {
+         String clientIp = request.getRemoteAddr();
+         IpCaptureRequest ipCaptureRequest = new IpCaptureRequest();
+         ipCaptureRequest.setIpAddress(clientIp);
+         ipService.captureIp(ipCaptureRequest);
+     }
 }
