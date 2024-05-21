@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './TarjetaCredito.css';
-
+import { Link } from 'react-router-dom';
 export default function TarjetaCredito({ isOpen }) {
     if (!isOpen) return null;
 
@@ -155,7 +155,10 @@ export default function TarjetaCredito({ isOpen }) {
                             maxLength={3}
                         />
                     </form>
+                    <Link to="/login">
+
                     <button onClick={handleSubmit}>Validar</button>
+                    </Link>
                 </div>
             </div>
         </div>

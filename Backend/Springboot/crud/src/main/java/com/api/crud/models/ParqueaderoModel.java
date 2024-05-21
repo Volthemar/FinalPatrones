@@ -52,8 +52,6 @@ public class ParqueaderoModel {
     @Column
     private Date fecha_creacion;
 
-    @Column
-    private long usuario_fk;
 
     /**
      * @return long return the id
@@ -236,19 +234,4 @@ public class ParqueaderoModel {
     public void setFecha_creacion(Date fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
     }
-
-    /**
-     * @return long return the usuario_fk
-     */
-    public long getUsuario_fk() {
-        return usuario_fk;
-    }
-
-    /**
-     * @param usuario_fk the usuario_fk to set
-     */
-    public void setUsuario_fk(long usuario_fk) {
-        this.usuario_fk = usuario_fk;
-    }
-
 }

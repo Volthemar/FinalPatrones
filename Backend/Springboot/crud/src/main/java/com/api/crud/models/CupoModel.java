@@ -2,11 +2,14 @@ package com.api.crud.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.util.Date;
+
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "Cupo")
@@ -28,16 +31,19 @@ public class CupoModel {
     private boolean pagado;
 
     @Column
-    private Date hora_llegada;
+    private Timestamp hora_llegada;
 
     @Column
-    private Date hora_salida;
+    private Timestamp hora_salida;
 
     @Column
     private int horas_pedidas;
 
     @Column
-    private Date fecha_creacion;
+    private Timestamp fecha_creacion;
+
+    @Enumerated(EnumType.STRING)
+    private Estado estado; 
 
 
 
@@ -98,30 +104,30 @@ public class CupoModel {
     }
 
     /**
-     * @return Date return the hora_llegada
+     * @return Timestamp return the hora_llegada
      */
-    public Date getHora_llegada() {
+    public Timestamp getHora_llegada() {
         return hora_llegada;
     }
 
     /**
      * @param hora_llegada the hora_llegada to set
      */
-    public void setHora_llegada(Date hora_llegada) {
+    public void setHora_llegada(Timestamp hora_llegada) {
         this.hora_llegada = hora_llegada;
     }
 
     /**
-     * @return Date return the hora_salida
+     * @return Timestamp return the hora_salida
      */
-    public Date getHora_salida() {
+    public Timestamp getHora_salida() {
         return hora_salida;
     }
 
     /**
      * @param hora_salida the hora_salida to set
      */
-    public void setHora_salida(Date hora_salida) {
+    public void setHora_salida(Timestamp hora_salida) {
         this.hora_salida = hora_salida;
     }
 
@@ -155,17 +161,30 @@ public class CupoModel {
     }
 
     /**
-     * @return Date return the fecha_creacion
+     * @return Timestamp return the fecha_creacion
      */
-    public Date getFecha_creacion() {
+    public Timestamp getFecha_creacion() {
         return fecha_creacion;
     }
 
     /**
      * @param fecha_creacion the fecha_creacion to set
      */
-    public void setFecha_creacion(Date fecha_creacion) {
+    public void setFecha_creacion(Timestamp fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
+    }
+
+    public void setEstado(Estado estado){
+        this.estado = estado;
+    }
+
+    public Estado getEstado(){
+        return estado;
+    }
+
+    public enum Estado{
+        RESERVADO,
+        OCUPADO
     }
 
 }
