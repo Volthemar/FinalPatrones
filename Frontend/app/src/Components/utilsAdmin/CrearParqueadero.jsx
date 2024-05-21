@@ -4,7 +4,7 @@ import Sidebar from '../Sidebar/Sidebar';
 
 const CrearParqueadero = () => {
     const [parkingType, setParkingType] = useState('');
-    const [nombreParqueadero, setnombreParqueadero] = useState('');
+    const [nombreParqueadero, setNombreParqueadero] = useState('');
     const [numCars, setNumCars] = useState('');
     const [numMotorcycles, setNumMotorcycles] = useState('');
     const [numBicycles, setNumBicycles] = useState('');
@@ -65,7 +65,19 @@ const CrearParqueadero = () => {
             const response = await fetch("http://localhost:3241/guardarParqueadero", requestOptions);
             const result = await response.json();
             console.log('Response from server:', result);
-            // Handle success, maybe reset form or show a message
+
+            if (result && result.msg === 'Ciudad creada') {
+                alert('Parqueadero creado');
+                // Reset form fields
+                setParkingType('');
+                setNombreParqueadero('');
+                setNumCars('');
+                setNumMotorcycles('');
+                setNumBicycles('');
+                setAltitude('');
+                setLatitude('');
+                setCity('');
+            }
         } catch (error) {
             console.error('Error submitting data:', error);
         }
@@ -73,7 +85,7 @@ const CrearParqueadero = () => {
 
     return (
         <div>
-            <Sidebar />
+            <Sidebar vista = {'Gerente'}></Sidebar>
             <div className="card2">
                 <form className='form-ciudades' onSubmit={handleSubmit}>
                     <div className='div-select-ciudades'>
@@ -94,7 +106,7 @@ const CrearParqueadero = () => {
                         <input className='input-ciudades'
                             type="text"
                             value={nombreParqueadero}
-                            onChange={(e) => setnombreParqueadero(e.target.value)}
+                            onChange={(e) => setNombreParqueadero(e.target.value)}
                         /></div>
                     <div className='div-input-ciudades'>
                         <label>Disponibilidad de carros</label>
@@ -135,8 +147,6 @@ const CrearParqueadero = () => {
                             onChange={(e) => setAltitude(e.target.value)}
                         />
                     </div>
-                    
-
                     <div className='div-select-ciudades'>
                         <label>Ciudad</label>
                         <select className='select-ciudades'
