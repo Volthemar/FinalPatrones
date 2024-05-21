@@ -30,8 +30,8 @@ public class UsuarioModel {
     @Column
     private String contrasena;
 
-    @Column
-    private boolean estado;
+    @Column(nullable = true)
+    private Boolean estado;
 
     @Column
     private Date fecha_creacion;
@@ -134,9 +134,16 @@ public class UsuarioModel {
     }
 
     /**
+     * @return Boolean return the estado
+     */
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    /**
      * @param estado the estado to set
      */
-    public void setEstado(boolean estado) {
+    public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 

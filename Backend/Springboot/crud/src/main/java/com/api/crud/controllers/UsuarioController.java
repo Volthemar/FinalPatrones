@@ -11,8 +11,10 @@ import jakarta.mail.MessagingException;
 import com.api.crud.models.UsuarioModel;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -31,16 +34,6 @@ public class UsuarioController {
     @Autowired
     IEmailService emailService;
 
-    @GetMapping("/getUsuarios")
-    public ResponseEntity<String> getUsuarios() throws MessagingException{
-        EmailDTO email = new EmailDTO();
-        email.setMensaje("123456");
-        email.setAsunto("prueba 1");
-        email.setDestinatario("davariasc@udistrital.edu.co");
-        emailService.enviarCorreoCodigo(email);
-        return new ResponseEntity<>("Correo enviado exitosamente",HttpStatus.OK);
-    }
-
     @PostMapping("/postUsuario")
     public UsuarioModel postGuardarUsuario(@RequestBody UsuarioModel usuario) {
         return this.userService.guardarUsuario(usuario);
@@ -49,6 +42,54 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public Optional<UsuarioModel> getUsuariosPorId(@PathVariable Long id) {
         return this.userService.getPorId(id);
+    }
+
+    @Autowired
+    UsuarioService UsuarioService;
+
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<UsuarioModel> actualizarEstado(@PathVariable("id") long id,
+            @RequestParam("estado") boolean estado) {
+        Optional<UsuarioModel> usuario = UsuarioService.actualizarEstado(id, estado);
+        if (usuario.isPresent()) {
+            return ResponseEntity.ok(usuario.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<UsuarioModel> updateEstado(@PathVariable("id") long id,
+            @RequestParam("estado") boolean estado) {
+        Optional<UsuarioModel> usuario = usuarioService.updateEstado(id, estado);
+        if (usuario.isPresent()) {
+            return ResponseEntity.ok(usuario.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/estado-false")
+    public ResponseEntity<List<UsuarioModel>> getUsuariosConEstadoFalse() {
+        List<UsuarioModel> usuarios = usuarioService.getUsuariosPorEstado(false);
+        if (usuarios.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(usuarios);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UsuarioModel>> getUsuarios() {
+        List<UsuarioModel> usuarios = usuarioService.getUsuarios();
+        if (usuarios.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(usuarios);
+        }
     }
 
 }
