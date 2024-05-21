@@ -59,7 +59,7 @@ public class RegistroController {
         usuarioModel.setEstado(true);
         usuarioModel.setFecha_creacion(ManejarFechas.obtenerFechaActual());
         userService.guardarUsuario(usuarioModel);
-
+        
         EmailDTO email = new EmailDTO();
         email.setAsunto("Confirmación de cuenta");
         email.setDestinatario(correo);
