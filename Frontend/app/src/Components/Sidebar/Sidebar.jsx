@@ -14,6 +14,7 @@ import './Sidebar.css'
 function Sidebar({vista, handleClick}) {
     const [usuario, setUsuario] = useState([]);
     const URL_NOMBRE_USUARIO = '/endpointxd'
+    const nombre = localStorage.getItem('userName');
     useEffect(() => {
         fetch(URL_NOMBRE_USUARIO)
             .then(response => {
@@ -34,7 +35,7 @@ function Sidebar({vista, handleClick}) {
     <div id='sidebar'>
         <div id='usuario'>
             <img src={URL_IMG_USER} alt="" />
-            <label>Pedro Navaja</label>
+            <label id="nombre-Usuario">{nombre}</label>
             <div>
             <p>Gerente</p>
             </div>
