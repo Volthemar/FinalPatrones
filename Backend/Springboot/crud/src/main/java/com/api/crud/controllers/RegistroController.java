@@ -8,12 +8,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.Optional;
 import com.api.crud.DTO.Request.RegistroPersonaRequest;
+import com.api.crud.DTO.Response.RegistroResponse;
+import com.api.crud.models.TipoUsuarioUsuarioModel;
 import com.api.crud.models.UsuarioModel;
 import com.api.crud.services.Encriptar;
 import com.api.crud.services.IEmailService;
 import com.api.crud.services.ManejarFechas;
+import com.api.crud.services.TipoUsuarioService;
+import com.api.crud.services.TipoUsuarioUsuarioService;
 import com.api.crud.services.UsuarioService;
 import com.api.crud.services.models.EmailDTO;
 
@@ -24,6 +28,12 @@ import jakarta.mail.MessagingException;
 public class RegistroController {
     @Autowired
     private UsuarioService userService;
+
+    @Autowired
+    private TipoUsuarioService tipoUsuarioService;
+
+    @Autowired
+    private TipoUsuarioUsuarioService tipoUsuarioUsuarioService;
 
     @Autowired
     private IEmailService emailService;
@@ -60,6 +70,13 @@ public class RegistroController {
         usuarioModel.setFecha_creacion(ManejarFechas.obtenerFechaActual());
         userService.guardarUsuario(usuarioModel);
         
+        Optional<UsuarioModel> usuarioAgregado = userService.buscarUsuario(usuario);
+        TipoUsuarioUsuarioModel tipo = new TipoUsuarioUsuarioModel();
+        tipo.setUsuario_fk(usuarioAgregado.get().getId());
+        Long idTipoCliente = tipoUsuarioService.obtenerIdCliente();
+        tipo.setTipo_usuario_fk(idTipoCliente);
+        tipoUsuarioUsuarioService.guardarTipoUsuarioUsuario(tipo);
+
         EmailDTO email = new EmailDTO();
         email.setAsunto("Confirmación de cuenta");
         email.setDestinatario(correo);
@@ -67,6 +84,13 @@ public class RegistroController {
         email.setContrasena(contrasena);
         emailService.enviarCorreoRegistro(email);
 
-        return Map.of("data", usuarioModel, "msg", "Usuario creado con exito");
+        RegistroResponse registro = new RegistroResponse();
+        registro.setId(usuarioAgregado.get().getId());
+        registro.setNombre(nombre);
+        registro.setCorreo(correo);
+        registro.setEstado(true);
+        registro.setTipo(tipoUsuarioService.obtenerTipo(idTipoCliente).get());
+
+        return Map.of("data", registro, "msg", "Usuario creado con exito");
     }
 }

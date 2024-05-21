@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.websocket.ClientEndpoint;
 
 import com.api.crud.DTO.Request.LoginRequest;
 import com.api.crud.DTO.Response.LoginResponse;

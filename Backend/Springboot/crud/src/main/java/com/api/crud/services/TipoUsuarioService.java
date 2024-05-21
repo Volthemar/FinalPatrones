@@ -15,4 +15,12 @@ public class TipoUsuarioService {
     public Optional<TipoUsuarioModel> obtenerTipo(Long tipo){
         return tipoUsuario.findById(tipo);
     }
+
+    public Long obtenerIdCliente(){
+        return tipoUsuario.findIdCliente();
+    }
+
+    public Optional<TipoUsuarioModel> obtenerTipoUsuario(Long tipo){
+        return tipoUsuario.findById(tipo);
+    }
 }

@@ -1,17 +1,29 @@
 package com.api.crud.DTO.Response;
-import java.util.Vector;
+import java.util.Date;
 
 import com.api.crud.models.TipoUsuarioModel;
 
-public class LoginResponse {
+public class RegistroResponse {
+    private Long id;
     private String nombre;
     private String correo;
-    private String identificacion;
     private String usuario;
     private boolean estado;
-    private Long id;
-    private Vector<TipoUsuarioModel> tipo;
-    
+    private TipoUsuarioModel tipo;
+
+    /**
+     * @return Long return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     /**
      * @return String return the nombre
@@ -42,20 +54,6 @@ public class LoginResponse {
     }
 
     /**
-     * @return String return the identificacion
-     */
-    public String getIdentificacion() {
-        return identificacion;
-    }
-
-    /**
-     * @param identificacion the identificacion to set
-     */
-    public void setIdentificacion(String identificacion) {
-        this.identificacion = identificacion;
-    }
-
-    /**
      * @return String return the usuario
      */
     public String getUsuario() {
@@ -70,9 +68,9 @@ public class LoginResponse {
     }
 
     /**
-     * @return String return the estado
+     * @return boolean return the estado
      */
-    public boolean getEstado() {
+    public boolean isEstado() {
         return estado;
     }
 
@@ -83,31 +81,18 @@ public class LoginResponse {
         this.estado = estado;
     }
 
-    /**
-     * @return Long return the id
-     */
-    public Long getId() {
-        return id;
-    }
 
     /**
-     * @param id the id to set
+     * @return TipoUsuarioModel return the tipo
      */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return List return the tipo
-     */
-    public Vector<TipoUsuarioModel> getTipo() {
+    public TipoUsuarioModel getTipo() {
         return tipo;
     }
 
     /**
      * @param tipo the tipo to set
      */
-    public void setTipo(Vector<TipoUsuarioModel> tipo) {
+    public void setTipo(TipoUsuarioModel tipo) {
         this.tipo = tipo;
     }
 

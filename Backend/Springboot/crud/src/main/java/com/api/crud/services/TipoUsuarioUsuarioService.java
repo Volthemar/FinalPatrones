@@ -15,4 +15,8 @@ public class TipoUsuarioUsuarioService {
     public Vector<TipoUsuarioUsuarioModel> obtenerTipoUsuario(Long usuario){
         return tipoUsuarioUsuarioRepository.findByUsuario(usuario);
     }
+
+    public TipoUsuarioUsuarioModel guardarTipoUsuarioUsuario(TipoUsuarioUsuarioModel tipo){
+        return tipoUsuarioUsuarioRepository.save(tipo);
+    }
 }
