@@ -58,23 +58,9 @@ public class UsuarioController {
         }
     }
 
-    @Autowired
-    private UsuarioService usuarioService;
-
-    @PutMapping("/{id}/estado")
-    public ResponseEntity<UsuarioModel> updateEstado(@PathVariable("id") long id,
-            @RequestParam("estado") boolean estado) {
-        Optional<UsuarioModel> usuario = usuarioService.updateEstado(id, estado);
-        if (usuario.isPresent()) {
-            return ResponseEntity.ok(usuario.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @GetMapping("/estado-false")
     public ResponseEntity<List<UsuarioModel>> getUsuariosConEstadoFalse() {
-        List<UsuarioModel> usuarios = usuarioService.getUsuariosPorEstado(false);
+        List<UsuarioModel> usuarios = UsuarioService.getUsuariosPorEstado(false);
         if (usuarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -84,7 +70,7 @@ public class UsuarioController {
 
     @GetMapping
     public ResponseEntity<List<UsuarioModel>> getUsuarios() {
-        List<UsuarioModel> usuarios = usuarioService.getUsuarios();
+        List<UsuarioModel> usuarios = UsuarioService.getUsuarios();
         if (usuarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {

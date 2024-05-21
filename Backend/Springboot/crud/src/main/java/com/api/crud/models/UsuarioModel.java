@@ -189,4 +189,12 @@ public class UsuarioModel {
         this.cod_verificacion = cod_verificacion;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
 }

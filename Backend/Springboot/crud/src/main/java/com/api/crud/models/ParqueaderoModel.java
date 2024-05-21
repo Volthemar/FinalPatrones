@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="parqueadero")
+@Table(name = "parqueadero")
 public class ParqueaderoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +52,10 @@ public class ParqueaderoModel {
     @Column
     private Date fecha_creacion;
 
-        /**
+    @Column
+    private long usuario_fk;
+
+    /**
      * @return long return the id
      */
     public long getId() {
@@ -234,4 +237,17 @@ public class ParqueaderoModel {
         this.fecha_creacion = fecha_creacion;
     }
 
+    /**
+     * @return long return the usuario_fk
+     */
+    public long getUsuario_fk() {
+        return usuario_fk;
+    }
+
+    /**
+     * @param usuario_fk the usuario_fk to set
+     */
+    public void setUsuario_fk(long usuario_fk) {
+        this.usuario_fk = usuario_fk;
+    }
 }
