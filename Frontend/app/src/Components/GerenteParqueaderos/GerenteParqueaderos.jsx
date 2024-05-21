@@ -119,8 +119,9 @@ function GerenteParqueaderos() {
 
               <label htmlFor="latitud">Latitud:</label>
               <input type="text" id="latitud" value={parqueaderoDetalles.latitud} readOnly className="input-detalle" />
-
+              <button className='sumbitGerenteParqueadero'>enviar</button>
             </form>
+            
           </div>
         )}
       </div>
