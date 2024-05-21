@@ -2,7 +2,8 @@ import './App.css'
 import Cliente from '../Views/Cliente/PerfilCliente'; // Importando el componente NewUser
 import Registro from '../Views/Registro/VistaRegistro';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Gerente from '../Views/Gerente/VistaGerente';
+import Impacto from '../Views/Gerente/VistaGerenteImpacto.jsx';
+import Modificaciones from '../Views/Gerente/VistaGerenteModificaciones.jsx' ;
 import LogIn from '../Views/Login/VistaLogin'
 import Codigo from '../Components/Codigo/Codigo';
 import TarjetaCredito from './Registro/TarjetaCredito';
@@ -11,7 +12,6 @@ import LandingPage from './LangingPage/LandingPage';
 import CrearCiudad from './utilsAdmin/CrearCiudad';
 import ParkingManagement from './gerenteUtils/ParkingManagement';
 import Admin from '../Views/Admin/Admin';
-import Impacto from '../Components/Impacto/Impacto.jsx';
 import GerenteParqueaderos from './GerenteParqueaderos/GerenteParqueaderos.jsx';
 function App() {
   return (
@@ -25,10 +25,15 @@ function App() {
         {/*Mejorables*/}
         <Route path="/user/:userId" element={<Cliente />} />      
         
-        {/*Por trabajar*/}
+        {/*Detalles por definir*/}
         <Route path="/Gerente/Impacto" element={<Impacto />} />
+
+        {/*Por trabajar*/}
+        <Route path="/Gerente/Modificaciones" element={<Modificaciones/>} />
         <Route path="/Gerente/VerComo" element={<Impacto />} />
         <Route path="/Gerente/Cuentas" element={<Impacto />} />
+             
+
         <Route path="/Gerente/CrearParqueadero" element={<CrearParqueadero />} />        
         <Route path="/Gerente/CrearCiudad" element={<CrearCiudad />} />
         
@@ -36,7 +41,6 @@ function App() {
         <Route path="/Admin/Administracion" element={<ParkingManagement />} />
 
         {/*Prescindibles*/}
-        <Route path="/Gerente" element={<Gerente />} />
         <Route path="/Admin" element={<Admin />} />
 
         {/*No funcionales*/}

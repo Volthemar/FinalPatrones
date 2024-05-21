@@ -1,36 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import './CrearParqueadero.css';
-import Sidebar from '../Sidebar/Sidebar';
+import './FormCrearParqueadero.css'
 
-const CrearParqueadero = () => {
+function FormCrearParqueadero() {
+    const URL_OBTENER_CIUDADES = "http://localhost:3241/obtenerCiudades"
+    const URL_OBTENER_TIPOS_PARQUEADEROS = 'http://localhost:3241/tiposParqueadero'
+    const requestOptions = {
+                    method: "GET",
+                    redirect: "follow"
+                };
     const [parkingType, setParkingType] = useState('');
     const [nombreParqueadero, setNombreParqueadero] = useState('');
     const [numCars, setNumCars] = useState('');
     const [numMotorcycles, setNumMotorcycles] = useState('');
     const [numBicycles, setNumBicycles] = useState('');
-    const [altitude, setAltitude] = useState('');
-    const [latitude, setLatitude] = useState('');
+    const [longitud, setLongitud] = useState('');
+    const [latitud, setLatitud] = useState('');
     const [city, setCity] = useState('');
     const [cities, setCities] = useState([]);
+    
+    //New
+    const [tiposParqueadero, setTiposParqueadero] = useState([]);
+    //...
 
     useEffect(() => {
         const fetchCities = async () => {
             try {
-                const requestOptions = {
-                    method: "GET",
-                    redirect: "follow"
-                };
-
-                const response = await fetch("http://localhost:3241/obtenerCiudades", requestOptions);
+                const response = await fetch(URL_OBTENER_CIUDADES, requestOptions);
                 const result = await response.json();
                 setCities(result.data);
             } catch (error) {
-                console.error('Error fetching cities:', error);
+                console.error('Problema:', error);
             }
         };
-
         fetchCities();
     }, []);
+
+    useEffect(() => {
+        const fetchTiposParqueadero = async () => {
+            try {
+                const response = await fetch(URL_OBTENER_TIPOS_PARQUEADEROS, requestOptions);
+                const result = await response.json();
+                setTiposParqueadero(result.data);
+                console.log(result.data);
+            } catch (error) {
+                console.error('Problema:', error);
+            }
+        };
+        fetchTiposParqueadero();
+    },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -84,75 +101,83 @@ const CrearParqueadero = () => {
     };
 
     return (
-        <div>
-            <div className="card2">
-                <form className='form-ciudades' onSubmit={handleSubmit}>
-                    <div className='div-select-ciudades'>
-                        <label>Tipo Parqueadero</label>
-                        <select className='select-ciudades'
+            <div id='container-crear-parqueadero'>
+                <form id='form-crear-parqueadero' onSubmit={handleSubmit}>
+                    <div className='div-select-form-parqueadero'>
+                        <label>Tipo Parqueadero: </label>
+                        <select className='select-form-parqueadero'
                             value={parkingType}
                             onChange={(e) => setParkingType(e.target.value)}
-                        >
-                            <option value="">Seleccione una opción</option>
-                            <option value="cubierto">Cubierto</option>
-                            <option value="descubierto">Descubierto</option>
-                            <option value="con_suscripcion">Con suscripción</option>
-                            <option value="sin_suscripcion">Sin suscripción</option>
+                            required>
+                                {tiposParqueadero.map((tipo) => (
+                                <option key={tipo.id} value={tipo.nombre}>{tipo.tipo}</option>
+                            ))}
                         </select>
                     </div>
-                    <div className='div-input-ciudades'>
+                    <div className='div-input-crear-parqueadero'>
                         <label>Nombre del parqueadero</label>
-                        <input className='input-ciudades'
+                        <input className='input-crear-parqueadero'
                             type="text"
                             value={nombreParqueadero}
+                            placeholder='Ingrese el nombre del parqueadero.'
                             onChange={(e) => setNombreParqueadero(e.target.value)}
+                            required
                         /></div>
-                    <div className='div-input-ciudades'>
-                        <label>Disponibilidad de carros</label>
-                        <input className='input-ciudades'
+                    <div className='div-input-crear-parqueadero'>
+                        <label>Cupos para carros:</label>
+                        <input className='input-crear-parqueadero'
                             type="number"
                             value={numCars}
+                            placeholder='Ingrese el número de cupos para carros.'
                             onChange={(e) => setNumCars(e.target.value)}
+                            required
                         /></div>
-                    <div className='div-input-ciudades'>
-                        <label>Disponibilidad Motos</label>
-                        <input className='input-ciudades'
+                    <div className='div-input-crear-parqueadero'>
+                        <label>Cupos para Motos:</label>
+                        <input className='input-crear-parqueadero'
                             type="number"
                             value={numMotorcycles}
+                            placeholder='Ingrese el número de cupos para motos.'
                             onChange={(e) => setNumMotorcycles(e.target.value)}
+                            required
                         />
                     </div>
-                    <div className='div-input-ciudades'>
-                        <label>Disponibilidad Bicicletas</label>
-                        <input className='input-ciudades'
+                    <div className='div-input-crear-parqueadero'>
+                        <label>Cupos para Bicicletas:</label>
+                        <input className='input-crear-parqueadero'
                             type="number"
                             value={numBicycles}
+                            placeholder='Ingrese el número de cupos para bicicletas.'
                             onChange={(e) => setNumBicycles(e.target.value)}
+                            required
                         />
                     </div>
-                    <div className='div-input-ciudades'>
-                        <label>Latitud</label>
-                        <input className='input-ciudades'
+                    <div className='div-input-crear-parqueadero'>
+                        <label>Longitud:</label>
+                        <input className='input-crear-parqueadero'
                             type="number"
-                            value={latitude}
-                            onChange={(e) => setLatitude(e.target.value)}
+                            placeholder='Ingrese la longitud'
+                            value={longitud}
+                            onChange={(e) => setLongitud(e.target.value)}
+                            required
                         />
                     </div>
-                    <div className='div-input-ciudades'>
-                        <label>Altitud</label>
-                        <input className='input-ciudades'
+                    <div className='div-input-crear-parqueadero'>
+                        <label>Latitud:</label>
+                        <input className='input-crear-parqueadero'
                             type="number"
-                            value={altitude}
-                            onChange={(e) => setAltitude(e.target.value)}
+                            value={latitud}
+                            placeholder='Ingrese la Latitud'
+                            onChange={(e) => setLatitud(e.target.value)}
+                            required
                         />
                     </div>
-                    <div className='div-select-ciudades'>
-                        <label>Ciudad</label>
-                        <select className='select-ciudades'
+                    <div className='div-select-form-parqueadero'>
+                        <label>Ciudad:</label>
+                        <select className='select-tipo-parqueadero'
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
-                        >
-                            <option value="">Seleccione una ciudad</option>
+                            required>
                             {cities.map((city) => (
                                 <option key={city.id} value={city.nombre}>
                                     {city.nombre}
@@ -160,11 +185,10 @@ const CrearParqueadero = () => {
                             ))}
                         </select>
                     </div>
-                    <button className='button-ciudades' type="submit">Enviar</button>
+                    <button id='btn-crear-parqueadero' type="submit">Enviar</button>
                 </form>
             </div>
-        </div>
     );
 };
 
-export default CrearParqueadero;
+export default FormCrearParqueadero;
