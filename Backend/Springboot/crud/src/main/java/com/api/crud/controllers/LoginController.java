@@ -41,12 +41,6 @@ public class LoginController {
     private IEmailService emailService;
 
     @Autowired
-    private TipoUsuarioService tipoUsuarioService;
-
-    @Autowired
-    private TipoUsuarioUsuarioService tipoUsuarioUsuarioService;
-
-    @Autowired
     private IpService ipService;
 
     @CrossOrigin(origins = "http://localhost:5173")
@@ -56,12 +50,10 @@ public class LoginController {
         String contrasena = loginRequest.getContrasena();
         EmailDTO email = new EmailDTO();
         Optional<UsuarioModel> usuarioLoggeado = this.userService.buscarUsuario(usuario);
-
         if (usuarioLoggeado.isPresent()) {
             String contrasenaAlmacenada = usuarioLoggeado.get().getContrasena();
 
             if (encriptarContrasena(contrasena).equals(contrasenaAlmacenada)) {
-                // Contraseña correcta
                 if (usuarioLoggeado.get().isEstado()) {
                     usuarioLoggeado.get().setNum_intentos(0);
                     CodigoLogin lc = new CodigoLogin();
@@ -124,11 +116,16 @@ public class LoginController {
         }
     }
 
+    @Autowired
+    private TipoUsuarioService tipoUsuarioService;
+
+    @Autowired
+    private TipoUsuarioUsuarioService tipoUsuarioUsuarioService;
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/loginCodigo")
-    public Map<String, Object> loginCodigo(@RequestBody LoginCodigoRequest
-    loginCodigoRequest, HttpServletRequest request) {
+    public Map<String, Object> loginCodigo(@RequestBody LoginCodigoRequest loginCodigoRequest,
+            HttpServletRequest request) {
         Long id = loginCodigoRequest.getId();
         String codigo = loginCodigoRequest.getCodigo();
         String codigoUsuario = this.userService.codigoUsuario(id);
@@ -141,11 +138,13 @@ public class LoginController {
             respuestaLogin.setIdentificacion(cliente.get().getIdentificacion());
             respuestaLogin.setEstado(cliente.get().isEstado());
             respuestaLogin.setUsuario(cliente.get().getUsuario());
-            Vector<TipoUsuarioUsuarioModel> rompimiento = tipoUsuarioUsuarioService.obtenerTipoUsuario(cliente.get().getId());
+            Vector<TipoUsuarioUsuarioModel> rompimiento = tipoUsuarioUsuarioService
+                    .obtenerTipoUsuario(cliente.get().getId());
             Vector<TipoUsuarioModel> tipos = new Vector<>();
             for (int i = 0; i < rompimiento.size(); i++) {
-                Optional<TipoUsuarioModel> tipo = tipoUsuarioService.obtenerTipo(rompimiento.get(i).getTipo_usuario_fk());
-                if (!tipo.isEmpty()){
+                Optional<TipoUsuarioModel> tipo = tipoUsuarioService
+                        .obtenerTipo(rompimiento.get(i).getTipo_usuario_fk());
+                if (!tipo.isEmpty()) {
                     tipos.add(tipo.get());
                 }
             }
