@@ -53,9 +53,7 @@ const ParkingManagement = () => {
         <button className="button-parkingManagement blue-parkingManagement">Reservar cupo</button>
         <button className="button-parkingManagement yellow-parkingManagement">Vista General del Parqueadero</button>
       </div>
-      <div className="image-container-parkingManagement">
-        <img src="/path/to/your/image.png" alt="Parking layout" className="parking-image-parkingManagement" />
-      </div>
+      
       <div className="data-container-parkingManagement">
         {parkingData ? (
           <div>

@@ -1,7 +1,12 @@
 #contenidoAdmin {
+    display: flex;
     background-color: white;
     margin: 1%;
     margin-left: 7%;
     border-radius: 30px;
-    padding: 3%;
+    padding: auto;
+    justify-content: center;
+    align-items: center;
+    overflow: scroll;
+    width: 80%;
 }
