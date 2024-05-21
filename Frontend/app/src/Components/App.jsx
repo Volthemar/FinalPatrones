@@ -6,13 +6,13 @@ import Gerente from '../Views/Gerente/VistaGerente';
 import LogIn from '../Views/Login/VistaLogin'
 import Codigo from '../Components/Codigo/Codigo';
 import TarjetaCredito from './Registro/TarjetaCredito';
-import Ciudad from './utilsAdmin/ciudad';
 import CrearParqueadero from './utilsAdmin/CrearParqueadero';
 import LandingPage from './LangingPage/LandingPage';
 import CrearCiudad from './utilsAdmin/CrearCiudad';
 import ParkingManagement from './gerenteUtils/ParkingManagement';
 import Admin from '../Views/Admin/Admin';
-import Impacto from '../Components/Impacto/Impacto.jsx'
+import Impacto from '../Components/Impacto/Impacto.jsx';
+import GerenteParqueaderos from './GerenteParqueaderos/GerenteParqueaderos.jsx';
 function App() {
   return (
     <Router>
@@ -21,12 +21,14 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/user/:userId" element={<Cliente />} />
         <Route path="/registro" element={<Registro />} />
-        <Route path="/admin" element={<Gerente />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/gerente" element={<Gerente />} />
         <Route path="/tarjeta" element={<TarjetaCredito />} />
         <Route path="/codigo" element={<Codigo />} />
         <Route path="/gerente/CrearParqueadero" element={<CrearParqueadero />} />        
         <Route path="/gerente/CrearCiudad" element={<CrearCiudad />} />
+        <Route path="/gerente/Impacto" element={<Impacto />} />
+        <Route path="/gerente/GerenteParqueaderos" element={<GerenteParqueaderos />} />
         <Route path="/admin/Administracion" element={<ParkingManagement />} />
       </Routes>
     </Router>
