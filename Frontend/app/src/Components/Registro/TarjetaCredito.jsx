@@ -155,7 +155,10 @@ export default function TarjetaCredito({ isOpen }) {
                             maxLength={3}
                         />
                     </form>
+                    <Link to="/login">
+
                     <button onClick={handleSubmit}>Validar</button>
+                    </Link>
                 </div>
             </div>
         </div>
