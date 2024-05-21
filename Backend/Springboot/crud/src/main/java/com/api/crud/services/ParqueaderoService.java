@@ -26,7 +26,4 @@ public class ParqueaderoService {
         return parqueaderoRepository.save(parqueadero);
     }
 
-    public Optional<ParqueaderoModel> obtenerParqueaderoPorUsuario(long usuario_FK) {
-        return parqueaderoRepository.findByUsuario_FK(usuario_FK);
-    }
 }

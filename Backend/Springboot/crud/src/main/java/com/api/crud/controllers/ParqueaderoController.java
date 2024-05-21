@@ -117,14 +117,4 @@ public class ParqueaderoController {
         return Map.of("data", parqueaderoGuardado, "msg", "Parqueaderos");
     }
 
-    @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<ParqueaderoModel> getParqueaderoByUsuarioId(@PathVariable("usuarioId") long usuarioId) {
-        Optional<ParqueaderoModel> parqueadero = parqueaderoService.obtenerParqueaderoPorUsuario(usuarioId);
-        if (parqueadero.isPresent()) {
-            return ResponseEntity.ok(parqueadero.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
 }
