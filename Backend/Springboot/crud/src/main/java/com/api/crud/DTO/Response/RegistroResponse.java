@@ -7,7 +7,6 @@ public class RegistroResponse {
     private Long id;
     private String nombre;
     private String correo;
-    private String usuario;
     private boolean estado;
     private TipoUsuarioModel tipo;
 
@@ -51,20 +50,6 @@ public class RegistroResponse {
      */
     public void setCorreo(String correo) {
         this.correo = correo;
-    }
-
-    /**
-     * @return String return the usuario
-     */
-    public String getUsuario() {
-        return usuario;
-    }
-
-    /**
-     * @param usuario the usuario to set
-     */
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 
     /**

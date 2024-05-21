@@ -1,23 +1,23 @@
-import { useState } from 'react'
-import Logo from '../../assets/logo.png'
-import backgroundLogin from '../../assets/backgroundLogin.svg'
-import './LoginDiv.css'
+import { useState } from 'react';
+import Logo from '../../assets/logo.png';
+import backgroundLogin from '../../assets/backgroundLogin.svg';
+import './LoginDiv.css';
 
 function LoginDiv() {
   const URL_POST = 'http://localhost:3241/login';
   const URL_USER = '/user';
+  const URL_ADMIN = '/admin';
+  const URL_GERENTE = '/gerente';
   const URL_REGISTRO = 'registro';
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [UserDataName, setUserDataName] = useState('')
   const [userId, setUserId] = useState(null);
   const [error, setError] = useState('');
 
-  const irAOtraRuta = () => {
-    window.location.href = URL_USER + '/' + userId;
+  const irAOtraRuta = (url) => {
+    window.location.href = url;
   };
 
-  //muchas funciones para el login que luego tienen que separarse
   function login(event) {
     event.preventDefault();
 
@@ -41,35 +41,30 @@ function LoginDiv() {
       redirect: "follow"
     };
 
-
-
-    //primer post para usuario y contraseña
     fetch(URL_POST, requestOptions)
       .then(response => {
         if (response.ok) {
-          return response.json(); // Procesamos la respuesta JSON si es exitosa
+          return response.json();
         } else {
           console.log(response);
           alert(response);
-          throw new Error('Failed to fetch data'); // Manejamos errores en caso de fallo en la petición
+          throw new Error('Failed to fetch data');
         }
       })
       .then(data => {
         if (data && data.data) {
           const id = data.data.id;
-
-          setUserId(id)
-          console.log(id)
+          setUserId(id);
+          console.log(id);
           localStorage.setItem('userId', id);
           promptForAccessCode(id);
         }
       })
       .catch(error => {
         console.error(error);
-        alert('Usuario no válido. Intente nuevamente.'); // Show alert on failed login
+        alert('Usuario no válido. Intente nuevamente.');
       });
 
-    //segundo post para el codigo
     function promptForAccessCode(userId) {
       const code = prompt("Escriba el código de acceso:");
       const myHeaders = new Headers();
@@ -90,20 +85,40 @@ function LoginDiv() {
       fetch("http://localhost:3241/loginCodigo", requestOptions)
         .then(response => {
           if (response.ok) {
-            return response.json(); // Procesamos la respuesta JSON si es exitosa
+            return response.json();
           } else {
             console.log(response);
-            alert(response);
-            throw new Error('Failed to fetch data'); // Manejamos errores en caso de fallo en la petición
+            alert(response.statusText);
+            throw new Error('Failed to fetch data');
           }
         })
         .then(data => {
           if (data && data.data) {
-            const id = data.id;      // Guardar el id
-            const nombre = data.data.nombre;
+            const userId = data.data.id;
+            const userType = data.data.tipo;
+            let redirectUrl = URL_USER + '/' ;
 
-            localStorage.setItem('userName', nombre);
-            irAOtraRuta(); // Redireccionar al usuario, modificar según tu necesidad
+            // Prioridad para los tipos 2 y 3
+            let foundType = false;
+
+            for (let type of userType) {
+              if (type.id === 2) {
+                redirectUrl = URL_ADMIN + '/' ;
+                foundType = true;
+                break;
+              } else if (type.id === 3) {
+                redirectUrl = URL_GERENTE + '/' ;
+                foundType = true;
+                break;
+              }
+            }
+
+            if (!foundType) {
+              // Si no se encontraron tipos 2 o 3, redirigir al URL_USER por defecto
+              irAOtraRuta(redirectUrl);
+            } else {
+              irAOtraRuta(redirectUrl);
+            }
           }
         })
         .catch(error => {
@@ -113,24 +128,25 @@ function LoginDiv() {
 
     }
   }
+
   return (
     <>
       <div id='container'>
         <div id='backgroundContainer'>
-          <img src={backgroundLogin} alt="Background"></img>
+          <img src={backgroundLogin} alt="Background" />
         </div>
         <div id='contentContainer'>
-          <img id='logo' src={Logo} alt="Logo"></img>
+          <img id='logo' src={Logo} alt="Logo" />
           <h2>Bienvenido!</h2>
           <label className='label'>Que placer tenerte acá </label>
           <form id='form-login'>
             <div id='username'>
               <label className='label'>Usuario</label>
-              <input type='text' id='inputUsername' value={username} onChange={(e) => setUsername(e.target.value)}></input>
+              <input type='text' id='inputUsername' value={username} onChange={(e) => setUsername(e.target.value)} />
             </div>
             <div id='password'>
               <label className='label'>Contraseña</label>
-              <input type='password' id='inputPassword' value={password} onChange={(e) => setPassword(e.target.value)}></input>
+              <input type='password' id='inputPassword' value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
             <button type='button' id='btnIngresar' onClick={login}>Ingresar</button>
           </form>
