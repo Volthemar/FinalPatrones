@@ -1,8 +1,9 @@
 import Sidebar from '../../Components/Sidebar/Sidebar.jsx'
 import Historial from '../../Components/Historial/Historial.jsx'
-import './VistaGerente.css'
+import Impacto from '../../Components/Impacto/Impacto.jsx';
+import './VistaGerenteImpacto.css'
 
-function VistaGerente() {
+function VistaGerenteImpacto() {
 
     return (
         <>
@@ -11,4 +12,4 @@ function VistaGerente() {
         </>
     );
 }
-export default VistaGerente;
+export default VistaGerenteImpacto;

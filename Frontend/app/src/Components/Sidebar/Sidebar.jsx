@@ -11,7 +11,7 @@ import URL_CERRAR_SESION from '../../assets/LogoCerrarSesion.svg'
 
 import './Sidebar.css'
 
-function Sidebar({vista, handleClick}) {
+function Sidebar({vista}) {
     const [usuario, setUsuario] = useState([]);
     const URL_NOMBRE_USUARIO = '/endpointxd'
     const nombre = localStorage.getItem('userName');
@@ -46,23 +46,23 @@ function Sidebar({vista, handleClick}) {
         <div id='botones'>
             {vista === 'Gerente' && (
                 <>
-                    <SidebarButton URL_BTN='/Gerente' nombre='Impacto' URL_IMG={URL_IMPACTO}></SidebarButton>
-                    <SidebarButton URL_BTN='/user/1' nombre='Ver como' URL_IMG={URL_VER_COMO}></SidebarButton>
-                    <SidebarButton URL_BTN='/Cuentas' nombre='Cuentas' URL_IMG={URL_CUENTAS}></SidebarButton>
-                    <SidebarButton URL_BTN='/Modificaciones' nombre='Modificaciones' URL_IMG={URL_MODIFICACIONES}></SidebarButton>
-                    <SidebarButton URL_BTN='/Trazabilidad' nombre='Trazabilidad' URL_IMG={URL_TRAZABILIDAD}></SidebarButton>
+                    <SidebarButton URL_BTN='/Gerente/Impacto' nombre='Impacto' URL_IMG={URL_IMPACTO}></SidebarButton>
+                    <SidebarButton URL_BTN='/Gerente/VerComo' nombre='Ver como' URL_IMG={URL_VER_COMO}></SidebarButton>
+                    <SidebarButton URL_BTN='/Gerente/Cuentas' nombre='Cuentas' URL_IMG={URL_CUENTAS}></SidebarButton>
+                    <SidebarButton URL_BTN='/Gerente/Modificaciones' nombre='Modificaciones' URL_IMG={URL_MODIFICACIONES}></SidebarButton>
+                    <SidebarButton URL_BTN='/Gerente/Trazabilidad' nombre='Trazabilidad' URL_IMG={URL_TRAZABILIDAD}></SidebarButton>
                 </>
             )}
             {vista === 'Administrador' && (
                 <>
-                    <SidebarButton URL_BTN='/admin' nombre='Impacto' URL_IMG={URL_IMPACTO}></SidebarButton>
-                    <SidebarButton URL_BTN='/user/1' nombre='Ver como' URL_IMG={URL_VER_COMO}></SidebarButton>
-                    <SidebarButton URL_BTN='/admin/Administracion' nombre='Modificaciones' URL_IMG={URL_MODIFICACIONES}></SidebarButton>
+                    <SidebarButton URL_BTN='/Admin/Impacto' nombre='Impacto' URL_IMG={URL_IMPACTO}></SidebarButton>
+                    <SidebarButton URL_BTN='/Admin/VerComo' nombre='Ver como' URL_IMG={URL_VER_COMO}></SidebarButton>
+                    <SidebarButton URL_BTN='/Admin/Modificaciones' nombre='Modificaciones' URL_IMG={URL_MODIFICACIONES}></SidebarButton>
                 </>
             )}
         </div>
         <div id='logout'>
-            <SidebarButton URL_BTN='/logout' nombre='Cerrar sesión' URL_IMG={URL_CERRAR_SESION}></SidebarButton>
+            <SidebarButton URL_BTN='/Login' nombre='Cerrar sesión' URL_IMG={URL_CERRAR_SESION}></SidebarButton>
         </div>
     </div>
   );
