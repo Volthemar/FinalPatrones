@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,13 +13,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.websocket.ClientEndpoint;
 
 import com.api.crud.DTO.Request.LoginRequest;
+import com.api.crud.DTO.Response.LoginResponse;
 import com.api.crud.DTO.Request.LoginCodigoRequest;
 import com.api.crud.DTO.Request.IpCaptureRequest;
+import com.api.crud.models.TipoUsuarioModel;
+import com.api.crud.models.TipoUsuarioUsuarioModel;
 import com.api.crud.models.UsuarioModel;
 import com.api.crud.services.IEmailService;
 import com.api.crud.services.IpService;
+import com.api.crud.services.TipoUsuarioService;
+import com.api.crud.services.TipoUsuarioUsuarioService;
 import com.api.crud.services.UsuarioService;
 import com.api.crud.services.models.EmailDTO;
 import com.api.crud.services.CodigoLogin;
@@ -33,6 +40,12 @@ public class LoginController {
 
     @Autowired
     private IEmailService emailService;
+
+    @Autowired
+    private TipoUsuarioService tipoUsuarioService;
+
+    @Autowired
+    private TipoUsuarioUsuarioService tipoUsuarioUsuarioService;
 
     @Autowired
     private IpService ipService;
@@ -123,18 +136,27 @@ public class LoginController {
 
         if (codigo.equals(codigoUsuario)) {
             Optional<UsuarioModel> cliente = this.userService.getPorId(id);
-            String nombre = cliente.get().getNombre();
-            String correo = cliente.get().getCorreo();
-            String identificacion = cliente.get().getIdentificacion();
-            Boolean estado = cliente.get().isEstado();
-            String usuario = cliente.get().getUsuario();
+            LoginResponse respuestaLogin = new LoginResponse();
+            respuestaLogin.setNombre(cliente.get().getNombre());
+            respuestaLogin.setCorreo(cliente.get().getCorreo());
+            respuestaLogin.setIdentificacion(cliente.get().getIdentificacion());
+            respuestaLogin.setEstado(cliente.get().isEstado());
+            respuestaLogin.setUsuario(cliente.get().getUsuario());
+            Vector<TipoUsuarioUsuarioModel> rompimiento = tipoUsuarioUsuarioService.obtenerTipoUsuario(cliente.get().getId());
+            Vector<TipoUsuarioModel> tipos = new Vector<>();
+            for (int i = 0; i < rompimiento.size(); i++) {
+                Optional<TipoUsuarioModel> tipo = tipoUsuarioService.obtenerTipo(rompimiento.get(i).getTipo_usuario_fk());
+                if (!tipo.isEmpty()){
+                    tipos.add(tipo.get());
+                }
+            }
+            respuestaLogin.setTipo(tipos);
+            respuestaLogin.setId(cliente.get().getId());
             IpCaptureRequest ipCaptureRequest = new IpCaptureRequest();
             ipCaptureRequest.setIpAddress(request.getRemoteAddr());
             ipCaptureRequest.setUserId(cliente.get().getId());
             ipService.captureIp(ipCaptureRequest);
-            return Map.of("data", Map.of("id",id,"nombre", nombre, "correo", correo,
-            "identificacion", identificacion, "estado",
-            estado, "usuario", usuario), "msg", "Codigo correcto");
+            return Map.of("data", respuestaLogin, "msg", "Codigo correcto");
         } else {
             IpCaptureRequest ipCaptureRequest = new IpCaptureRequest();
             ipCaptureRequest.setIpAddress(request.getRemoteAddr());
