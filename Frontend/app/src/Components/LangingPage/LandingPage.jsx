@@ -42,15 +42,7 @@ function LandingPage() {
                     </div>
                 </section>
             </div>
-            <section className="registration-form">
-                <h2>Regístrate</h2>
-                <form>
-                    <input type="text" placeholder="Nombre" required />
-                    <input type="email" placeholder="Email" required />
-                    <input type="password" placeholder="Contraseña" required />
-                    <button type="submit">Registrarse</button>
-                </form>
-            </section>
+
 
             <section className="contact-form">
                 <h2>Contacto</h2>

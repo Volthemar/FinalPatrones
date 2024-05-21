@@ -9,6 +9,7 @@ import TarjetaCredito from './Registro/TarjetaCredito';
 import CrearParqueadero from './utilsAdmin/CrearParqueadero';
 import LandingPage from './LangingPage/LandingPage';
 import CrearCiudad from './utilsAdmin/CrearCiudad';
+import ParkingManagement from './gerenteUtils/ParkingManagement';
 function App() {
   return (
     <Router>
@@ -23,6 +24,7 @@ function App() {
         <Route path="/codigo" element={<Codigo />} />
         <Route path="/gerente/CrearParqueadero" element={<CrearParqueadero />} />        
         <Route path="/gerente/CrearCiudad" element={<CrearCiudad />} />
+        <Route path="/admin/Administracion" element={<ParkingManagement />} />
       </Routes>
     </Router>
   );

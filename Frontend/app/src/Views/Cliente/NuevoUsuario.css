@@ -9,8 +9,10 @@
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   background-color: #f4f5f7;
   padding: 2%;
+  margin-bottom: 1%;
+  margin-top: 1%;
   font-size: 1vmax;
-  overflow: hidden; /* Asegura que el contenido no se salga del contenedor */
+  overflow:scroll; /* Asegura que el contenido no se salga del contenedor */
 }
 
 .imagen {
