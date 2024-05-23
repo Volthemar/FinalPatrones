@@ -1,0 +1,37 @@
+
+#view-container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#container-modificaciones{
+    background-color: #ffffff;
+    border-radius: 25px;
+    box-sizing: border-box;
+    overflow: hidden;
+    width: 40%;
+    height: 60vh;
+}
+
+#cabecera{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    height: 15%;
+}
+
+#container-modificaciones .titulos{
+    cursor:pointer;
+    width: 25%; 
+    height: 100%;
+    border-right: 1px solid rgba(18, 16, 18, 0.2);
+}
+#container-funciones{
+    padding: 5%;
+    height: 80%;
+}
+.titulosClicked{
+    background-color: brown;
+}

@@ -17,10 +17,11 @@ function FormCrearParqueadero() {
     const [latitud, setLatitud] = useState('');
     const [city, setCity] = useState('');
     const [cities, setCities] = useState([]);
-    
-    //New
+    const [precioCarros, setPrecioCarros] = useState('');
+    const [precioMotos, setPrecioMotos] = useState('');
+    const [precioCiclas, setPrecioCiclas] = useState('');
+    const [precioMora, setPrecioMora] = useState('');
     const [tiposParqueadero, setTiposParqueadero] = useState([]);
-    //...
 
     useEffect(() => {
         const fetchCities = async () => {
@@ -51,24 +52,26 @@ function FormCrearParqueadero() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const selectedCity = cities.find(c => c.nombre === city);
         if (!selectedCity) {
             alert('Please select a valid city');
             return;
         }
-
         const data = {
             nombre: nombreParqueadero,
             ciudad_fk: selectedCity.id,
             cupo_carro_total: parseInt(numCars, 10),
             cupo_moto_total: parseInt(numMotorcycles, 10),
             cupo_bici_total: parseInt(numBicycles, 10),
-            tipo_fk: parkingType === 'cubierto' ? 1 : parkingType === 'descubierto' ? 2 : parkingType === 'con_suscripcion' ? 3 : 4,
-            longitud: parseFloat(altitude),
-            latitud: parseFloat(latitude)
+            precio_normal_carro: precioCarros,
+            precio_normal_moto: precioMotos,
+            precio_normal_ciclas: precioCiclas,
+            precio_mora: precioMora,
+            tipo_fk: parkingType,
+            longitud: parseFloat(longitud),
+            latitud: parseFloat(latitud)
         };
-
+        
         try {
             const requestOptions = {
                 method: "POST",
@@ -83,16 +86,19 @@ function FormCrearParqueadero() {
             const result = await response.json();
             console.log('Response from server:', result);
 
-            if (result && result.msg === 'Ciudad creada') {
+            if (result) {
                 alert('Parqueadero creado');
-                // Reset form fields
                 setParkingType('');
                 setNombreParqueadero('');
                 setNumCars('');
                 setNumMotorcycles('');
                 setNumBicycles('');
-                setAltitude('');
-                setLatitude('');
+                setPrecioCarros('');
+                setPrecioMotos('');
+                setPrecioCiclas('');
+                setPrecioMora('');
+                setLongitud('');
+                setLatitud('');
                 setCity('');
             }
         } catch (error) {
@@ -106,11 +112,11 @@ function FormCrearParqueadero() {
                     <div className='div-select-form-parqueadero'>
                         <label>Tipo Parqueadero: </label>
                         <select className='select-form-parqueadero'
-                            value={parkingType}
+                            value={parkingType.id}
                             onChange={(e) => setParkingType(e.target.value)}
                             required>
                                 {tiposParqueadero.map((tipo) => (
-                                <option key={tipo.id} value={tipo.nombre}>{tipo.tipo}</option>
+                                <option key={tipo.id} value={tipo.id}>{tipo.tipo}</option>
                             ))}
                         </select>
                     </div>
@@ -149,6 +155,46 @@ function FormCrearParqueadero() {
                             value={numBicycles}
                             placeholder='Ingrese el número de cupos para bicicletas.'
                             onChange={(e) => setNumBicycles(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className='div-input-crear-parqueadero'>
+                        <label>Precios para Carros:</label>
+                        <input className='input-crear-parqueadero'
+                            type="number"
+                            value={precioCarros}
+                            placeholder='Ingrese el valor para carros.'
+                            onChange={(e) => setPrecioCarros(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className='div-input-crear-parqueadero'>
+                        <label>Precios para motos:</label>
+                        <input className='input-crear-parqueadero'
+                            type="number"
+                            value={precioMotos}
+                            placeholder='Ingrese el valor para motos.'
+                            onChange={(e) => setPrecioMotos(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className='div-input-crear-parqueadero'>
+                        <label>Precio para Bicicletas:</label>
+                        <input className='input-crear-parqueadero'
+                            type="number"
+                            value={precioCiclas}
+                            placeholder='Ingrese el valor para bicicletas.'
+                            onChange={(e) => setPrecioCiclas(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className='div-input-crear-parqueadero'>
+                        <label>Precio para Mora:</label>
+                        <input className='input-crear-parqueadero'
+                            type="number"
+                            value={numBicycles}
+                            placeholder='Ingrese el valor por mora'
+                            onChange={(e) => setPrecioMora(e.target.value)}
                             required
                         />
                     </div>
