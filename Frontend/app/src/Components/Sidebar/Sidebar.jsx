@@ -46,18 +46,18 @@ function Sidebar({vista}) {
         <div id='botones'>
             {vista === 'Gerente' && (
                 <>
-                    <SidebarButton URL_BTN='/gerente' nombre='Impacto' URL_IMG={URL_IMPACTO}></SidebarButton>
-                    <SidebarButton URL_BTN='/user/1' nombre='Ver como cliente' URL_IMG={URL_VER_COMO}></SidebarButton>
-                    <SidebarButton URL_BTN='/Cuentas' nombre='Cuentas' URL_IMG={URL_CUENTAS}></SidebarButton>
-                    <SidebarButton URL_BTN='/gerente/CrearParqueadero' nombre='CrearParqueadero' URL_IMG={URL_MODIFICACIONES}></SidebarButton>
-                    <SidebarButton URL_BTN='/gerente/CrearCiudad' nombre='CrearCiudad' URL_IMG={URL_TRAZABILIDAD}></SidebarButton>
+                    <SidebarButton URL_BTN='/Gerente/Impacto' nombre='Impacto' URL_IMG={URL_IMPACTO}></SidebarButton>
+                    <SidebarButton URL_BTN='/Gerente/VerComo' nombre='Ver como cliente' URL_IMG={URL_VER_COMO}></SidebarButton>
+                    <SidebarButton URL_BTN='/Gerente/Cuentas' nombre='Cuentas' URL_IMG={URL_CUENTAS}></SidebarButton>
+                    <SidebarButton URL_BTN='/Gerente/Modificaciones' nombre='CrearParqueadero' URL_IMG={URL_MODIFICACIONES}></SidebarButton>
+                    <SidebarButton URL_BTN='/Gerente/Trazabilidad' nombre='CrearCiudad' URL_IMG={URL_TRAZABILIDAD}></SidebarButton>
                 </>
             )}
             {vista === 'Administrador' && (
                 <>
-                    <SidebarButton URL_BTN='/admin' nombre='Impacto' URL_IMG={URL_IMPACTO}></SidebarButton>
-                    <SidebarButton URL_BTN='/user/1' nombre='Ver como cliente' URL_IMG={URL_VER_COMO}></SidebarButton>
-                    <SidebarButton URL_BTN='/admin/Administracion' nombre='Modificaciones' URL_IMG={URL_MODIFICACIONES}></SidebarButton>
+                    <SidebarButton URL_BTN='/Admin/Impacto' nombre='Impacto' URL_IMG={URL_IMPACTO}></SidebarButton>
+                    <SidebarButton URL_BTN='/Admin/VerComo' nombre='Ver como cliente' URL_IMG={URL_VER_COMO}></SidebarButton>
+                    <SidebarButton URL_BTN='/Admin/Modificaciones' nombre='Modificaciones' URL_IMG={URL_MODIFICACIONES}></SidebarButton>
                 </>
             )}
         </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Impacto.css'
 import Sidebar from '../Sidebar/Sidebar';
-import Chart from '../gerenteUtils/Chart';
+import Chart from '../utilsAdmin/Chart';
 function Impacto() {
 
   /*
