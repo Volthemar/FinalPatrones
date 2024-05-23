@@ -42,6 +42,9 @@ public class UsuarioModel {
     @Column
     private String cod_verificacion;
 
+    @Column
+    private Boolean activo;
+
     /**
      * @return long return the id
      */
@@ -124,13 +127,6 @@ public class UsuarioModel {
      */
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
-    }
-
-    /**
-     * @return boolean return the estado
-     */
-    public boolean isEstado() {
-        return estado;
     }
 
     /**

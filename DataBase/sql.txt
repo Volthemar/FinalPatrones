@@ -59,6 +59,7 @@ CREATE TABLE Ciudad (
     Nombre VARCHAR(255) NOT NULL,
     Longitud DECIMAL(9,6) NOT NULL,
     Latitud DECIMAL(9,6) NOT NULL,
+    Habilitado BOOLEAN NOT NULL DEFAULT TRUE,
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -88,6 +89,7 @@ CREATE TABLE Parqueadero (
     Cupo_uti_carro INT NOT NULL DEFAULT 0,
     Cupo_uti_bici INT NOT NULL DEFAULT 0,
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Habilitado BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (Ciudad_fk) REFERENCES Ciudad(Id),
     FOREIGN KEY (Tipo_fk) REFERENCES Tipo_parqueadero(Id)
 );
