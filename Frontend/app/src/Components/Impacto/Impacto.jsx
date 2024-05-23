@@ -69,7 +69,6 @@ function Impacto() {
     <>
       <Sidebar vista={'Gerente'}></Sidebar>
       <div id="contenidoImpacto">
-        
         <Chart></Chart>
       </div>
     </>

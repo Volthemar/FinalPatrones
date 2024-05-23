@@ -85,6 +85,7 @@ const CrearParqueadero = () => {
 
     return (
         <div>
+            <Sidebar vista='Gerente'></Sidebar>
             <div className="card2">
                 <form className='form-ciudades' onSubmit={handleSubmit}>
                     <div className='div-select-ciudades'>
@@ -157,8 +158,10 @@ const CrearParqueadero = () => {
                                 </option>
                             ))}
                         </select>
+                        
                     </div>
                     <button className='button-ciudades' type="submit">Enviar</button>
+
                 </form>
             </div>
         </div>
