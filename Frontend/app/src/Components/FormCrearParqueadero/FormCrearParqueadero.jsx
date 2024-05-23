@@ -51,24 +51,21 @@ function FormCrearParqueadero() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const selectedCity = cities.find(c => c.nombre === city);
         if (!selectedCity) {
             alert('Please select a valid city');
             return;
         }
-
         const data = {
             nombre: nombreParqueadero,
             ciudad_fk: selectedCity.id,
             cupo_carro_total: parseInt(numCars, 10),
             cupo_moto_total: parseInt(numMotorcycles, 10),
             cupo_bici_total: parseInt(numBicycles, 10),
-            tipo_fk: parkingType === 'cubierto' ? 1 : parkingType === 'descubierto' ? 2 : parkingType === 'con_suscripcion' ? 3 : 4,
-            longitud: parseFloat(altitude),
-            latitud: parseFloat(latitude)
+            tipo_fk: parkingType,
+            longitud: parseFloat(longitud),
+            latitud: parseFloat(latitud)
         };
-
         try {
             const requestOptions = {
                 method: "POST",
@@ -83,16 +80,15 @@ function FormCrearParqueadero() {
             const result = await response.json();
             console.log('Response from server:', result);
 
-            if (result && result.msg === 'Ciudad creada') {
+            if (result) {
                 alert('Parqueadero creado');
-                // Reset form fields
                 setParkingType('');
                 setNombreParqueadero('');
                 setNumCars('');
                 setNumMotorcycles('');
                 setNumBicycles('');
-                setAltitude('');
-                setLatitude('');
+                setLongitud('');
+                setLatitud('');
                 setCity('');
             }
         } catch (error) {
@@ -106,11 +102,11 @@ function FormCrearParqueadero() {
                     <div className='div-select-form-parqueadero'>
                         <label>Tipo Parqueadero: </label>
                         <select className='select-form-parqueadero'
-                            value={parkingType}
+                            value={parkingType.id}
                             onChange={(e) => setParkingType(e.target.value)}
                             required>
                                 {tiposParqueadero.map((tipo) => (
-                                <option key={tipo.id} value={tipo.nombre}>{tipo.tipo}</option>
+                                <option key={tipo.id} value={tipo.id}>{tipo.tipo}</option>
                             ))}
                         </select>
                     </div>
