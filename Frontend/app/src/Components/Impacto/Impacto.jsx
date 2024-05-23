@@ -38,7 +38,6 @@ function Impacto() {
   const handleChange = async (event) => {
     const idCiudadSeleccionada = event.target.value;
     setCiudadSeleccionada(idCiudadSeleccionada);
-    console.log(idCiudadSeleccionada);
     fetch(URL_PARQUEADEROS, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -51,8 +50,6 @@ function Impacto() {
         return response.json();
       })
       .then(data => {
-        console.log("data:");
-        console.log(data);
         setDatosParqueaderos(data);
         setVisibilidadSegundoSelect(true);
       })
@@ -62,14 +59,37 @@ function Impacto() {
   }
 
   const handleChangeParking = async (event) =>{
-
+    
   }
 
   return (
     <>
       <Sidebar vista={'Gerente'}></Sidebar>
       <div id="contenidoImpacto">
-        
+        <div id='seleccionar'>
+          <h2>Estadísticas de uso</h2>
+          <label htmlFor="ciudades">Seleccione una ciudad:</label>
+          {datosCiudades && (
+            <select id="ciudades" name="ciudades" value={ciudadSeleccionada} onChange={handleChange}>
+              <option value=''></option>
+              {datosCiudades.data.map(ciudad => (
+                <option key={ciudad.id} value={ciudad.id}>{ciudad.nombre}</option>
+              ))}
+            </select>
+          )}
+          {visibilidadSegundoSelect && (
+            <>
+              <label htmlFor="parqueaderos">Seleccione un parqueadero:</label>
+              <select id="parqueaderos" name="parqueaderos" onChange={handleChangeParking}>
+                <option value=''></option>
+                {datosParqueaderos.data.map(parqueadero => (
+                  <option key={parqueadero.id} value={parqueadero.id}>{parqueadero.nombre}</option>
+                ))}
+              </select>
+            </>
+          )}
+
+        </div>
         <Chart></Chart>
       </div>
     </>
