@@ -7,10 +7,17 @@ import Modificaciones from '../Views/Gerente/VistaGerenteModificaciones.jsx' ;
 import LogIn from '../Views/Login/VistaLogin'
 import Codigo from '../Components/Codigo/Codigo';
 import TarjetaCredito from './Registro/TarjetaCredito';
+<<<<<<< Updated upstream
 import CrearParqueadero from './utilsGerente/CrearParqueadero.jsx';
 import LandingPage from './LangingPage/LandingPage';
 import CrearCiudad from './utilsGerente/CrearCiudad.jsx';
 import ParkingManagement from './utilsAdmin/ParkingManagement.jsx'
+=======
+import CrearParqueadero from '../Components/utilsGerente/CrearParqueadero.jsx'
+import LandingPage from './LangingPage/LandingPage';
+import CrearCiudad from './utilsGerente/CrearCiudad';
+import ParkingManagement from './utilsAdmin/ParkingManagement';
+>>>>>>> Stashed changes
 import Admin from '../Views/Admin/Admin';
 import GerenteParqueaderos from './GerenteParqueaderos/GerenteParqueaderos.jsx';
 import VistaGerenteImpacto from '../Views/Gerente/VistaGerenteImpacto.jsx';
@@ -27,7 +34,11 @@ function App() {
         <Route path="/user/:userId" element={<Cliente />} />      
         
         {/*Detalles por definir*/}
+<<<<<<< Updated upstream
         <Route path="/Gerente/Impacto" element={<VistaGerenteImpacto/>} />
+=======
+        
+>>>>>>> Stashed changes
 
         {/*Por trabajar*/}
         <Route path="/Gerente/Modificaciones" element={<Modificaciones/>} />
@@ -41,12 +52,10 @@ function App() {
         <Route path="/Gerente/GerenteParqueaderos" element={<GerenteParqueaderos />} />
         <Route path="/Admin/Administracion" element={<ParkingManagement />} />
 
-        {/*Prescindibles*/}
+        {/*Prescindibles es que aca los estoy redirigiendo :C */}
         <Route path="/Admin" element={<Admin />} />
-
-        {/*No funcionales*/}
-        <Route path="/tarjeta" element={<TarjetaCredito />} />
-        <Route path="/codigo" element={<Codigo />} />
+        <Route path="/Gerente" element={<Impacto />} />
+        
       </Routes>
     </Router>
   );

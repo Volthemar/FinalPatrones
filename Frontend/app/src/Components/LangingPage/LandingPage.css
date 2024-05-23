@@ -15,7 +15,20 @@
     height: 50px;
 
   }
-  
+  #buttonIngreso{
+    padding: 15px 30px;
+    font-size: 1.5em;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  }
+
+
   #login-link {
     color: #fff;
     text-decoration: none;
