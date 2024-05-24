@@ -1,4 +1,5 @@
 package com.api.crud.models;
+
 import java.util.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="tarifa")
+@Table(name = "tarifa")
 public class TarifaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,10 @@ public class TarifaModel {
 
     @Column
     private Date fecha_creacion;
-    
+
+    @Column
+    private Boolean activo;
+
     /**
      * @return long return the id
      */
@@ -113,4 +117,24 @@ public class TarifaModel {
         this.fecha_creacion = fecha_creacion;
     }
 
+    /**
+     * @return boolean return the activo
+     */
+    public boolean isActivo() {
+        return activo;
+    }
+
+    /**
+     * @return Boolean return the activo
+     */
+    public Boolean getactivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
 }

@@ -1,9 +1,5 @@
 package com.api.crud.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -24,6 +20,9 @@ public class Ip {
 
     @Column
     private Timestamp fechaCreacion;
+
+    @Column
+    private Boolean activo;
 
     /**
      * @return Long return the id
@@ -81,4 +80,24 @@ public class Ip {
         this.fechaCreacion = fechaCreacion;
     }
 
+    /**
+     * @return boolean return the activo
+     */
+    public boolean isActivo() {
+        return activo;
+    }
+
+    /**
+     * @return Boolean return the activo
+     */
+    public Boolean getactivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
 }

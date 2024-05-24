@@ -30,7 +30,7 @@ public class UsuarioModel {
     @Column
     private String contrasena;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private Boolean estado;
 
     @Column
@@ -42,7 +42,7 @@ public class UsuarioModel {
     @Column
     private String cod_verificacion;
 
-    @Column
+    @Column(nullable = false)
     private Boolean activo;
 
     /**
@@ -130,6 +130,13 @@ public class UsuarioModel {
     }
 
     /**
+     * @return boolean return the estado
+     */
+    public boolean isEstado() {
+        return estado;
+    }
+
+    /**
      * @return Boolean return the estado
      */
     public Boolean getEstado() {
@@ -191,6 +198,27 @@ public class UsuarioModel {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    /**
+     * @return boolean return the activo
+     */
+    public boolean isActivo() {
+        return activo;
+    }
+
+    /**
+     * @return Boolean return the activo
+     */
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
 }

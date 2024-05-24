@@ -16,6 +16,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -64,7 +65,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/getUsuarios")
     public ResponseEntity<List<UsuarioModel>> getUsuarios() {
         List<UsuarioModel> usuarios = UsuarioService.getUsuarios();
         if (usuarios.isEmpty()) {
@@ -72,6 +73,24 @@ public class UsuarioController {
         } else {
             return ResponseEntity.ok(usuarios);
         }
+    }
+
+    @PatchMapping("/{id}/bloquear")
+    public ResponseEntity<UsuarioModel> bloquearUsuario(@PathVariable Long id) {
+        UsuarioModel usuarioActualizado = UsuarioService.updateEstado(id, false);
+        if (usuarioActualizado != null) {
+            return ResponseEntity.ok(usuarioActualizado);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PatchMapping("/{id}/desbloquear")
+    public ResponseEntity<UsuarioModel> desbloquearUsuario(@PathVariable Long id) {
+        UsuarioModel usuarioActualizado = UsuarioService.updateEstado(id, true);
+        if (usuarioActualizado != null) {
+            return ResponseEntity.ok(usuarioActualizado);
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }

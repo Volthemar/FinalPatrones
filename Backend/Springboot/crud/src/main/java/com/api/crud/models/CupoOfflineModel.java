@@ -1,6 +1,5 @@
 package com.api.crud.models;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GenerationType;
@@ -8,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.sql.Timestamp;
-
 
 @Entity
 @Table(name = "Cupo_Offline")
@@ -38,7 +36,9 @@ public class CupoOfflineModel {
     @Column
     private String nombre_cliente;
 
-    
+    @Column
+    private Boolean activo;
+
     /**
      * @return Long return the id
      */
@@ -137,12 +137,33 @@ public class CupoOfflineModel {
         this.fecha_creacion = fecha_creacion;
     }
 
-    public String getNombre_Cliente(){
+    public String getNombre_Cliente() {
         return nombre_cliente;
     }
 
-    public void setNombre_Cliente(String nombre_cliente){
+    public void setNombre_Cliente(String nombre_cliente) {
         this.nombre_cliente = nombre_cliente;
+    }
+
+    /**
+     * @return boolean return the activo
+     */
+    public boolean isActivo() {
+        return activo;
+    }
+
+    /**
+     * @return Boolean return the activo
+     */
+    public Boolean getactivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
 }
