@@ -90,4 +90,12 @@ public class RegistroResponse {
         this.activo = activo;
     }
 
+
+    /**
+     * @return boolean return the activo
+     */
+    public boolean isActivo() {
+        return activo;
+    }
+
 }
