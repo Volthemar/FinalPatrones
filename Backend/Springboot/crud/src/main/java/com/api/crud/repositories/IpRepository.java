@@ -8,5 +8,8 @@ import java.util.List;
 @Repository
 public interface IpRepository extends JpaRepository<Ip, Long> {
     List<Ip> findByUsuarioFk(Long usuarioFk);
+
     List<Ip> findByDireccionIp(String direccionIp);
+
+    List<Ip> findByActivo(boolean activo);
 }

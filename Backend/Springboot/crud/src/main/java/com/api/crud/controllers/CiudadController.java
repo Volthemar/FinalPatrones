@@ -24,7 +24,7 @@ public class CiudadController {
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/obtenerCiudades")
     public Map<String, Object> obenerCiudades() {
-        return Map.of("data", ciudadService.obtenerCiudades(), "msg", "Ciudades");
+        return Map.of("data", ciudadService.obtenerCiudades(true), "msg", "Ciudades");
     }
 
     @CrossOrigin(origins = "http://localhost:5173")

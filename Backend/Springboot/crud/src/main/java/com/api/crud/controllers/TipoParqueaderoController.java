@@ -20,7 +20,7 @@ public class TipoParqueaderoController {
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/tiposParqueadero")
     public Map<String, Object> tiposParqueadero() {
-        return Map.of("data", tipoParqueaderoService.tomarTodo(), "msg", "Parqueaderos");
+        return Map.of("data", tipoParqueaderoService.tomarTodo(true), "msg", "Parqueaderos");
     }
 
 }

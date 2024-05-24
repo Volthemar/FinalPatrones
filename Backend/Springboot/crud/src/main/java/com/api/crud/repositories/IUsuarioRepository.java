@@ -22,4 +22,6 @@ public interface IUsuarioRepository extends JpaRepository<UsuarioModel, Long> {
 
     List<UsuarioModel> findByEstado(boolean estado);
 
+    List<UsuarioModel> findByActivo(boolean activo);
+
 }

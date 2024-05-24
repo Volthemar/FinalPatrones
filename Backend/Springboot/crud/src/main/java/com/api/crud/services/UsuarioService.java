@@ -85,4 +85,18 @@ public class UsuarioService {
         return null; // Usuario no encontrado
     }
 
+    public UsuarioModel updateActivo(Long id, Boolean activo) {
+        Optional<UsuarioModel> usuarioOpt = IUsuarioRepository.findById(id);
+        if (usuarioOpt.isPresent()) {
+            UsuarioModel usuario = usuarioOpt.get();
+            usuario.setActivo(activo);
+            return IUsuarioRepository.save(usuario);
+        }
+        return null;
+    }
+
+    public List<UsuarioModel> getUsuariosPorActivo(boolean activo) {
+        return IUsuarioRepository.findByActivo(activo);
+    }
+
 }

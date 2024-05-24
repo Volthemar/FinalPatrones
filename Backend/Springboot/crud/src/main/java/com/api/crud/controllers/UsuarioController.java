@@ -67,11 +67,11 @@ public class UsuarioController {
 
     @GetMapping("/getUsuarios")
     public ResponseEntity<List<UsuarioModel>> getUsuarios() {
-        List<UsuarioModel> usuarios = UsuarioService.getUsuarios();
-        if (usuarios.isEmpty()) {
+        List<UsuarioModel> usuariosActivos = UsuarioService.getUsuariosPorActivo(true);
+        if (usuariosActivos.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.ok(usuarios);
+            return ResponseEntity.ok(usuariosActivos);
         }
     }
 
@@ -87,6 +87,24 @@ public class UsuarioController {
     @PatchMapping("/{id}/desbloquear")
     public ResponseEntity<UsuarioModel> desbloquearUsuario(@PathVariable Long id) {
         UsuarioModel usuarioActualizado = UsuarioService.updateEstado(id, true);
+        if (usuarioActualizado != null) {
+            return ResponseEntity.ok(usuarioActualizado);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PatchMapping("/{id}/desactivar")
+    public ResponseEntity<UsuarioModel> desactivarUsuario(@PathVariable Long id) {
+        UsuarioModel usuarioActualizado = UsuarioService.updateActivo(id, false);
+        if (usuarioActualizado != null) {
+            return ResponseEntity.ok(usuarioActualizado);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PatchMapping("/{id}/activar")
+    public ResponseEntity<UsuarioModel> activarUsuario(@PathVariable Long id) {
+        UsuarioModel usuarioActualizado = UsuarioService.updateActivo(id, true);
         if (usuarioActualizado != null) {
             return ResponseEntity.ok(usuarioActualizado);
         }
