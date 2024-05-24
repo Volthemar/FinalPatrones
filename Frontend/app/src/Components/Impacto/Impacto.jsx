@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Impacto.css'
 import Sidebar from '../Sidebar/Sidebar';
-import Chart from '../gerenteUtils/Chart';
+import Chart from '../utilsAdmin/Chart';
 function Impacto() {
 
   /*
@@ -38,7 +38,6 @@ function Impacto() {
   const handleChange = async (event) => {
     const idCiudadSeleccionada = event.target.value;
     setCiudadSeleccionada(idCiudadSeleccionada);
-    console.log(idCiudadSeleccionada);
     fetch(URL_PARQUEADEROS, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -51,8 +50,6 @@ function Impacto() {
         return response.json();
       })
       .then(data => {
-        console.log("data:");
-        console.log(data);
         setDatosParqueaderos(data);
         setVisibilidadSegundoSelect(true);
       })
@@ -62,7 +59,7 @@ function Impacto() {
   }
 
   const handleChangeParking = async (event) =>{
-
+    
   }
 
   return (
@@ -74,6 +71,7 @@ function Impacto() {
           <label htmlFor="ciudades">Seleccione una ciudad:</label>
           {datosCiudades && (
             <select id="ciudades" name="ciudades" value={ciudadSeleccionada} onChange={handleChange}>
+              <option value=''></option>
               {datosCiudades.data.map(ciudad => (
                 <option key={ciudad.id} value={ciudad.id}>{ciudad.nombre}</option>
               ))}
@@ -83,12 +81,14 @@ function Impacto() {
             <>
               <label htmlFor="parqueaderos">Seleccione un parqueadero:</label>
               <select id="parqueaderos" name="parqueaderos" onChange={handleChangeParking}>
-              {datosParqueaderos.data.map(parqueadero => (
-                <option key={parqueadero.id} value={parqueadero.id}>{parqueadero.nombre}</option>
-              ))}
+                <option value=''></option>
+                {datosParqueaderos.data.map(parqueadero => (
+                  <option key={parqueadero.id} value={parqueadero.id}>{parqueadero.nombre}</option>
+                ))}
               </select>
             </>
           )}
+
         </div>
         <Chart></Chart>
       </div>

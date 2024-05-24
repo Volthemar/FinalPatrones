@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './CrearParqueadero.css';
-import Sidebar from '../Sidebar/Sidebar';
+import './FormCrearCiudad.css'
 
-const CrearCiudad = () => {
+function FormCrearCiudad() {
+    const URL_CREAR_CIUDAD = "http://localhost:3241/crearCiudad"
     const [cityName, setCityName] = useState('');
     const [longitude, setLongitude] = useState('');
     const [latitude, setLatitude] = useState('');
@@ -14,15 +14,11 @@ const CrearCiudad = () => {
             longitud: parseFloat(longitude),
             latitud: parseFloat(latitude)
         };
-
         console.log('Form data submitted:', data);
-
         try {
-            const response = await fetch('http://localhost:3241/crearCiudad', {
+            const response = await fetch(URL_CREAR_CIUDAD, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
             });
 
@@ -31,7 +27,6 @@ const CrearCiudad = () => {
 
             if (result && result.msg === 'Ciudad creada') {
                 alert('Ciudad creada');
-                // Reset form fields
                 setCityName('');
                 setLongitude('');
                 setLatitude('');
@@ -42,39 +37,44 @@ const CrearCiudad = () => {
     };
 
     return (
-        <div>
-            <Sidebar />
-            <div className="card2">
-                <form className='form-ciudades' onSubmit={handleSubmit}>
-                    <div className='div-input-ciudades'>
-                        <label>Nombre de la ciudad</label>
-                        <input className='input-ciudades'
+            <div id='container-crear-ciudad'>
+                <form id='form-crear-ciudad' onSubmit={handleSubmit}>
+                    <div className='div-input-crear-ciudad'>
+                        <label>Nombre:</label>
+                        <input className='input-crear-ciudad'
                             type="text"
+                            placeholder='Ingrese el nombre de la ciudad.'
                             value={cityName}
                             onChange={(e) => setCityName(e.target.value)}
+                            required
                         />
                     </div>
-                    <div className='div-input-ciudades'>
-                        <label>Longitud</label>
-                        <input className='input-ciudades'
+                    <div className='div-input-crear-ciudad'>
+                        <label>Longitud:</label>
+                        <input className='input-crear-ciudad'
                             type="number"
+                            placeholder='Ingrese la Longitud.'
                             value={longitude}
                             onChange={(e) => setLongitude(e.target.value)}
+                            required
                         />
                     </div>
-                    <div className='div-input-ciudades'>
-                        <label>Latitud</label>
-                        <input className='input-ciudades'
+                    <div className='div-input-crear-ciudad'>
+                        <label>Latitud:</label>
+                        <input className='input-crear-ciudad'
                             type="number"
+                            placeholder='Ingrese la Latitud'
                             value={latitude}
                             onChange={(e) => setLatitude(e.target.value)}
+                            required
                         />
                     </div>
-                    <button className='button-ciudades' type="submit">Enviar</button>
+                    <button id='btn-crear-ciudad' type="submit">Enviar</button>
                 </form>
             </div>
-        </div>
+
     );
 };
 
-export default CrearCiudad;
+export default FormCrearCiudad;
+

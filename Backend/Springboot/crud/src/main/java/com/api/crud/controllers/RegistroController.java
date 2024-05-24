@@ -38,11 +38,11 @@ public class RegistroController {
     @Autowired
     private IEmailService emailService;
 
-
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/registroPersona")
     public Map<String, Object> registroPersona(@RequestBody RegistroPersonaRequest registroPersona)
             throws MessagingException {
+
         String nombre = registroPersona.getNombre();
         String identificacion = registroPersona.getIdentificacion();
         String correo = registroPersona.getCorreo();
@@ -57,7 +57,7 @@ public class RegistroController {
         String contrasena = Encriptar.generarContrasena();
 
         String contrasenaEncriptada = Encriptar.encriptarContrasena(contrasena);
-        
+
         UsuarioModel usuarioModel = new UsuarioModel();
         usuarioModel.setUsuario(usuario);
         usuarioModel.setContrasena(contrasenaEncriptada);
@@ -68,8 +68,9 @@ public class RegistroController {
         usuarioModel.setNum_intentos(0);
         usuarioModel.setEstado(true);
         usuarioModel.setFecha_creacion(ManejarFechas.obtenerFechaActual());
+        usuarioModel.setActivo(true);
         userService.guardarUsuario(usuarioModel);
-        
+
         Optional<UsuarioModel> usuarioAgregado = userService.buscarUsuario(usuario);
         TipoUsuarioUsuarioModel tipo = new TipoUsuarioUsuarioModel();
         tipo.setUsuario_fk(usuarioAgregado.get().getId());
@@ -90,6 +91,7 @@ public class RegistroController {
         registro.setCorreo(correo);
         registro.setEstado(true);
         registro.setTipo(tipoUsuarioService.obtenerTipo(idTipoCliente).get());
+        registro.setActivo(true);
 
         return Map.of("data", registro, "msg", "Usuario creado con exito");
     }

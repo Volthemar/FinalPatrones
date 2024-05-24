@@ -11,12 +11,12 @@ public class TipoParqueaderoService {
     @Autowired
     ITipoParqueaderoRepository tipoParqueaderoRepository;
 
-    public String obtenerTipo(Long tipo_id){
+    public String obtenerTipo(Long tipo_id) {
         String tipo = tipoParqueaderoRepository.findById(tipo_id).get().getTipo();
         return tipo;
     }
 
-    public List<TipoParqueaderoModel> tomarTodo(){
-        return tipoParqueaderoRepository.findAll();
+    public List<TipoParqueaderoModel> tomarTodo(Boolean activo) {
+        return tipoParqueaderoRepository.findByActivo(activo);
     }
 }

@@ -12,7 +12,11 @@ function LandingPage() {
             <header className="header">
                 <img id='logo' src={Logo} alt="Logo"></img>
                 <nav>
-                    <Link to="/login" className="login-link">Login</Link>
+                    <Link to="/login" className="login-link">
+                        <button id='buttonIngreso'>
+                        Ingresa
+                        </button>
+                        </Link>
                 </nav>
             </header>
             <div className='info'>
@@ -20,7 +24,7 @@ function LandingPage() {
                     <h1>Bienvenido a Four Parks</h1>
                     <p>Reserva tu parqueadero en Cali, Medellín o Bogotá de manera fácil y rápida.</p>
                     <Link to="/registro">
-                        <button>Regístrate Ahora</button>
+                        <button>Regístrate</button>
                     </Link>
                 </section>
 

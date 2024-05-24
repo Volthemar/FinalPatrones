@@ -1,6 +1,6 @@
 import Sidebar from '../../Components/Sidebar/Sidebar.jsx'
 import './Admin.css'
-import Chart from '../../Components/gerenteUtils/Chart.jsx';
+import Chart from '../../Components/utilsAdmin/Chart.jsx';
 function VistaAdmin() {
     return (
         <>

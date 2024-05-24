@@ -20,13 +20,13 @@ public class CupoModel {
 
     @Column
     private long usuario_fk;
-    
+
     @Column
     private long parqueadero_fk;
 
     @Column
     private long vehiculo_fk;
-    
+
     @Column
     private boolean pagado;
 
@@ -43,9 +43,10 @@ public class CupoModel {
     private Timestamp fecha_creacion;
 
     @Enumerated(EnumType.STRING)
-    private Estado estado; 
+    private Estado estado;
 
-
+    @Column
+    private Boolean activo;
 
     /**
      * @return long return the id
@@ -145,7 +146,6 @@ public class CupoModel {
         this.horas_pedidas = horas_pedidas;
     }
 
-
     /**
      * @return long return the vehiculo_fk
      */
@@ -174,17 +174,38 @@ public class CupoModel {
         this.fecha_creacion = fecha_creacion;
     }
 
-    public void setEstado(Estado estado){
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
-    public Estado getEstado(){
+    public Estado getEstado() {
         return estado;
     }
 
-    public enum Estado{
+    public enum Estado {
         RESERVADO,
         OCUPADO
+    }
+
+    /**
+     * @return boolean return the activo
+     */
+    public boolean isActivo() {
+        return activo;
+    }
+
+    /**
+     * @return Boolean return the activo
+     */
+    public Boolean getactivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
 }

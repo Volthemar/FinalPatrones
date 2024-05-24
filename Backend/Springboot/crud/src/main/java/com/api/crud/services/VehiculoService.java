@@ -11,7 +11,7 @@ public class VehiculoService {
     @Autowired
     IVehiculoRepository vehiculoRepository;
 
-    public List<VehiculoModel> obtenerVehiculos(){
-        return vehiculoRepository.findAll();
+    public List<VehiculoModel> obtenerVehiculos(boolean activo) {
+        return vehiculoRepository.findByActivo(activo);
     }
 }
