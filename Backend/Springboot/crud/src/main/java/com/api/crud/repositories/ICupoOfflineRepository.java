@@ -13,7 +13,7 @@ import com.api.crud.models.CupoOfflineModel;
 public interface ICupoOfflineRepository extends JpaRepository<CupoOfflineModel, Long> {
 
     @Query("SELECT COUNT(c) FROM CupoOfflineModel c JOIN VehiculoModel v ON c.vehiculo_fk = v.id WHERE c.parqueadero_fk = :parqueaderoId AND v.tipo = :vehicleType")
-    int countByParqueaderoIdAndVehicleType(@Param("parqueaderoId") long parqueaderoId,
+    int countByParqueaderoIdAndVehiculoTipo(@Param("parqueaderoId") long parqueaderoId,
             @Param("vehicleType") String vehicleType);
 
     List<CupoOfflineModel> findByActivo(boolean activo);

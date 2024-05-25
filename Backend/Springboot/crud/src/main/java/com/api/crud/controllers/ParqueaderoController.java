@@ -2,8 +2,10 @@ package com.api.crud.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.api.crud.DTO.Request.ParqueaderoEstadisticasRequest;
 import com.api.crud.DTO.Request.ParqueaderoRequest;
 import com.api.crud.DTO.Response.ParqueaderoBasicoResponse;
+import com.api.crud.DTO.Response.ParqueaderoEstadisticasResponse;
 import com.api.crud.DTO.Response.ParqueaderoResponse;
 import com.api.crud.models.ParqueaderoModel;
 import com.api.crud.services.ManejarFechas;
@@ -13,6 +15,8 @@ import java.util.Optional;
 import java.util.Map;
 import java.util.Vector;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -112,6 +116,18 @@ public class ParqueaderoController {
         parqueaderoGuardado.setFecha_creacion(ManejarFechas.obtenerFechaActual());
         parqueaderoService.guardarParqueadero(parqueaderoGuardado);
         return Map.of("data", parqueaderoGuardado, "msg", "Parqueaderos");
+    }
+    
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PostMapping("/estadisticasParqueadero")
+    public ResponseEntity<ParqueaderoEstadisticasResponse> obtenerEstadisticas(@RequestBody ParqueaderoEstadisticasRequest request) {
+        ParqueaderoEstadisticasResponse response = parqueaderoService.obtenerEstadisticas(request.getParqueadero_id());
+
+        if (response == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

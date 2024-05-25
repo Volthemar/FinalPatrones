@@ -118,18 +118,18 @@ public class CupoService {
         switch (tipoVehiculo.toUpperCase()) {
             case "CARRO":
                 totalSpots = parqueadero.getCupo_carro_total();
-                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehicleType(parqueaderoId, "CARRO") +
-                                cupoOfflineRepository.countByParqueaderoIdAndVehicleType(parqueaderoId, "CARRO");
+                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO") +
+                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO");
                 break;
             case "MOTO":
                 totalSpots = parqueadero.getCupo_moto_total();
-                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehicleType(parqueaderoId, "MOTO") +
-                                cupoOfflineRepository.countByParqueaderoIdAndVehicleType(parqueaderoId, "MOTO");
+                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO") +
+                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO");
                 break;
             case "BICI":
                 totalSpots = parqueadero.getCupo_bici_total();
-                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehicleType(parqueaderoId, "BICI") +
-                                cupoOfflineRepository.countByParqueaderoIdAndVehicleType(parqueaderoId, "BICI");
+                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI") +
+                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI");
                 break;
             default:
                 return false;
@@ -150,18 +150,18 @@ public class CupoService {
 
         switch (tipoVehiculo.toUpperCase()) {
             case "CARRO":
-                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehicleType(parqueaderoId, "CARRO") +
-                                cupoOfflineRepository.countByParqueaderoIdAndVehicleType(parqueaderoId, "CARRO");
+                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO") +
+                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO");
                 parqueadero.setCupo_uti_carro(occupiedSpots);     
                 break;
             case "MOTO":
-                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehicleType(parqueaderoId, "MOTO") +
-                                cupoOfflineRepository.countByParqueaderoIdAndVehicleType(parqueaderoId, "MOTO");
+                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO") +
+                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO");
                 parqueadero.setCupo_uti_moto(occupiedSpots);                     
                 break;
             case "BICI":
-                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehicleType(parqueaderoId, "BICI") +
-                                cupoOfflineRepository.countByParqueaderoIdAndVehicleType(parqueaderoId, "BICI");
+                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI") +
+                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI");
                 parqueadero.setCupo_uti_bici(occupiedSpots);                
                 break;
         }

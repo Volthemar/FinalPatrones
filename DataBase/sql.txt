@@ -23,7 +23,7 @@ CREATE TABLE Tarjeta_credito (
     Numero VARCHAR(50) NOT NULL,
     Nombre_propietario VARCHAR(50) NOT NULL,
     CVC VARCHAR(3) NOT NULL,
-    Fecha_vencimiento TIMESTAMP NOT NULL,
+    Fecha_vencimiento DATE NOT NULL,
     Usuario_fk BIGINT UNSIGNED,
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id)
