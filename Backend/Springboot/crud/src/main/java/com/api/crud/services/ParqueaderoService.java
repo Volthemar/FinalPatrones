@@ -29,10 +29,11 @@ public class ParqueaderoService {
     private ICupoOfflineRepository cupoOfflineRepository;
 
     @Autowired
-    private IFacturaRepository facturaRepository;
-
-    @Autowired
     private IFacturaOfflineRepository facturaOfflineRepository;
+
+    
+    @Autowired
+    private IFacturaRepository facturaRepository;
 
     public Vector<ParqueaderoModel> obtenerParqueaderoCiudad(Long ciudad) {
         return parqueaderoRepository.findByCiudad(ciudad);
