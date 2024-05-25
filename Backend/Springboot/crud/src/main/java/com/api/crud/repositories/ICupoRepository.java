@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.api.crud.models.CupoModel;
-import com.api.crud.models.FacturaModel;
+
 
 import java.util.Optional;
 
@@ -22,9 +22,6 @@ public interface ICupoRepository extends JpaRepository<CupoModel, Long> {
 
     @Query("SELECT v.tipo FROM VehiculoModel v WHERE v.id = :vehicleId")
     String findVehicleTypeById(@Param("vehicleId") long vehicleId);
-
-    @Query("SELECT SUM(f.valorPagado) FROM FacturaModel f JOIN f.vehiculo v WHERE f.parqueaderoId = :parqueaderoId AND v.tipo = :vehiculoTipo")
-    int sumByParqueaderoIdAndVehiculoTipo(@Param("parqueaderoId") long parqueaderoId, @Param("vehiculoTipo") String vehiculoTipo);
 
     List<CupoModel> findByActivo(boolean activo);
 
