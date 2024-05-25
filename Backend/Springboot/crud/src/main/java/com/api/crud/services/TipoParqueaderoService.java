@@ -16,7 +16,7 @@ public class TipoParqueaderoService {
         return tipo;
     }
 
-    public List<TipoParqueaderoModel> tomarTodo(Boolean activo) {
+    public List<TipoParqueaderoModel> obtenerTipoParqueadero(Boolean activo) {
         return tipoParqueaderoRepository.findByActivo(activo);
     }
 }
