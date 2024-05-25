@@ -1,6 +1,7 @@
 package com.api.crud.models;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import org.hibernate.annotations.CreationTimestamp;

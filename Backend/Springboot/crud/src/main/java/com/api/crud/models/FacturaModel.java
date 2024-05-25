@@ -1,6 +1,7 @@
 package com.api.crud.models;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -36,7 +37,6 @@ public class FacturaModel {
     @Column(name = "fecha_creacion", nullable = false, updatable = false, insertable = false)
     private Timestamp fechaCreacion;
 
-    // Getters and Setters
 
     public Long getId() {
         return id;

@@ -2,7 +2,6 @@ package com.api.crud.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.crud.DTO.Request.ParqueaderoEstadisticasRequest;
 import com.api.crud.DTO.Request.ParqueaderoRequest;
 import com.api.crud.DTO.Response.ParqueaderoBasicoResponse;
 import com.api.crud.DTO.Response.ParqueaderoEstadisticasResponse;
@@ -14,17 +13,23 @@ import com.api.crud.services.TipoParqueaderoService;
 import java.util.Optional;
 import java.util.Map;
 import java.util.Vector;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
 @RequestMapping("")
 public class ParqueaderoController {
+    private static final Logger logger = Logger.getLogger(ParqueaderoController.class.getName());
+
+
     @Autowired
     private ParqueaderoService parqueaderoService;
 
@@ -119,15 +124,18 @@ public class ParqueaderoController {
     }
     
     @CrossOrigin(origins = "http://localhost:5173")
-    @PostMapping("/estadisticasParqueadero")
-    public ResponseEntity<ParqueaderoEstadisticasResponse> obtenerEstadisticas(@RequestBody ParqueaderoEstadisticasRequest request) {
-        ParqueaderoEstadisticasResponse response = parqueaderoService.obtenerEstadisticas(request.getParqueadero_id());
+    @GetMapping("/{id}/estadisticasParqueadero")
+    public ResponseEntity<ParqueaderoEstadisticasResponse> obtenerEstadisticas(@PathVariable("id") long parqueaderoId) {
+        Optional<ParqueaderoEstadisticasResponse> response = parqueaderoService.obtenerEstadisticasParqueadero(parqueaderoId);
 
-        if (response == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        
+        if (response.isPresent()) {
+            logger.info("Estadisticas found for parqueadero ID: " + parqueaderoId);
+            return ResponseEntity.ok(response.get());
+        } else {
+            logger.warning("No estadisticas found for parqueadero ID: " + parqueaderoId);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 }

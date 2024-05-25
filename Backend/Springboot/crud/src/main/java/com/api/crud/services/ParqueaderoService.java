@@ -1,97 +1,95 @@
 package com.api.crud.services;
 
-import java.util.Map;
-import java.util.Vector;
-import java.util.HashMap;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.api.crud.DTO.Response.ParqueaderoEstadisticasResponse;
 import com.api.crud.models.ParqueaderoModel;
-import com.api.crud.repositories.ICupoOfflineRepository;
-import com.api.crud.repositories.ICupoRepository;
-import com.api.crud.repositories.IParqueaderoRepository;
 import com.api.crud.repositories.IFacturaRepository;
 import com.api.crud.repositories.IFacturaOfflineRepository;
+import com.api.crud.repositories.IParqueaderoRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class ParqueaderoService {
-    @Autowired
-    IParqueaderoRepository parqueaderoRepository;
-    
-    @Autowired
-    private ICupoRepository cupoRepository;
+
+    private static final Logger logger = Logger.getLogger(ParqueaderoService.class.getName());
 
     @Autowired
-    private ICupoOfflineRepository cupoOfflineRepository;
+    private IParqueaderoRepository parqueaderoRepository;
+
+    @Autowired
+    private IFacturaRepository facturaRepository;
 
     @Autowired
     private IFacturaOfflineRepository facturaOfflineRepository;
 
-    
-    @Autowired
-    private IFacturaRepository facturaRepository;
+    public Optional<ParqueaderoEstadisticasResponse> obtenerEstadisticasParqueadero(long parqueaderoId) {
+        logger.info("Fetching parqueadero with ID: " + parqueaderoId);
+        Optional<ParqueaderoModel> parqueaderoOpt = parqueaderoRepository.findById(parqueaderoId);
 
-    public Vector<ParqueaderoModel> obtenerParqueaderoCiudad(Long ciudad) {
-        return parqueaderoRepository.findByCiudad(ciudad);
-    }
+        if (parqueaderoOpt.isPresent()) {
+            ParqueaderoModel parqueadero = parqueaderoOpt.get();
 
-    public Optional<ParqueaderoModel> obtenerParqueadero(Long parqueadero) {
-        return parqueaderoRepository.findById(parqueadero);
-    }
+            List<String> labels = new ArrayList<>();
+            List<Integer> cuposTotales = new ArrayList<>();
+            List<Integer> cuposOcupados = new ArrayList<>();
+            List<Integer> cuposDisponibles = new ArrayList<>();
+            List<Integer> ingresos = new ArrayList<>();
 
-    public ParqueaderoModel guardarParqueadero(ParqueaderoModel parqueadero) {
-        return parqueaderoRepository.save(parqueadero);
-    }
+            labels.add("CARRO");
+            labels.add("MOTO");
+            labels.add("BICI");
 
-    public ParqueaderoEstadisticasResponse obtenerEstadisticas(long parqueaderoId) {
-        ParqueaderoModel parqueadero = parqueaderoRepository.findById(parqueaderoId).orElse(null);
+            int totalCuposCarro = parqueadero.getCupo_carro_total();
+            int cuposOcupadosCarro = parqueadero.getCupo_uti_carro();
+            int cuposDisponiblesCarro = totalCuposCarro - cuposOcupadosCarro;
+            int ingresosCarro = facturaRepository.sumByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO") +
+                                facturaOfflineRepository.sumByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO");
 
-        if (parqueadero == null) {
-            return null; // Handle appropriately
+            cuposTotales.add(totalCuposCarro);
+            cuposOcupados.add(cuposOcupadosCarro);
+            cuposDisponibles.add(cuposDisponiblesCarro);
+            ingresos.add(ingresosCarro);
+
+            int totalCuposMoto = parqueadero.getCupo_moto_total();
+            int cuposOcupadosMoto = parqueadero.getCupo_uti_moto();
+            int cuposDisponiblesMoto = totalCuposMoto - cuposOcupadosMoto;
+            int ingresosMoto = facturaRepository.sumByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO") +
+                               facturaOfflineRepository.sumByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO");
+
+            cuposTotales.add(totalCuposMoto);
+            cuposOcupados.add(cuposOcupadosMoto);
+            cuposDisponibles.add(cuposDisponiblesMoto);
+            ingresos.add(ingresosMoto);
+
+            int totalCuposBici = parqueadero.getCupo_bici_total();
+            int cuposOcupadosBici = parqueadero.getCupo_uti_bici();
+            int cuposDisponiblesBici = totalCuposBici - cuposOcupadosBici;
+            int ingresosBici = facturaRepository.sumByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI") +
+                               facturaOfflineRepository.sumByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI");
+
+            cuposTotales.add(totalCuposBici);
+            cuposOcupados.add(cuposOcupadosBici);
+            cuposDisponibles.add(cuposDisponiblesBici);
+            ingresos.add(ingresosBici);
+
+            ParqueaderoEstadisticasResponse response = new ParqueaderoEstadisticasResponse();
+            response.setLabels(labels);
+            response.setCuposTotales(cuposTotales);
+            response.setCuposOcupados(cuposOcupados);
+            response.setCuposDisponibles(cuposDisponibles);
+            response.setIngresos(ingresos);
+
+            return Optional.of(response);
+        } else {
+            logger.warning("Parqueadero not found with ID: " + parqueaderoId);
+            return Optional.empty();
         }
-
-        int totalCuposCarro = parqueadero.getCupo_carro_total();
-        int totalCuposMoto = parqueadero.getCupo_moto_total();
-        int totalCuposBici = parqueadero.getCupo_bici_total();
-
-        int cuposOcupadosCarro = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO");
-        int cuposOcupadosMoto = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO");
-        int cuposOcupadosBici = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI");
-
-        int cuposOcupadosCarroOffline = cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO");
-        int cuposOcupadosMotoOffline = cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO");
-        int cuposOcupadosBiciOffline = cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI");
-
-        cuposOcupadosCarro += cuposOcupadosCarroOffline;
-        cuposOcupadosMoto += cuposOcupadosMotoOffline;
-        cuposOcupadosBici += cuposOcupadosBiciOffline;
-
-        Map<String, Integer> ingresosPorVehiculo = new HashMap<>();
-        ingresosPorVehiculo.put("CARRO", 
-            facturaRepository.sumByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO") + 
-            facturaOfflineRepository.sumByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO"));
-        ingresosPorVehiculo.put("MOTO", 
-            facturaRepository.sumByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO") + 
-            facturaOfflineRepository.sumByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO"));
-        ingresosPorVehiculo.put("BICI", 
-            facturaRepository.sumByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI") + 
-            facturaOfflineRepository.sumByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI"));
-
-        ParqueaderoEstadisticasResponse response = new ParqueaderoEstadisticasResponse();
-        response.setParqueaderoId(parqueaderoId);
-        response.setTotalCuposCarro(totalCuposCarro);
-        response.setTotalCuposMoto(totalCuposMoto);
-        response.setTotalCuposBici(totalCuposBici);
-        response.setCuposOcupadosCarro(cuposOcupadosCarro);
-        response.setCuposOcupadosMoto(cuposOcupadosMoto);
-        response.setCuposOcupadosBici(cuposOcupadosBici);
-        response.setIngresosPorVehiculo(ingresosPorVehiculo);
-
-        return response;
     }
-
 }
+

@@ -1,79 +1,52 @@
 package com.api.crud.DTO.Response;
 
-import java.util.Map;
+import java.util.List;
 
 public class ParqueaderoEstadisticasResponse {
-    private long parqueaderoId;
-    private int totalCuposCarro;
-    private int totalCuposMoto;
-    private int totalCuposBici;
-    private int cuposOcupadosCarro;
-    private int cuposOcupadosMoto;
-    private int cuposOcupadosBici;
-    private Map<String, Integer> ingresosPorVehiculo;
+    private List<String> labels;
+    private List<Integer> cuposTotales;
+    private List<Integer> cuposOcupados;
+    private List<Integer> cuposDisponibles;
+    private List<Integer> ingresos;
 
-    // Getters and setters
-    public long getParqueaderoId() {
-        return parqueaderoId;
+    // Getters and Setters
+    public List<String> getLabels() {
+        return labels;
     }
 
-    public void setParqueaderoId(long parqueaderoId) {
-        this.parqueaderoId = parqueaderoId;
+    public void setLabels(List<String> labels) {
+        this.labels = labels;
     }
 
-    public int getTotalCuposCarro() {
-        return totalCuposCarro;
+    public List<Integer> getCuposTotales() {
+        return cuposTotales;
     }
 
-    public void setTotalCuposCarro(int totalCuposCarro) {
-        this.totalCuposCarro = totalCuposCarro;
+    public void setCuposTotales(List<Integer> cuposTotales) {
+        this.cuposTotales = cuposTotales;
     }
 
-    public int getTotalCuposMoto() {
-        return totalCuposMoto;
+    public List<Integer> getCuposOcupados() {
+        return cuposOcupados;
     }
 
-    public void setTotalCuposMoto(int totalCuposMoto) {
-        this.totalCuposMoto = totalCuposMoto;
+    public void setCuposOcupados(List<Integer> cuposOcupados) {
+        this.cuposOcupados = cuposOcupados;
     }
 
-    public int getTotalCuposBici() {
-        return totalCuposBici;
+    public List<Integer> getCuposDisponibles() {
+        return cuposDisponibles;
     }
 
-    public void setTotalCuposBici(int totalCuposBici) {
-        this.totalCuposBici = totalCuposBici;
+    public void setCuposDisponibles(List<Integer> cuposDisponibles) {
+        this.cuposDisponibles = cuposDisponibles;
     }
 
-    public int getCuposOcupadosCarro() {
-        return cuposOcupadosCarro;
+    public List<Integer> getingresos() {
+        return ingresos;
     }
 
-    public void setCuposOcupadosCarro(int cuposOcupadosCarro) {
-        this.cuposOcupadosCarro = cuposOcupadosCarro;
-    }
-
-    public int getCuposOcupadosMoto() {
-        return cuposOcupadosMoto;
-    }
-
-    public void setCuposOcupadosMoto(int cuposOcupadosMoto) {
-        this.cuposOcupadosMoto = cuposOcupadosMoto;
-    }
-
-    public int getCuposOcupadosBici() {
-        return cuposOcupadosBici;
-    }
-
-    public void setCuposOcupadosBici(int cuposOcupadosBici) {
-        this.cuposOcupadosBici = cuposOcupadosBici;
-    }
-
-    public Map<String, Integer> getIngresosPorVehiculo() {
-        return ingresosPorVehiculo;
-    }
-
-    public void setIngresosPorVehiculo(Map<String, Integer> ingresosPorVehiculo) {
-        this.ingresosPorVehiculo = ingresosPorVehiculo;
+    public void setIngresos(List<Integer> ingresos) {
+        this.ingresos = ingresos;
     }
 }
