@@ -2,6 +2,7 @@ package com.api.crud.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.api.crud.DTO.Request.ParqueaderoRequest;
 import com.api.crud.DTO.Response.ParqueaderoBasicoResponse;
 import com.api.crud.DTO.Response.ParqueaderoEstadisticasResponse;
@@ -137,5 +138,13 @@ public class ParqueaderoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping("/estadisticasGlobal")
+    public ResponseEntity<ParqueaderoEstadisticasResponse> getEstadisticasGlobales() {
+        logger.info("Received request for global parqueadero estadisticas");
+        ParqueaderoEstadisticasResponse estadisticas = parqueaderoService.obtenerEstadisticasGlobales();
+        return ResponseEntity.ok(estadisticas);
     }
 }
