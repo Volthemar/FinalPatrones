@@ -99,7 +99,7 @@ function LoginDiv() {
             const name = data.data.nombre;
             localStorage.setItem('userName', name);
             const userType = data.data.tipo;
-            let redirectUrl = URL_USER + '/' + '1';
+            let redirectUrl = URL_USER ;
 
             // Prioridad para los tipos 2 y 3
             let foundType = false;

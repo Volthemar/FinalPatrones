@@ -24,7 +24,7 @@ function App() {
         <Route path="/registro" element={<Registro />} />
 
         {/*Mejorables*/}
-        <Route path="/user/:userId" element={<Cliente />} />      
+        <Route path="/user" element={<Cliente />} />      
         
         {/*Detalles por definir*/}
         <Route path="/Gerente/Impacto" element={<VistaGerenteImpacto/>} />
@@ -39,7 +39,7 @@ function App() {
         <Route path="/Gerente/CrearCiudad" element={<CrearCiudad />} />
         
         <Route path="/Gerente/GerenteParqueaderos" element={<GerenteParqueaderos />} />
-        <Route path="/Admin/Administracion" element={<ParkingManagement />} />
+        <Route path="/Admin/Modificaciones" element={<ParkingManagement />} />
 
         {/*Prescindibles es que aca los estoy redirigiendo :C */}
         <Route path="/Admin" element={<Admin />} />

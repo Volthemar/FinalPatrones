@@ -55,8 +55,8 @@ function Sidebar({vista}) {
             )}
             {vista === 'Administrador' && (
                 <>
-                    <SidebarButton URL_BTN='/Admin/Impacto' nombre='Impacto' URL_IMG={URL_IMPACTO}></SidebarButton>
-                    <SidebarButton URL_BTN='/Admin/VerComo' nombre='Ver como' URL_IMG={URL_VER_COMO}></SidebarButton>
+                    <SidebarButton URL_BTN='/Admin/' nombre='Impacto' URL_IMG={URL_IMPACTO}></SidebarButton>
+                    <SidebarButton URL_BTN='/user' nombre='Ver como' URL_IMG={URL_VER_COMO}></SidebarButton>
                     <SidebarButton URL_BTN='/Admin/Modificaciones' nombre='Modificaciones' URL_IMG={URL_MODIFICACIONES}></SidebarButton>
                 </>
             )}
