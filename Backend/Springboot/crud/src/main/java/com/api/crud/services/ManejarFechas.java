@@ -12,4 +12,12 @@ public class ManejarFechas {
         Date fechaColombia = calendar.getTime();
         return fechaColombia;
     }
+
+    public static Date sumarHoras(Date fecha, int horas){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        calendar.add(Calendar.HOUR_OF_DAY,horas);
+        Date fechaSumada = calendar.getTime();
+        return fechaSumada;
+    }
 }

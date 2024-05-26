@@ -23,48 +23,57 @@ public class CupoController {
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/reservarCupo")
     public Map<String, Object>reservarCupo(@RequestBody ReservarCupoRequest request) {
-        // boolean isReserved = cupoService.reservarCupo(request.getUsuario_fk(), request.getParqueadero_fk(), request.getVehiculo_fk());
+        boolean isReserved = cupoService.reservarCupo(request.getParqueaderoId(),request.getUsuarioId(),request.getVehiculoId(),request.getHoras(),request.getHora_llegada(),request.getTarjetaId());
         return Map.of("data","", "msg", "Cupo reservado con exito");
         
     }
 
-     @PostMapping("/ocuparCupo")
-     public ResponseEntity<?> occuparCupo(@RequestBody OccupyCupoRequest request) {
-         boolean isOccupied = cupoService.occupyCupo(request.getCupoId());
-         if (isOccupied) {
-             return ResponseEntity.ok("Cupo ocupado con éxito.");
-         } else {
-             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo ocupar el cupo.");
-         }
-     }
+    @PostMapping("/ocuparCupo")
+    public ResponseEntity<?> occuparCupo(@RequestBody OccupyCupoRequest request) {
+        boolean isOccupied = cupoService.occupyCupo(request.getCupoId());
+        if (isOccupied) {
+            return ResponseEntity.ok("Cupo ocupado con éxito.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo ocupar el cupo.");
+        }
+    }
 
-     @PostMapping("/ocuparCupoOffline")
-     public ResponseEntity<?> ocuparCupoOffline(@RequestBody OcuparCupoOfflineRequest request) {
-         boolean isOccupied = cupoService.ocuparCupoOffline(request.getParqueaderoId(),request.getVehiculoId(),request.getNombreCliente());
-         if (isOccupied) {
-             return ResponseEntity.ok("Cupo ocupado con éxito.");
-         } else {
-             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No hay cupos disponibles.");
-         }
-     }
+    @PostMapping("/ocuparCupoOffline")
+    public ResponseEntity<?> ocuparCupoOffline(@RequestBody OcuparCupoOfflineRequest request) {
+        boolean isOccupied = cupoService.ocuparCupoOffline(request.getParqueaderoId(),request.getVehiculoId(),request.getNombreCliente());
+        if (isOccupied) {
+            return ResponseEntity.ok("Cupo ocupado con éxito.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No hay cupos disponibles.");
+        }
+    }
 
-     @PostMapping("/leave")
-     public ResponseEntity<?> leaveCupo(@RequestBody LeaveCupoRequest request) {
-         boolean isLeft = cupoService.leaveCupo(request.getCupoId(), request.isOffline());
-         if (isLeft) {
-             return ResponseEntity.ok("Cupo ahora está disponible.");
-         } else {
-             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al liberar el cupo.");
-         }
-     }
+    @PostMapping("/leave")
+    public ResponseEntity<?> leaveCupo(@RequestBody LeaveCupoRequest request) {
+        boolean isLeft = cupoService.leaveCupo(request.getCupoId(), request.isOffline());
+        if (isLeft) {
+            return ResponseEntity.ok("Cupo ahora está disponible.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al liberar el cupo.");
+        }
+    }
 
-     @PostMapping("/cancelar")
-     public ResponseEntity<?> cancelReservation(@RequestBody CancelReservationRequest request) {
-         boolean isCancelled = cupoService.cancelReservation(request.getCupoId());
-         if (isCancelled) {
-             return ResponseEntity.ok("Reserva cancelada con éxito.");
-         } else {
-             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo cancelar la reserva.");
-         }
-     }
+    @PostMapping("/cancelar")
+    public ResponseEntity<?> cancelReservation(@RequestBody CancelReservationRequest request) {
+        boolean isCancelled = cupoService.cancelReservation(request.getCupoId());
+        if (isCancelled) {
+            return ResponseEntity.ok("Reserva cancelada con éxito.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo cancelar la reserva.");
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PostMapping("/verificarDisponibilidad")
+    public Map<String, Object>verificarDisponibilidad(@RequestBody VerificarDisponibilidadRequest verificar) {
+        boolean cupoDisponible = cupoService.verificarDisponibilidadCupo(verificar.getParqueaderoId(), verificar.getVehiculoId(),verificar.getHora_llegada());
+        return Map.of("data",cupoDisponible, "msg", "Disponibilidad");
+        
+    }
+
 }

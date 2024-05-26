@@ -11,6 +11,7 @@ import com.api.crud.repositories.IParqueaderoRepository;
 import com.api.crud.repositories.ICupoOfflineRepository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.sql.Timestamp;
 
@@ -41,7 +42,6 @@ public class CupoService {
                 cupo.setHoras_pedidas(horas);
                 cupo.setActivo(true);
                 cupoRepository.save(cupo);
-
                 actualizarCupo(parqueadero, vehiculoId);
                 parqueaderoRepository.save(parqueadero);
 
@@ -148,20 +148,62 @@ public class CupoService {
             case "CARRO":
                 occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO") +
                                 cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO");
-                parqueadero.setCupo_uti_carro(occupiedSpots + 1);     
+                parqueadero.setCupo_uti_carro(occupiedSpots);     
                 break;
             case "MOTO":
                 occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO") +
                                 cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO");
-                parqueadero.setCupo_uti_moto(occupiedSpots + 1);                     
+                parqueadero.setCupo_uti_moto(occupiedSpots);                     
                 break;
             case "BICI":
                 occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI") +
                                 cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI");
-                parqueadero.setCupo_uti_bici(occupiedSpots + 1);                
+                parqueadero.setCupo_uti_bici(occupiedSpots);                
                 break;
         }
         parqueaderoRepository.save(parqueadero);
     }
+
+    public boolean verificarDisponibilidadCupo(Long parqueaderoId, Long vehiculoId, Date horaLlegada){
+
+        List<CupoModel> cuposReservados = cupoRepository.findByParqueaderoAndVehiculoReservado(parqueaderoId, vehiculoId);
+        Date horaLlegadaEvaluar = new Date();
+        Date horaSalidaEvaluar = new Date();
+        int horasPedidas = 0;
+        int cuposUtilizados = 0;
+        for (int i=0;i<cuposReservados.size();i++){
+            horaLlegadaEvaluar = cuposReservados.get(i).getHora_llegada();
+            horasPedidas = cuposReservados.get(i).getHoras_pedidas();
+            horaSalidaEvaluar = ManejarFechas.sumarHoras(horaLlegadaEvaluar,horasPedidas);
+            if (horaLlegada.before(horaSalidaEvaluar) || horaLlegada.after(horaLlegadaEvaluar) || horaLlegada.equals(horaLlegadaEvaluar)){
+                cuposUtilizados+=1;
+            }
+        }
+        cuposUtilizados = cuposUtilizados + cupoRepository.findByParqueaderoAndVehiculoOcupado(parqueaderoId, vehiculoId).size();
+        cuposUtilizados = cuposUtilizados + cupoOfflineRepository.findByParqueaderoAndVehiculoOcupado(parqueaderoId, vehiculoId).size();
+
+        Optional<ParqueaderoModel> parqueadero = parqueaderoRepository.findById(parqueaderoId);
+        String tipoVehiculo = cupoRepository.findVehicleTypeById(vehiculoId);
+        int cupoTotal = 0;
+
+        switch (tipoVehiculo.toUpperCase()) {
+            case "CARRO":
+                cupoTotal = parqueadero.get().getCupo_carro_total();
+                break;
+            case "MOTO":
+                cupoTotal = parqueadero.get().getCupo_moto_total();
+                break;
+            case "BICICLETA":
+                cupoTotal = parqueadero.get().getCupo_bici_total();
+                break;
+        }
+        if (cuposUtilizados < cupoTotal){
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+
 }
 

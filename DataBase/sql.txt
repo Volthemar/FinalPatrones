@@ -135,6 +135,7 @@ CREATE TABLE Cupo_offline (
     Nombre_cliente VARCHAR(255),
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     Activo BOOLEAN NOT NULL DEFAULT TRUE,
+    Estado ENUM('OCUPADO','FINALIZADO') NOT NULL,
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
 );

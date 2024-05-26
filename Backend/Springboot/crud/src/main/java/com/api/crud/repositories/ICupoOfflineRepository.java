@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.api.crud.models.CupoModel;
 import com.api.crud.models.CupoOfflineModel;
 
 @Repository
@@ -17,4 +18,7 @@ public interface ICupoOfflineRepository extends JpaRepository<CupoOfflineModel, 
             @Param("vehicleType") String vehicleType);
 
     List<CupoOfflineModel> findByActivo(boolean activo);
+
+    @Query(value = "SELECT * FROM CUPO WHERE estado = 'OCUPADO' AND parqueadero_fk = ?1 AND vehiculo_fk = ?2", nativeQuery = true)
+    List<CupoModel> findByParqueaderoAndVehiculoOcupado(Long parqueaderoId, Long vehiculoId);
 }
