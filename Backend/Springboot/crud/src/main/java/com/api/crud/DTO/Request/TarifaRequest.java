@@ -3,6 +3,7 @@ package com.api.crud.DTO.Request;
 public class TarifaRequest {
     private long parqueadero_fk;
     private long vehiculo_fk;
+    private int horas;
 
     /**
      * @return long return the parqueadero_fk
@@ -30,6 +31,20 @@ public class TarifaRequest {
      */
     public void setVehiculo_fk(long vehiculo_fk) {
         this.vehiculo_fk = vehiculo_fk;
+    }
+
+    /**
+     * @return int return the horas
+     */
+    public int getHoras() {
+        return horas;
+    }
+
+    /**
+     * @param horas the horas to set
+     */
+    public void setHoras(int horas) {
+        this.horas = horas;
     }
 
 }

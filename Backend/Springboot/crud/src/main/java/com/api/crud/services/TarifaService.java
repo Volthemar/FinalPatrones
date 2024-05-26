@@ -1,6 +1,6 @@
 package com.api.crud.services;
 
-import java.util.Vector;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,11 +13,11 @@ public class TarifaService {
     @Autowired
     ITarifaRepository tarifaRepository;
 
-    public Vector<TarifaModel> obtenerTarifaParqueadero(Long parqueadero){
+    public Optional<TarifaModel> obtenerTarifaParqueadero(Long parqueadero){
         return tarifaRepository.findByParqueadero(parqueadero);
     }
 
-    public Vector<TarifaModel> obtenerTarifaParqueaderoVehiculo(Long parqueadero,Long vehiculo){
+    public Optional<TarifaModel> obtenerTarifaParqueaderoVehiculo(Long parqueadero,Long vehiculo){
         return tarifaRepository.findByParqueaderoAndVehiculo(parqueadero,vehiculo);
     }
 }
