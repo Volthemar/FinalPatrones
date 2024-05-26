@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ParkingManagement.css'; // Importar los estilos CSS
 import Sidebar from '../Sidebar/Sidebar';
-
+import ReservaCupoOff from './ReservaCupoOff';
 const fetchParkingLot = async (parkingLotId) => {
   try {
     const response = await fetch('http://localhost:3241/obtenerParqueadero', {
@@ -22,6 +22,7 @@ const fetchParkingLot = async (parkingLotId) => {
 const ParkingManagement = () => {
   const [parkingData, setParkingData] = useState(null);
   const [disponible, setDisponible] = useState(true);
+  const [isReservaOpen, setReservaOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,9 +52,9 @@ const ParkingManagement = () => {
         >
           Ver Cupos Reservados
         </button>
-        <button className="button-parkingManagement blue-parkingManagement">Reservar cupo</button>
+        <button className="button-parkingManagement blue-parkingManagement" onClick={() => setReservaOpen(true)}>Reservar cupo</button>
       </div>
-      
+
       <div className="data-container-parkingManagement">
         {parkingData ? (
           <div>
@@ -80,6 +81,9 @@ const ParkingManagement = () => {
                 </tr>
               </tbody>
             </table>
+            <ReservaCupoOff
+              isOpen={isReservaOpen}
+              onClose={() => setReservaOpen(false)} />F
           </div>
         ) : (
           <p>Loading...</p>
