@@ -30,8 +30,7 @@ public class CupoService {
     public boolean reservarCupo(Long parqueaderoId, Long usuarioId, Long vehiculoId, int horas, Date hora_llegada, Long tarjetaId) {
         Optional<ParqueaderoModel> parqueaderoOptional = parqueaderoRepository.findById(parqueaderoId);
         if (parqueaderoOptional.isPresent()) {
-            ParqueaderoModel parqueadero = parqueaderoOptional.get();
-            if (verificarEspacio(parqueadero, vehiculoId)) {
+            if (verificarDisponibilidadCupo(parqueaderoId, vehiculoId, hora_llegada)) {
                 CupoModel cupo = new CupoModel();
                 cupo.setEstado(CupoModel.Estado.RESERVADO);
                 cupo.setUsuario_fk(usuarioId);
@@ -42,9 +41,6 @@ public class CupoService {
                 cupo.setHoras_pedidas(horas);
                 cupo.setActivo(true);
                 cupoRepository.save(cupo);
-                actualizarCupo(parqueadero, vehiculoId);
-                parqueaderoRepository.save(parqueadero);
-
                 return true;
             }
         }
@@ -108,61 +104,6 @@ public class CupoService {
          }
          return false;
      }
-
-     private boolean verificarEspacio(ParqueaderoModel parqueadero, long vehicleId) {
-
-        int cupoTotal = 0;
-        int cupoOcupado = 0;
-        Long parqueaderoId = parqueadero.getId();
-        String tipoVehiculo = cupoRepository.findVehicleTypeById(vehicleId);
-
-        switch (tipoVehiculo.toUpperCase()) {
-            case "CARRO":
-                cupoTotal = parqueadero.getCupo_carro_total();
-                cupoOcupado = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, tipoVehiculo.toUpperCase()) +
-                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, tipoVehiculo.toUpperCase());
-                break;
-            case "MOTO":
-                cupoTotal = parqueadero.getCupo_moto_total();
-                cupoOcupado = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO") +
-                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO");
-                break;
-            case "BICICLETA":
-                cupoTotal = parqueadero.getCupo_bici_total();
-                cupoOcupado = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI") +
-                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI");
-                break;
-            default:
-                return false;
-        }
-
-        return cupoOcupado < cupoTotal;
-    }
-
-    public void actualizarCupo(ParqueaderoModel parqueadero, long vehicleId) {
-        int occupiedSpots = 0;
-        Long parqueaderoId = parqueadero.getId();
-        String tipoVehiculo = cupoRepository.findVehicleTypeById(vehicleId);
-
-        switch (tipoVehiculo.toUpperCase()) {
-            case "CARRO":
-                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO") +
-                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO");
-                parqueadero.setCupo_uti_carro(occupiedSpots);     
-                break;
-            case "MOTO":
-                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO") +
-                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO");
-                parqueadero.setCupo_uti_moto(occupiedSpots);                     
-                break;
-            case "BICI":
-                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI") +
-                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI");
-                parqueadero.setCupo_uti_bici(occupiedSpots);                
-                break;
-        }
-        parqueaderoRepository.save(parqueadero);
-    }
 
     public boolean verificarDisponibilidadCupo(Long parqueaderoId, Long vehiculoId, Date horaLlegada){
 
