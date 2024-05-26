@@ -35,6 +35,7 @@ public class CiudadController {
         ciudadNueva.setLatitud(ciudad.getLatitud());
         ciudadNueva.setLongitud(ciudad.getLongitud());
         ciudadNueva.setNombre(ciudad.getNombre());
+        ciudadNueva.setActivo(true);
         return Map.of("data", ciudadService.guardarCiudad(ciudadNueva), "msg", "Ciudad creada");
     }
 }

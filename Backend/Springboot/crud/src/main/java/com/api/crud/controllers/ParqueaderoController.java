@@ -120,6 +120,7 @@ public class ParqueaderoController {
         parqueaderoGuardado.setCupo_uti_carro(0);
         parqueaderoGuardado.setCupo_uti_moto(0);
         parqueaderoGuardado.setFecha_creacion(ManejarFechas.obtenerFechaActual());
+        parqueaderoGuardado.setActivo(true);
         parqueaderoService.guardarParqueadero(parqueaderoGuardado);
         return Map.of("data", parqueaderoGuardado, "msg", "Parqueaderos");
     }
