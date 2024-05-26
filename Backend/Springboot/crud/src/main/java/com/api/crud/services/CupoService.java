@@ -10,6 +10,7 @@ import com.api.crud.repositories.ICupoRepository;
 import com.api.crud.repositories.IParqueaderoRepository;
 import com.api.crud.repositories.ICupoOfflineRepository;
 
+import java.util.Date;
 import java.util.Optional;
 import java.sql.Timestamp;
 
@@ -25,19 +26,23 @@ public class CupoService {
     @Autowired
     private IParqueaderoRepository parqueaderoRepository;
 
-    public boolean reservarCupo(Long userId, Long parqueaderoId, Long vehiculoId) {
+    public boolean reservarCupo(Long parqueaderoId, Long usuarioId, Long vehiculoId, int horas, Date hora_llegada, Long tarjetaId) {
         Optional<ParqueaderoModel> parqueaderoOptional = parqueaderoRepository.findById(parqueaderoId);
         if (parqueaderoOptional.isPresent()) {
             ParqueaderoModel parqueadero = parqueaderoOptional.get();
-            if (canReserveSpot(parqueadero.getId(), vehiculoId)) {
+            if (verificarEspacio(parqueadero, vehiculoId)) {
                 CupoModel cupo = new CupoModel();
                 cupo.setEstado(CupoModel.Estado.RESERVADO);
-                cupo.setUsuario_fk(userId);
+                cupo.setUsuario_fk(usuarioId);
                 cupo.setParqueadero_fk(parqueaderoId);
                 cupo.setVehiculo_fk(vehiculoId);
+                cupo.setFecha_creacion(ManejarFechas.obtenerFechaActual());
+                cupo.setHora_llegada(hora_llegada);
+                cupo.setHoras_pedidas(horas);
+                cupo.setActivo(true);
                 cupoRepository.save(cupo);
 
-                updateOccupiedSpots(parqueadero.getId(), vehiculoId);
+                actualizarCupo(parqueadero, vehiculoId);
                 parqueaderoRepository.save(parqueadero);
 
                 return true;
@@ -60,7 +65,7 @@ public class CupoService {
         Optional<ParqueaderoModel> parqueaderoOptional = parqueaderoRepository.findById(parqueaderoId);
         if (parqueaderoOptional.isPresent()) {
             ParqueaderoModel parqueadero = parqueaderoOptional.get();
-            if (canReserveSpot(parqueadero.getId(), vehiculoId)) {
+            if (verificarEspacio(parqueadero, vehiculoId)) {
                 CupoOfflineModel cupoOffline = new CupoOfflineModel();
                 cupoOffline.setParqueadero_fk(parqueaderoId);
                 cupoOffline.setVehiculo_fk(vehiculoId);
@@ -68,7 +73,7 @@ public class CupoService {
                 cupoOffline.setHora_llegada(new Timestamp(System.currentTimeMillis()));
                 cupoOfflineRepository.save(cupoOffline);
 
-                updateOccupiedSpots(parqueadero.getId(), vehiculoId);
+                actualizarCupo(parqueadero, vehiculoId);
                 parqueaderoRepository.save(parqueadero);
 
                 return true;
@@ -104,65 +109,56 @@ public class CupoService {
          return false;
      }
 
-     private boolean canReserveSpot(long parqueaderoId, long vehicleId) {
-        Optional<ParqueaderoModel> optionalParqueadero = parqueaderoRepository.findById(parqueaderoId);
-        if (!optionalParqueadero.isPresent()) {
-            return false;
-        }
-        ParqueaderoModel parqueadero = optionalParqueadero.get();
-        int totalSpots = 0;
-        int occupiedSpots = 0;
+     private boolean verificarEspacio(ParqueaderoModel parqueadero, long vehicleId) {
 
+        int cupoTotal = 0;
+        int cupoOcupado = 0;
+        Long parqueaderoId = parqueadero.getId();
         String tipoVehiculo = cupoRepository.findVehicleTypeById(vehicleId);
 
         switch (tipoVehiculo.toUpperCase()) {
             case "CARRO":
-                totalSpots = parqueadero.getCupo_carro_total();
-                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO") +
-                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO");
+                cupoTotal = parqueadero.getCupo_carro_total();
+                cupoOcupado = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, tipoVehiculo.toUpperCase()) +
+                                cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, tipoVehiculo.toUpperCase());
                 break;
             case "MOTO":
-                totalSpots = parqueadero.getCupo_moto_total();
-                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO") +
+                cupoTotal = parqueadero.getCupo_moto_total();
+                cupoOcupado = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO") +
                                 cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO");
                 break;
-            case "BICI":
-                totalSpots = parqueadero.getCupo_bici_total();
-                occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI") +
+            case "BICICLETA":
+                cupoTotal = parqueadero.getCupo_bici_total();
+                cupoOcupado = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI") +
                                 cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI");
                 break;
             default:
                 return false;
         }
 
-        return occupiedSpots < totalSpots;
+        return cupoOcupado < cupoTotal;
     }
 
-    public void updateOccupiedSpots(long parqueaderoId, long vehicleId) {
-        Optional<ParqueaderoModel> optionalParqueadero = parqueaderoRepository.findById(parqueaderoId);
-        if (!optionalParqueadero.isPresent()) {
-            return;
-        }
+    public void actualizarCupo(ParqueaderoModel parqueadero, long vehicleId) {
         int occupiedSpots = 0;
-        ParqueaderoModel parqueadero = optionalParqueadero.get();
-
+        Long parqueaderoId = parqueadero.getId();
         String tipoVehiculo = cupoRepository.findVehicleTypeById(vehicleId);
 
         switch (tipoVehiculo.toUpperCase()) {
             case "CARRO":
                 occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO") +
                                 cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "CARRO");
-                parqueadero.setCupo_uti_carro(occupiedSpots);     
+                parqueadero.setCupo_uti_carro(occupiedSpots + 1);     
                 break;
             case "MOTO":
                 occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO") +
                                 cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "MOTO");
-                parqueadero.setCupo_uti_moto(occupiedSpots);                     
+                parqueadero.setCupo_uti_moto(occupiedSpots + 1);                     
                 break;
             case "BICI":
                 occupiedSpots = cupoRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI") +
                                 cupoOfflineRepository.countByParqueaderoIdAndVehiculoTipo(parqueaderoId, "BICI");
-                parqueadero.setCupo_uti_bici(occupiedSpots);                
+                parqueadero.setCupo_uti_bici(occupiedSpots + 1);                
                 break;
         }
         parqueaderoRepository.save(parqueadero);

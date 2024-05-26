@@ -1,11 +1,12 @@
 package com.api.crud.controllers;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.api.crud.DTO.Request.OcuparCupoOfflineRequest;
 import com.api.crud.DTO.Request.*;
 import com.api.crud.services.CupoService;
 // import com.api.crud.services.ManejarFechas;
@@ -21,13 +22,10 @@ public class CupoController {
     
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/reservarCupo")
-    public ResponseEntity<?> reservarCupo(@RequestBody ReservarCupoRequest request) {
-        boolean isReserved = cupoService.reservarCupo(request.getUsuario_fk(), request.getParqueadero_fk(), request.getVehiculo_fk());
-        if (isReserved) {
-            return ResponseEntity.ok("Cupo reservado con éxito.");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No hay cupos disponibles.");
-        }
+    public Map<String, Object>reservarCupo(@RequestBody ReservarCupoRequest request) {
+        // boolean isReserved = cupoService.reservarCupo(request.getUsuario_fk(), request.getParqueadero_fk(), request.getVehiculo_fk());
+        return Map.of("data","", "msg", "Cupo reservado con exito");
+        
     }
 
      @PostMapping("/ocuparCupo")

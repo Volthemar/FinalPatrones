@@ -1,82 +1,82 @@
 package com.api.crud.DTO.Request;
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class ReservarCupoRequest {
-    private long usuario_fk;
-    private long parqueadero_fk;
-    private long vehiculo_fk;
-    private Timestamp hora_llegada;
-    private int horas_pedidas;
-    
+    private Long tarjeta_fk;
+    private Long parqueadero_fk;
+    private Long vehiculo_fk;
+    private Date hora_llegada;
+    private int horas;
+
 
     /**
-     * @return long return the usuario_fk
+     * @return Long return the tarjeta_fk
      */
-    public long getUsuario_fk() {
-        return usuario_fk;
+    public Long getTarjeta_fk() {
+        return tarjeta_fk;
     }
 
     /**
-     * @param usuario_fk the usuario_fk to set
+     * @param tarjeta_fk the tarjeta_fk to set
      */
-    public void setUsuario_fk(long usuario_fk) {
-        this.usuario_fk = usuario_fk;
+    public void setTarjeta_fk(Long tarjeta_fk) {
+        this.tarjeta_fk = tarjeta_fk;
     }
 
     /**
-     * @return long return the parqueadero_fk
+     * @return Long return the parqueadero_fk
      */
-    public long getParqueadero_fk() {
+    public Long getParqueadero_fk() {
         return parqueadero_fk;
     }
 
     /**
      * @param parqueadero_fk the parqueadero_fk to set
      */
-    public void setParqueadero_fk(long parqueadero_fk) {
+    public void setParqueadero_fk(Long parqueadero_fk) {
         this.parqueadero_fk = parqueadero_fk;
     }
 
     /**
-     * @return long return the vehiculo_fk
+     * @return Long return the vehiculo_fk
      */
-    public long getVehiculo_fk() {
+    public Long getVehiculo_fk() {
         return vehiculo_fk;
     }
 
     /**
      * @param vehiculo_fk the vehiculo_fk to set
      */
-    public void setVehiculo_fk(long vehiculo_fk) {
+    public void setVehiculo_fk(Long vehiculo_fk) {
         this.vehiculo_fk = vehiculo_fk;
     }
 
     /**
      * @return Date return the hora_llegada
      */
-    public Timestamp getHora_llegada() {
+    public Date getHora_llegada() {
         return hora_llegada;
     }
 
     /**
      * @param hora_llegada the hora_llegada to set
      */
-    public void setHora_llegada(Timestamp hora_llegada) {
+    public void setHora_llegada(Date hora_llegada) {
         this.hora_llegada = hora_llegada;
-    }
-    
-    /**
-     * @return int return the horas_pedidas
-     */
-    public int getHoras_pedidas() {
-        return horas_pedidas;
     }
 
     /**
-     * @param horas_pedidas the horas_pedidas to set
+     * @return int return the horas
      */
-    public void setHoras_pedidas(int horas_pedidas) {
-        this.horas_pedidas = horas_pedidas;
+    public int getHoras() {
+        return horas;
+    }
+
+    /**
+     * @param horas the horas to set
+     */
+    public void setHoras(int horas) {
+        this.horas = horas;
     }
 
 }

@@ -1,5 +1,7 @@
 package com.api.crud.models;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "Cupo")
@@ -31,16 +32,16 @@ public class CupoModel {
     private boolean pagado;
 
     @Column
-    private Timestamp hora_llegada;
+    private Date hora_llegada;
 
     @Column
-    private Timestamp hora_salida;
+    private Date hora_salida;
 
     @Column
     private int horas_pedidas;
 
     @Column
-    private Timestamp fecha_creacion;
+    private Date fecha_creacion;
 
     @Enumerated(EnumType.STRING)
     private Estado estado;
@@ -107,28 +108,28 @@ public class CupoModel {
     /**
      * @return Timestamp return the hora_llegada
      */
-    public Timestamp getHora_llegada() {
+    public Date getHora_llegada() {
         return hora_llegada;
     }
 
     /**
      * @param hora_llegada the hora_llegada to set
      */
-    public void setHora_llegada(Timestamp hora_llegada) {
+    public void setHora_llegada(Date hora_llegada) {
         this.hora_llegada = hora_llegada;
     }
 
     /**
      * @return Timestamp return the hora_salida
      */
-    public Timestamp getHora_salida() {
+    public Date getHora_salida() {
         return hora_salida;
     }
 
     /**
      * @param hora_salida the hora_salida to set
      */
-    public void setHora_salida(Timestamp hora_salida) {
+    public void setHora_salida(Date hora_salida) {
         this.hora_salida = hora_salida;
     }
 
@@ -163,14 +164,14 @@ public class CupoModel {
     /**
      * @return Timestamp return the fecha_creacion
      */
-    public Timestamp getFecha_creacion() {
+    public Date getFecha_creacion() {
         return fecha_creacion;
     }
 
     /**
      * @param fecha_creacion the fecha_creacion to set
      */
-    public void setFecha_creacion(Timestamp fecha_creacion) {
+    public void setFecha_creacion(Date fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
     }
 
@@ -184,7 +185,9 @@ public class CupoModel {
 
     public enum Estado {
         RESERVADO,
-        OCUPADO
+        OCUPADO,
+        FINALIZADO,
+        CANCELADO
     }
 
     /**
