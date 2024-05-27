@@ -65,13 +65,21 @@ public class CupoController {
         return Map.of("data","", "msg", "Sin disponibilidad"); 
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/ocuparCupo")
-    public ResponseEntity<?> occuparCupo(@RequestBody OccupyCupoRequest request) {
-        boolean isOccupied = cupoService.occupyCupo(request.getCupoId());
+    public Map<String, Object> ocuparCupo(@RequestBody OcuparRequest request) throws MessagingException{
+        boolean isOccupied = cupoService.ocuparCupo(request.getCodigo());
         if (isOccupied) {
-            return ResponseEntity.ok("Cupo ocupado con éxito.");
+
+            EmailCupo emailCupo = new EmailCupo();
+            emailCupo.setAsunto("Confirmación de Reserva de Parqueadero y Código de Acceso");
+            emailCupo.setDestinatario(usuarioService.getPorId(cupoService.buscarCodigo(request.getCodigo()).getUsuario_fk()).get().getCorreo());
+            emailCupo.setCodigo(request.getCodigo());
+            emailCupo.setHoraLlegada(ManejarFechas.obtenerFechaActual());
+            emailService.enviarCorreoConfirmacionCupo(emailCupo);
+            return Map.of("data", Map.of("ocupado", true), "msg", "Cupo ocupado con exito"); 
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo ocupar el cupo.");
+            return Map.of("data","", "msg", "No se encontraron cupos con reserva"); 
         }
     }
 

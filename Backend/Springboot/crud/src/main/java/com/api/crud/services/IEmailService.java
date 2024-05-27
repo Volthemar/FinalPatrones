@@ -11,4 +11,5 @@ public interface IEmailService {
     public void enviarCorreoBloqueo(EmailDTO email) throws MessagingException;
     public void enviarCorreoTarjeta(EmailDTO email) throws MessagingException;
     public void enviarCorreoCodigoCupo(EmailCupo email) throws MessagingException;
+    public void enviarCorreoConfirmacionCupo(EmailCupo email) throws MessagingException;
 }

@@ -110,4 +110,22 @@ public class EmailServiceImpl implements IEmailService{
         }
     }
 
+    @Override
+    public void enviarCorreoConfirmacionCupo(EmailCupo email) throws MessagingException{
+        try{
+            MimeMessage mensaje = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mensaje,true,"utf-8");
+            helper.setTo(email.getDestinatario());
+            helper.setSubject(email.getAsunto());
+            Context context = new Context();
+            context.setVariable("codigo", email.getCodigo());
+            context.setVariable("horaLlegada", email.getHoraLlegada());
+            String contenidoHTML = templateEngine.process("enviarConfirmacionCupo", context);
+            helper.setText(contenidoHTML,true);
+            javaMailSender.send(mensaje);
+        }catch (Exception e){
+            throw new RuntimeException("Error al enviar el correo: " + e.getMessage(), e);
+        }
+    }
+
 }

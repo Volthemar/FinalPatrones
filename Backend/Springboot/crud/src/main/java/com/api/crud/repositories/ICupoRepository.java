@@ -14,7 +14,9 @@ import java.util.Optional;
 
 @Repository
 public interface ICupoRepository extends JpaRepository<CupoModel, Long> {
-    Optional<CupoModel> findByIdAndEstado(Long id, CupoModel.Estado status);
+    Optional<CupoModel> findByCodigoAndEstado(String Codigo, CupoModel.Estado status);
+
+    Optional<CupoModel> findByCodigo(String Codigo);
 
     @Query("SELECT COUNT(c) FROM CupoModel c JOIN VehiculoModel v ON c.vehiculo_fk = v.id WHERE c.parqueadero_fk = :parqueaderoId AND v.tipo = :vehicleType")
     int countByParqueaderoIdAndVehiculoTipo(@Param("parqueaderoId") long parqueaderoId,
@@ -30,5 +32,6 @@ public interface ICupoRepository extends JpaRepository<CupoModel, Long> {
 
     @Query(value = "SELECT * FROM CUPO WHERE estado = 'OCUPADO' AND parqueadero_fk = ?1 AND vehiculo_fk = ?2", nativeQuery = true)
     List<CupoModel> findByParqueaderoAndVehiculoOcupado(Long parqueaderoId, Long vehiculoId);
+    
 
 }

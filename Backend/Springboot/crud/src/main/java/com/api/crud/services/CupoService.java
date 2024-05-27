@@ -34,15 +34,19 @@ public class CupoService {
         return cupoOfflineRepository.save(cupo);
     }
 
-    public boolean occupyCupo(Long cupoId) {
-         Optional<CupoModel> reservedCupo = cupoRepository.findByIdAndEstado(cupoId, CupoModel.Estado.RESERVADO);
-         if (reservedCupo.isPresent()) {
-             reservedCupo.get().setEstado(CupoModel.Estado.OCUPADO);
-             cupoRepository.save(reservedCupo.get());
-             return true;
-         }
-         return false;
-     }
+    public CupoModel buscarCodigo(String codigo){
+        return cupoRepository.findByCodigo(codigo).get();
+    }
+
+    public boolean ocuparCupo(String codigo) {
+        Optional<CupoModel> cupoReservado = cupoRepository.findByCodigoAndEstado(codigo, CupoModel.Estado.RESERVADO);
+        if (cupoReservado.isPresent()) {
+            cupoReservado.get().setEstado(CupoModel.Estado.OCUPADO);
+            cupoRepository.save(cupoReservado.get());
+            return true;
+        }
+        return false;
+    }
 
     // public boolean ocuparCupoOffline(Long parqueaderoId, Long vehiculoId, String NombreCliente) {
     //     Optional<ParqueaderoModel> parqueaderoOptional = parqueaderoRepository.findById(parqueaderoId);
