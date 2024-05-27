@@ -73,16 +73,6 @@ public class CupoController {
         }
     }
 
-    // @PostMapping("/ocuparCupoOffline")
-    // public ResponseEntity<?> ocuparCupoOffline(@RequestBody OcuparCupoOfflineRequest request) {
-    //     boolean isOccupied = cupoService.ocuparCupoOffline(request.getParqueaderoId(),request.getVehiculoId(),request.getNombreCliente());
-    //     if (isOccupied) {
-    //         return ResponseEntity.ok("Cupo ocupado con éxito.");
-    //     } else {
-    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No hay cupos disponibles.");
-    //     }
-    // }
-
     // @PostMapping("/leave")
     // public ResponseEntity<?> leaveCupo(@RequestBody LeaveCupoRequest request) {
     //     boolean isLeft = cupoService.leaveCupo(request.getCupoId(), request.isOffline());
