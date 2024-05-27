@@ -9,7 +9,6 @@ import com.api.crud.models.FacturaOfflineModel;
 import com.api.crud.models.ParqueaderoModel;
 import com.api.crud.models.TarifaModel;
 import com.api.crud.models.TarjetaCreditoModel;
-import com.api.crud.models.UsuarioModel;
 import com.api.crud.models.CupoModel;
 import com.api.crud.repositories.ICupoRepository;
 import com.api.crud.repositories.IParqueaderoRepository;
@@ -94,14 +93,15 @@ public class CupoService {
         return null;
     }
 
-    //  public boolean cancelReservation(Long cupoId) {
-    //      Optional<CupoModel> reservedCupo = cupoRepository.findByIdAndEstado(cupoId, CupoModel.Estado.RESERVADO);
-    //      if (reservedCupo.isPresent()) {
-    //          cupoRepository.delete(reservedCupo.get());
-    //          return true;
-    //      }
-    //      return false;
-    //  }
+     public boolean cancelarReserva(Long cupoId) {
+        Optional<CupoModel> cupoReservado = cupoRepository.findByIdAndEstado(cupoId, CupoModel.Estado.RESERVADO);
+        if (cupoReservado.isPresent()) {
+            cupoReservado.get().setEstado(CupoModel.Estado.CANCELADO);
+            cupoRepository.save(cupoReservado.get());
+            return true;
+        }
+        return false;
+     }
 
     public boolean verificarDisponibilidadCupo(Long parqueaderoId, Long vehiculoId, Date horaLlegada){
         List<CupoModel> cuposReservados = cupoRepository.findByParqueaderoAndVehiculoReservado(parqueaderoId, vehiculoId);

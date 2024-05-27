@@ -98,15 +98,15 @@ public class CupoController {
         return Map.of("data",Map.of("valor_total",factura.getValorPagado()), "msg", "Error al finalizar el cupo");  
     }
 
-    // @PostMapping("/cancelar")
-    // public ResponseEntity<?> cancelReservation(@RequestBody CancelReservationRequest request) {
-    //     boolean isCancelled = cupoService.cancelReservation(request.getCupoId());
-    //     if (isCancelled) {
-    //         return ResponseEntity.ok("Reserva cancelada con éxito.");
-    //     } else {
-    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo cancelar la reserva.");
-    //     }
-    // }
+    @PostMapping("/cancelarCupo")
+    public Map<String, Object> cancelarCupo(@RequestBody CancelReservationRequest request) {
+        boolean cancelado = cupoService.cancelarReserva(request.getCupoId());
+        if (cancelado) {
+            return Map.of("data",Map.of("cancelado",true), "msg", "Cancelado con exito");
+        } else {
+            return Map.of("data",Map.of("cancelado",false), "msg", "Error al cancelar el cupo");
+        }
+    }
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/verificarDisponibilidad")

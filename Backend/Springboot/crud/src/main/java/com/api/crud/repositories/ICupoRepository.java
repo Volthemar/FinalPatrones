@@ -14,7 +14,9 @@ import java.util.Optional;
 
 @Repository
 public interface ICupoRepository extends JpaRepository<CupoModel, Long> {
-    Optional<CupoModel> findByCodigoAndEstado(String Codigo, CupoModel.Estado status);
+    Optional<CupoModel> findByCodigoAndEstado(String codigo, CupoModel.Estado status);
+
+    Optional<CupoModel> findByIdAndEstado(Long id, CupoModel.Estado status);
 
     Optional<CupoModel> findByCodigo(String Codigo);
 
