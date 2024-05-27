@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
+import { toast, ToastContainer } from 'react-toastify';
+import { format } from 'date-fns';
+import 'react-toastify/dist/ReactToastify.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import './Parqueadero.css';
 
@@ -9,6 +12,9 @@ export default function Parqueadero({ isOpen, onClose, idParqueadero, name, cupo
   const [reservationHours, setReservationHours] = useState(1);
   const [isButtonActive, setIsButtonActive] = useState(false);
   const [paymentInfo, setPaymentInfo] = useState(null);
+
+  const tarjetaId = localStorage.getItem('tarjetaId');
+  const usuarioId = localStorage.getItem('usuarioId');
 
   const handleVehicleChange = (e) => {
     setSelectedVehicle(e.target.value);
@@ -22,40 +28,45 @@ export default function Parqueadero({ isOpen, onClose, idParqueadero, name, cupo
     setReservationHours(e.target.value);
   };
 
+  const formatDateTime = (date) => {
+    return format(date, 'yyyy-MM-dd HH:00:00');
+  };
+
   const handleSubmit = async () => {
-    const response = await fetch('/api/reserve', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name,
-        vehicleType: selectedVehicle,
-        dateTime: selectedDateTime,
-        hours: reservationHours,
-      }),
-    });
+    if (!selectedVehicle || !selectedDateTime) {
+      toast.error('Por favor, seleccione el tipo de vehículo y la fecha/hora de llegada.');
+      return;
+    }
 
-    const data = await response.json();
+    const formattedDateTime = formatDateTime(selectedDateTime);
 
-    if (data.status === 'yes') {
-      setIsButtonActive(true);
-      const tariffResponse = await fetch('/tarifaParqueaderoVehiculo', {
+    try {
+      const response = await fetch('http://localhost:3241/reservarCupo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          parqueadero_fk: idParqueadero,
-          vehiculo_fk: selectedVehicle,
-          horas: reservationHours,
+          tarjetaId: parseInt(tarjetaId, 10),
+          usuarioId: parseInt(usuarioId, 10),
+          parqueaderoId: parseInt(idParqueadero, 10),
+          vehiculoId: parseInt(selectedVehicle, 10),
+          hora_llegada: formattedDateTime,
+          horas: parseInt(reservationHours, 10),
         }),
       });
 
-      const tariffData = await tariffResponse.json();
-      setPaymentInfo(tariffData.data.Precio);
-    } else {
-      alert('No se puede reservar');
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsButtonActive(true);
+        setPaymentInfo(data.data.codigo);
+        toast.success('Cupo reservado con éxito.');
+      } else {
+        toast.error(data.msg || 'No se puede reservar');
+      }
+    } catch (error) {
+      toast.error('Error en la reserva, intente nuevamente.');
     }
   };
 
@@ -71,6 +82,7 @@ export default function Parqueadero({ isOpen, onClose, idParqueadero, name, cupo
   return (
     <div className="backdrop">
       <div className="parqueadero">
+        <ToastContainer />
         <h1>{name}</h1>
         <h2>{tipo}</h2>
         <div className="cupos">
@@ -112,22 +124,14 @@ export default function Parqueadero({ isOpen, onClose, idParqueadero, name, cupo
         <button
           className='reservar'
           onClick={handleSubmit}
-          disabled={!isButtonActive}
+          disabled={!selectedVehicle || !selectedDateTime}
         >
           Reservar
         </button>
         <button className='cerrar' onClick={onClose}>Cerrar</button>
         {paymentInfo && (
           <div className="payment-info">
-            <p>Debe pagar tanto: {paymentInfo} $$$$</p>
-            <div>
-              <label>Seleccionar tarjeta de crédito:</label>
-              <select>
-                <option value="1">Tarjeta de configuración</option>
-                {/* Add more options as needed */}
-              </select>
-            </div>
-            <button className='pagar'>PAGAR</button>
+            <p>Código de reserva: {paymentInfo}</p>
           </div>
         )}
       </div>
