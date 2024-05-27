@@ -7,7 +7,7 @@ function FormModificarParqueadero() {
     const URL_CIUDADES = "http://localhost:3241/obtenerCiudades";
     const URL_PARQUEADEROS = "http://localhost:3241/parqueaderoCiudadBasico";
     const URL_PARQUEADERO_ESPECIFICO = "http://localhost:3241/obtenerParqueadero";
-    const URL_MODIFICAR_PARQUEADERO = "http://localhost:3241/";
+    const URL_MODIFICAR_PARQUEADERO = "http://localhost:3241/modificarParqueadero";
     /*
     se necesita el endpoint para modificar el parqueadero, el fetch ya está falta reemplazar
     la URL en la constante de arriba
@@ -125,6 +125,7 @@ function FormModificarParqueadero() {
             })
             .then(responseData => {
                 console.log(responseData.data);
+                alert("Parqueadero Modificado");
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -227,7 +228,7 @@ function FormModificarParqueadero() {
                                 <label>Precio para Mora:</label>
                                 <input className='input-modificar-parqueadero'
                                     type="number"
-                                    value={numBicycles}
+                                    value={precioMora}
                                     placeholder='Ingrese el valor por mora'
                                     onChange={(e) => setPrecioMora(e.target.value)}
                                     required
