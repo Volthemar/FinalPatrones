@@ -5,7 +5,6 @@ import './Chart.css';
 
 ChartJS.register(BarElement, ArcElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-
 const Chart = () => {
     const dataBar1 = {
         labels: ['Autos', 'Motos', 'Bicicletas'],
@@ -71,8 +70,13 @@ const Chart = () => {
         ],
     };
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
-        <div className="dashboard-charts">
+        <div className="dashboard-charts2">
+            <div className='dashboard-charts '>
             <div className="chart">
                 <h2>Comportamiento por tipo de vehículo</h2>
                 <Bar data={dataBar1} options={{ responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Comportamiento por tipo de vehículo' } } }} />
@@ -88,6 +92,11 @@ const Chart = () => {
             <div className="chart">
                 <h2>Disponibilidad vs Ocupado</h2>
                 <Bar data={dataBar2} options={{ responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Disponibilidad vs Ocupado' } } }} />
+            </div>
+            </div>
+            
+            <div className="print-button-container">
+                <button className="print-button" onClick={handlePrint}>Imprimir</button>
             </div>
         </div>
     );

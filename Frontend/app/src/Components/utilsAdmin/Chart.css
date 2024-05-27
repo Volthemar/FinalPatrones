@@ -1,12 +1,11 @@
 .dashboard-charts {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-columns: 50% 50% ;
-    grid-template-rows: 50% 50%;
-    justify-self: center;
+    grid-template-rows: auto;
     gap: 5%;
     padding: 3%;
     width: 90%;
+    justify-content: center;
 }
 
 .chart {
@@ -16,10 +15,52 @@
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 90%;
+    height: 400px; /* Ajuste del tamaño del gráfico */
 }
 
 .chart h2 {
     margin-bottom: 20px;
     font-size: 18px;
     text-align: center;
+}
+
+.print-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.print-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.print-button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para impresión */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .dashboard-charts, .dashboard-charts * {
+        visibility: visible;
+    }
+    .dashboard-charts {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+    }
+    .print-button-container {
+        display: none;
+    }
 }
