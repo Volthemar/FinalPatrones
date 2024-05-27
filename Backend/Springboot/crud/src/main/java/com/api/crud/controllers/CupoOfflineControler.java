@@ -44,8 +44,8 @@ public class CupoOfflineControler {
             cupoOffline.setActivo(true);
             String codigo = Codigos.generarCodigoCupo();
             cupoOffline.setCodigo(codigo);
-            cupoService.guardarCupoOffline(cupoOffline);
             cupoService.actualizarParqueadero(request.getParqueaderoId(),request.getVehiculoId());
+            cupoService.guardarCupoOffline(cupoOffline);
             return Map.of("data",Map.of("codigo",codigo), "msg", "Cupo reservado con exito");
         }
         return Map.of("data","", "msg", "Sin disponibilidad");
