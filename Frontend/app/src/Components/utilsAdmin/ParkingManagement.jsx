@@ -43,16 +43,19 @@ const ParkingManagement = () => {
           onClick={() => setDisponible(true)}
           disabled={disponible}
         >
-          Ver Cupos Disponibles
+          Ver Cupos en uso
         </button>
         <button
           className="button-parkingManagement red-parkingManagement"
           onClick={() => setDisponible(false)}
           disabled={!disponible}
         >
-          Ver Cupos Reservados
+          Ver cupos en total
         </button>
-        <button className="button-parkingManagement blue-parkingManagement" onClick={() => setReservaOpen(true)}>Reservar cupo</button>
+        <button className="button-parkingManagement blue-parkingManagement" onClick={() => setReservaOpen(true)}>Reservar cupo OFFLINE</button>
+        
+        <button className="button-parkingManagement blue-parkingManagement" onClick={() => setReservaOpen(true)}>Reservar cupo ONLINE</button>
+        <button className="button-parkingManagement blue-parkingManagement" onClick={() => setReservaOpen(true)}>Finalizar cupo </button>
       </div>
 
       <div className="data-container-parkingManagement">
@@ -63,7 +66,7 @@ const ParkingManagement = () => {
               <thead>
                 <tr>
                   <th>Vehículo </th>
-                  <th>{disponible ? 'Cupos Disponibles' : 'Cupos Totales'}</th>
+                  <th>{disponible ? 'Cupos en uso' : 'Cupos Totales'}</th>
                 </tr>
               </thead>
               <tbody>
@@ -83,7 +86,7 @@ const ParkingManagement = () => {
             </table>
             <ReservaCupoOff
               isOpen={isReservaOpen}
-              onClose={() => setReservaOpen(false)} />F
+              onClose={() => setReservaOpen(false)} />
           </div>
         ) : (
           <p>Loading...</p>
