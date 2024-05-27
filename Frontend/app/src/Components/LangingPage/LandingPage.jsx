@@ -11,32 +11,32 @@ import carrusel2 from '../../assets/carrusel2.jpg';
 import carrusel3 from '../../assets/carrusel3.jpg';
 
 function LandingPage() {
-    const [currentImage, setCurrentImage] = useState(carrusel1);
-    const [nextImage, setNextImage] = useState(carrusel2); // La próxima imagen a mostrar
+    const [imagenActual, setImagenActual] = useState(carrusel1);
+    const [siguienteImagen, setSiguienteImagen] = useState(carrusel2);
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        const intervalo = setInterval(() => {
             
-            if (currentImage === carrusel1) {
-                setNextImage(carrusel2);
-            } else if (currentImage === carrusel2) {
-                setNextImage(carrusel3);
+            if (imagenActual === carrusel1) {
+                setSiguienteImagen(carrusel2);
+            } else if (imagenActual === carrusel2) {
+                setSiguienteImagen(carrusel3);
             } else {
-                setNextImage(carrusel1);
+                setSiguienteImagen(carrusel1);
             }
         }, 2000);
 
-        return () => clearInterval(interval);
-    }, [currentImage]);
+        return () => clearInterval(intervalo);
+    }, [imagenActual]);
 
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            setCurrentImage(nextImage);
+            setImagenActual(siguienteImagen);
         }, 100); 
 
         return () => clearTimeout(timeout);
-    }, [nextImage]);
+    }, [siguienteImagen]);
 
     return (
         <div className="landing-page">
@@ -44,18 +44,18 @@ function LandingPage() {
                 <img id='logo' src={Logo} alt="Logo"></img>
                 <nav>
                     <Link to="/login" className="login-link">
-                        <button id='buttonIngreso'>
+                        <button className='landing-button'>
                         Ingresa
                         </button>
                         </Link>
                 </nav>
             </header>
             <div className='info'>
-                <section className="hero-section" style={{ backgroundImage: `url(${currentImage})` }}>
-                    <h1>Bienvenido a Four Parks</h1>
-                    <p>Reserva tu parqueadero en Cali, Medellín o Bogotá de manera fácil y rápida.</p>
+                <section className="hero-section" style={{ backgroundImage: `url(${imagenActual})` }}>
+                    <h1>¡Bienvenido a Four Parks!</h1>
+                    <p>Reserva tu parqueadero de manera fácil, rápida y segura.</p>
                     <Link to="/registro">
-                        <button>Regístrate</button>
+                        <button className='landing-button'>Regístrate</button>
                     </Link>
                 </section>
 

@@ -67,28 +67,31 @@
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
   }
   
-  .hero-section button {
+  .landing-button {
     padding: 15px 30px;
-    font-size: 1.5em;
-    color: #fff;
-    background-color: #007BFF;
+    font-size: 1.3rem;
+    color: #000000;
+    background-color: #E2F22B;
     border: none;
-    border-radius: 5px;
+    border-radius: 2rem;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
-  .hero-section button:hover {
-    background-color: #0056b3;
+  .hero-section .landing-button:hover {
+    background-color: #89a1d4;
     transform: translateY(-3px);
   }
   
-  .hero-section button:active {
-    background-color: #00408d;
+  .hero-section .landing-button:active {
+    background-color: #89a1d4;
     transform: translateY(0);
   }
   
+  .landing-button:hover{
+    background-color: #89a1d4;
+  }
   .parking-options {
     text-align: center;
     padding: 50px;
