@@ -122,6 +122,7 @@ function NuevoUsuario() {
           cupoCarro={selectedParqueadero.cupo_disponible_carro}
           cupoMoto={selectedParqueadero.cupo_disponible_moto}
           cupoBici={selectedParqueadero.cupo_disponible_bici}
+          idParqueadero={selectedParqueadero.id}
           tipo={selectedParqueadero.tipo}
         />
         <header>
