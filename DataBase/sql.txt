@@ -133,7 +133,6 @@ CREATE TABLE Cupo_offline (
     Pagado BOOLEAN DEFAULT FALSE,
     Hora_llegada TIMESTAMP,
     Hora_salida TIMESTAMP,
-    Nombre_cliente VARCHAR(255),
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     Activo BOOLEAN NOT NULL DEFAULT TRUE,
     Codigo VARCHAR(10);

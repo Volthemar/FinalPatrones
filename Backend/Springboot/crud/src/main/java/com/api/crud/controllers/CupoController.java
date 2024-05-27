@@ -36,8 +36,8 @@ public class CupoController {
     
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/reservarCupo")
-    public Map<String, Object>reservarCupo(@RequestBody ReservarCupoRequest request) throws MessagingException{
-        boolean disponibilidad = cupoService.reservarCupo(request.getParqueaderoId(),request.getUsuarioId(),request.getVehiculoId(),request.getHoras(),request.getHora_llegada(),request.getTarjetaId());
+    public Map<String, Object> reservarCupo(@RequestBody ReservarCupoRequest request) throws MessagingException{
+        boolean disponibilidad = cupoService.verificarDisponibilidadCupo(request.getParqueaderoId(),request.getVehiculoId(),request.getHora_llegada());
         if (disponibilidad){
             CupoModel cupo = new CupoModel();
             cupo.setEstado(CupoModel.Estado.RESERVADO);
@@ -47,6 +47,7 @@ public class CupoController {
             cupo.setFecha_creacion(ManejarFechas.obtenerFechaActual());
             cupo.setHora_llegada(request.getHora_llegada());
             cupo.setHoras_pedidas(request.getHoras());
+            cupo.setPagado(false);
             cupo.setActivo(true);
             String codigo = Codigos.generarCodigoCupo();
             cupo.setCodigo(codigo);

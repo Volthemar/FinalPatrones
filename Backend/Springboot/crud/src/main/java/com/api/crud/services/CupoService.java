@@ -26,18 +26,12 @@ public class CupoService {
     @Autowired
     private IParqueaderoRepository parqueaderoRepository;
 
-    public boolean reservarCupo(Long parqueaderoId, Long usuarioId, Long vehiculoId, int horas, Date hora_llegada, Long tarjetaId) {
-        Optional<ParqueaderoModel> parqueaderoOptional = parqueaderoRepository.findById(parqueaderoId);
-        if (parqueaderoOptional.isPresent()) {
-            if (verificarDisponibilidadCupo(parqueaderoId, vehiculoId, hora_llegada)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public CupoModel guardarCupo(CupoModel cupo){
         return cupoRepository.save(cupo);
+    }
+
+    public CupoOfflineModel guardarCupoOffline(CupoOfflineModel cupo){
+        return cupoOfflineRepository.save(cupo);
     }
 
     public boolean occupyCupo(Long cupoId) {
