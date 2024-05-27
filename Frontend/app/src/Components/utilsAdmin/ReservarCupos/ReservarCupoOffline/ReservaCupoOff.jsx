@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Factura from '../Factura/Factura';
+import Factura from '../../../Factura/Factura';
 import './ReservaCupoOff.css';
 
 export default function ReservaCupoOff({ isOpen, onClose }) {

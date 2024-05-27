@@ -1,0 +1,79 @@
+.reservaCupoOff-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.reservaCupoOff-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    width: 40%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.reservaCupoOff-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.reservaCupoOff-container h2 {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.reservaCupoOff-cupos {
+    margin: 20px 0;
+}
+
+.reservaCupoOff-cupos input {
+    font-size: 1.2rem;
+    height: 2.5rem;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.reservaCupoOff-continuar {
+    font-size: 1.5rem;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.reservaCupoOff-continuar:hover {
+    background-color: #0056b3;
+}
+
+.reservaCupoOff-cerrar {
+    font-size: 1.5rem;
+    background-color: rgb(255, 127, 127);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.reservaCupoOff-cerrar:hover {
+    background-color: rgb(200, 80, 80);
+}

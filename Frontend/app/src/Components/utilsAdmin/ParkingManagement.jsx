@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './ParkingManagement.css'; // Importar los estilos CSS
 import Sidebar from '../Sidebar/Sidebar';
-import ReservaCupoOff from './ReservaCupoOff';
+import ReservaCupoOff from './ReservarCupos/ReservarCupoOffline/ReservaCupoOff';
+import ReservarCupoOnline from './ReservarCupos/ReservarCupoOnline/ReservarCupoOnline';
 const fetchParkingLot = async (parkingLotId) => {
   try {
     const response = await fetch('http://localhost:3241/obtenerParqueadero', {
@@ -23,6 +24,7 @@ const ParkingManagement = () => {
   const [parkingData, setParkingData] = useState(null);
   const [disponible, setDisponible] = useState(true);
   const [isReservaOpen, setReservaOpen] = useState(false);
+  const [isReservaONOpen, setReservaONOpen] = useState(false);
   
   useEffect(() => {
     const fetchData = async () => {
@@ -52,10 +54,11 @@ const ParkingManagement = () => {
         >
           Ver cupos en total
         </button>
+
         <button className="button-parkingManagement blue-parkingManagement" onClick={() => setReservaOpen(true)}>Reservar cupo OFFLINE</button>
-        
-        <button className="button-parkingManagement blue-parkingManagement" onClick={() => setReservaOpen(true)}>Reservar cupo ONLINE</button>
+        <button className="button-parkingManagement blue-parkingManagement" onClick={() => setReservaONOpen(true)}>Reservar cupo ONLINE</button>
         <button className="button-parkingManagement blue-parkingManagement" onClick={() => setReservaOpen(true)}>Finalizar cupo </button>
+
       </div>
 
       <div className="data-container-parkingManagement">
@@ -87,6 +90,9 @@ const ParkingManagement = () => {
             <ReservaCupoOff
               isOpen={isReservaOpen}
               onClose={() => setReservaOpen(false)} />
+            <ReservarCupoOnline
+              isOpen={isReservaONOpen}
+              onClose={() => setReservaONOpen(false)} />
           </div>
         ) : (
           <p>Loading...</p>
