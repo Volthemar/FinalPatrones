@@ -1,12 +1,43 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
 import Logo from '../../assets/logo.png';
 import Bogota from '../../assets/bogota.png';
 import Cali from '../../assets/cali.png';
 import Medellin from '../../assets/medellin.png';
+import carrusel1 from '../../assets/carrusel1.jpg';
+import carrusel2 from '../../assets/carrusel2.jpg';
+import carrusel3 from '../../assets/carrusel3.jpg';
 
 function LandingPage() {
+    const [currentImage, setCurrentImage] = useState(carrusel1);
+    const [nextImage, setNextImage] = useState(carrusel2); // La próxima imagen a mostrar
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            
+            if (currentImage === carrusel1) {
+                setNextImage(carrusel2);
+            } else if (currentImage === carrusel2) {
+                setNextImage(carrusel3);
+            } else {
+                setNextImage(carrusel1);
+            }
+        }, 2000);
+
+        return () => clearInterval(interval);
+    }, [currentImage]);
+
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setCurrentImage(nextImage);
+        }, 100); 
+
+        return () => clearTimeout(timeout);
+    }, [nextImage]);
+
     return (
         <div className="landing-page">
             <header className="header">
@@ -20,7 +51,7 @@ function LandingPage() {
                 </nav>
             </header>
             <div className='info'>
-                <section className="hero-section">
+                <section className="hero-section" style={{ backgroundImage: `url(${currentImage})` }}>
                     <h1>Bienvenido a Four Parks</h1>
                     <p>Reserva tu parqueadero en Cali, Medellín o Bogotá de manera fácil y rápida.</p>
                     <Link to="/registro">
@@ -46,17 +77,6 @@ function LandingPage() {
                     </div>
                 </section>
             </div>
-
-
-            <section className="contact-form">
-                <h2>Contacto</h2>
-                <form>
-                    <input type="text" placeholder="Nombre" required />
-                    <input type="email" placeholder="Email" required />
-                    <textarea placeholder="Mensaje" required></textarea>
-                    <button type="submit">Enviar</button>
-                </form>
-            </section>
 
             <footer className="footer">
                 <p>© 2024 Four Parks. Todos los derechos reservados.</p>

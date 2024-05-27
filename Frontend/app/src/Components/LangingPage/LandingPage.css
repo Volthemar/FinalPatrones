@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300&display=swap');
+
 .landing-page {
-    font-family: Arial, sans-serif;
+  font-family: 'Assistant', sans-serif;
   }
   
   .header {
@@ -48,6 +51,7 @@
     background: url('hero-bg.jpg') no-repeat center center/cover;
     color: #fff;
     box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.5);
+    transition: background-image 0.5s ease-in-out;
   }
   
   .hero-section h1 {
