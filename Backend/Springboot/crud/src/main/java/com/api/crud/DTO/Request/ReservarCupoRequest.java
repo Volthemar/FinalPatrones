@@ -2,53 +2,67 @@ package com.api.crud.DTO.Request;
 import java.util.Date;
 
 public class ReservarCupoRequest {
-    private Long tarjeta_fk;
-    private Long parqueadero_fk;
-    private Long vehiculo_fk;
+    private Long tarjetaId;
+    private Long usuarioId;
+    private Long parqueaderoId;
+    private Long vehiculoId;
     private Date hora_llegada;
     private int horas;
-
-
+    
     /**
-     * @return Long return the tarjeta_fk
+     * @return Long return the tarjetaId
      */
-    public Long getTarjeta_fk() {
-        return tarjeta_fk;
+    public Long getTarjetaId() {
+        return tarjetaId;
     }
 
     /**
-     * @param tarjeta_fk the tarjeta_fk to set
+     * @param tarjetaId the tarjetaId to set
      */
-    public void setTarjeta_fk(Long tarjeta_fk) {
-        this.tarjeta_fk = tarjeta_fk;
+    public void setTarjetaId(Long tarjetaId) {
+        this.tarjetaId = tarjetaId;
     }
 
     /**
-     * @return Long return the parqueadero_fk
+     * @return Long return the usuarioId
      */
-    public Long getParqueadero_fk() {
-        return parqueadero_fk;
+    public Long getUsuarioId() {
+        return usuarioId;
     }
 
     /**
-     * @param parqueadero_fk the parqueadero_fk to set
+     * @param usuarioId the usuarioId to set
      */
-    public void setParqueadero_fk(Long parqueadero_fk) {
-        this.parqueadero_fk = parqueadero_fk;
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     /**
-     * @return Long return the vehiculo_fk
+     * @return Long return the parqueaderoId
      */
-    public Long getVehiculo_fk() {
-        return vehiculo_fk;
+    public Long getParqueaderoId() {
+        return parqueaderoId;
     }
 
     /**
-     * @param vehiculo_fk the vehiculo_fk to set
+     * @param parqueaderoId the parqueaderoId to set
      */
-    public void setVehiculo_fk(Long vehiculo_fk) {
-        this.vehiculo_fk = vehiculo_fk;
+    public void setParqueaderoId(Long parqueaderoId) {
+        this.parqueaderoId = parqueaderoId;
+    }
+
+    /**
+     * @return Long return the vehiculoId
+     */
+    public Long getVehiculoId() {
+        return vehiculoId;
+    }
+
+    /**
+     * @param vehiculoId the vehiculoId to set
+     */
+    public void setVehiculoId(Long vehiculoId) {
+        this.vehiculoId = vehiculoId;
     }
 
     /**

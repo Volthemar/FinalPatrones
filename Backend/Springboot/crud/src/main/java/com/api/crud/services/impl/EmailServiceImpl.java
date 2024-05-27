@@ -7,6 +7,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import com.api.crud.services.IEmailService;
+import com.api.crud.services.models.EmailCupo;
 import com.api.crud.services.models.EmailDTO;
 
 import jakarta.mail.MessagingException;
@@ -89,4 +90,24 @@ public class EmailServiceImpl implements IEmailService{
             throw new RuntimeException("Error al enviar el correo: " + e.getMessage(), e);
         }
     }
+
+    @Override
+    public void enviarCorreoCodigoCupo(EmailCupo email) throws MessagingException{
+        try{
+            MimeMessage mensaje = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mensaje,true,"utf-8");
+            helper.setTo(email.getDestinatario());
+            helper.setSubject(email.getAsunto());
+            Context context = new Context();
+            context.setVariable("codigo", email.getCodigo());
+            context.setVariable("horaLlegada", email.getHoraLlegada());
+            context.setVariable("horasSolicitadas", email.getHorasSolicitadas());
+            String contenidoHTML = templateEngine.process("enviarCodigoCupo", context);
+            helper.setText(contenidoHTML,true);
+            javaMailSender.send(mensaje);
+        }catch (Exception e){
+            throw new RuntimeException("Error al enviar el correo: " + e.getMessage(), e);
+        }
+    }
+
 }

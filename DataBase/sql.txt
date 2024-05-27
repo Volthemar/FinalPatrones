@@ -120,6 +120,7 @@ CREATE TABLE Cupo (
     Activo BOOLEAN NOT NULL DEFAULT TRUE,
     Estado ENUM('RESERVADO','OCUPADO','FINALIZADO','CANCELADO') NOT NULL DEFAULT 'RESERVADO',
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Codigo VARCHAR(10);
     FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id),
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
@@ -132,9 +133,10 @@ CREATE TABLE Cupo_offline (
     Pagado BOOLEAN DEFAULT FALSE,
     Hora_llegada TIMESTAMP,
     Hora_salida TIMESTAMP,
-    Nombre_cliente VARCHAR(255),
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     Activo BOOLEAN NOT NULL DEFAULT TRUE,
+    Codigo VARCHAR(10);
+    Estado ENUM('OCUPADO','FINALIZADO') NOT NULL,
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
 );

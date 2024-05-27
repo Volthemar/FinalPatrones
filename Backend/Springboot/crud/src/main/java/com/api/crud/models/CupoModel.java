@@ -49,6 +49,9 @@ public class CupoModel {
     @Column
     private Boolean activo;
 
+    @Column
+    private String codigo;
+
     /**
      * @return long return the id
      */
@@ -209,6 +212,21 @@ public class CupoModel {
      */
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+
+    /**
+     * @return String return the codigo
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * @param codigo the codigo to set
+     */
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
 }

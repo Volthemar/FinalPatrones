@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 
 function FormModificarCiudad() {
     const URL_CIUDADES = "http://localhost:3241/obtenerCiudades";
-    const URL_MODIFICAR_CIUDAD = "http://localhost:3241/o"
+    const URL_MODIFICAR_CIUDAD = "http://localhost:3241/modificarCiudad"
     const [datosCiudades, setDatosCiudades] = useState(null);
     const [visibilidadForm, setVisibilidadForm] = useState(false);
     const [idCiudadSeleccionada, setIdCiudadSeleccionada] = useState("");
@@ -44,6 +44,7 @@ function FormModificarCiudad() {
             })
             .then(responseData => {
                 console.log(responseData.data);
+                alert("Ciudad Modificada")
             })
             .catch(error => {
                 console.error('Error:', error);
