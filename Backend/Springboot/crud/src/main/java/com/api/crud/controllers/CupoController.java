@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.api.crud.DTO.Request.*;
 import com.api.crud.models.CupoModel;
+import com.api.crud.models.FacturaModel;
 import com.api.crud.services.Codigos;
 import com.api.crud.services.CupoService;
 import com.api.crud.services.IEmailService;
@@ -68,9 +69,8 @@ public class CupoController {
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/ocuparCupo")
     public Map<String, Object> ocuparCupo(@RequestBody OcuparRequest request) throws MessagingException{
-        boolean isOccupied = cupoService.ocuparCupo(request.getCodigo());
-        if (isOccupied) {
-
+        boolean ocupado = cupoService.ocuparCupo(request.getCodigo());
+        if (ocupado) {
             EmailCupo emailCupo = new EmailCupo();
             emailCupo.setAsunto("Confirmación de Reserva de Parqueadero y Código de Acceso");
             emailCupo.setDestinatario(usuarioService.getPorId(cupoService.buscarCodigo(request.getCodigo()).getUsuario_fk()).get().getCorreo());
@@ -83,15 +83,19 @@ public class CupoController {
         }
     }
 
-    // @PostMapping("/leave")
-    // public ResponseEntity<?> leaveCupo(@RequestBody LeaveCupoRequest request) {
-    //     boolean isLeft = cupoService.leaveCupo(request.getCupoId(), request.isOffline());
-    //     if (isLeft) {
-    //         return ResponseEntity.ok("Cupo ahora está disponible.");
-    //     } else {
-    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al liberar el cupo.");
-    //     }
-    // }
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PostMapping("/finalizarCupoOnline")
+    public Map<String, Object> finalizarCupoOn(@RequestBody OcuparRequest request) {
+        FacturaModel factura = cupoService.finalizarCupoOnline(request.getCodigo());
+        return Map.of("data",Map.of("valor_ordinario",factura.getValorOrdinario(), "valor_extraordinario",factura.getValorExtraordinario(), "valor_total",factura.getValorTotal()), "msg", "Error al finalizar el cupo");  
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PostMapping("/finalizarCupoOffline")
+    public Map<String, Object> finalizarCupoOff(@RequestBody OcuparRequest request) {
+        FacturaModel factura = cupoService.finalizarCupoOffline(request.getCodigo());
+        return Map.of("data",Map.of("valor_ordinario",factura.getValorOrdinario(), "valor_extraordinario",factura.getValorExtraordinario(), "valor_total",factura.getValorTotal()), "msg", "Error al finalizar el cupo");  
+    }
 
     // @PostMapping("/cancelar")
     // public ResponseEntity<?> cancelReservation(@RequestBody CancelReservationRequest request) {

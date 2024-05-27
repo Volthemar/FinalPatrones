@@ -120,7 +120,7 @@ CREATE TABLE Cupo (
     Activo BOOLEAN NOT NULL DEFAULT TRUE,
     Estado ENUM('RESERVADO','OCUPADO','FINALIZADO','CANCELADO') NOT NULL DEFAULT 'RESERVADO',
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    Codigo VARCHAR(10);
+    Codigo VARCHAR(10),
     FOREIGN KEY (Usuario_fk) REFERENCES Usuario(Id),
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
@@ -135,7 +135,7 @@ CREATE TABLE Cupo_offline (
     Hora_salida TIMESTAMP,
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     Activo BOOLEAN NOT NULL DEFAULT TRUE,
-    Codigo VARCHAR(10);
+    Codigo VARCHAR(10),
     Estado ENUM('OCUPADO','FINALIZADO') NOT NULL,
     FOREIGN KEY (Parqueadero_fk) REFERENCES Parqueadero(Id),
     FOREIGN KEY (Vehiculo_fk) REFERENCES Vehiculo(Id)
@@ -155,7 +155,9 @@ CREATE TABLE Tarifa (
 
 CREATE TABLE Factura(
     Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    Valor_pagado DECIMAL(15, 2),
+    Valor_ordinario DECIMAL(15, 2),
+    Valor_extraordinario DECIMAL(15, 2),
+    Valor_total DECIMAL(15, 2),
     Cupo_fk BIGINT UNSIGNED,
     Vehiculo_fk BIGINT UNSIGNED,
     Parqueadero_fk BIGINT UNSIGNED,
@@ -169,6 +171,7 @@ CREATE TABLE Factura(
     FOREIGN KEY (Tarjeta_credito_fk) REFERENCES Tarjeta_credito(Id),
     FOREIGN KEY (Cupo_fk) REFERENCES Cupo(Id)
 );
+
 
 CREATE TABLE Factura_offline(
     Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

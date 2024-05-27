@@ -20,4 +20,9 @@ public class TarifaService {
     public Optional<TarifaModel> obtenerTarifaParqueaderoVehiculo(Long parqueadero,Long vehiculo){
         return tarifaRepository.findByParqueaderoAndVehiculo(parqueadero,vehiculo);
     }
+
+    public TarifaModel crearFactura(TarifaModel tarifa){
+        return tarifaRepository.save(tarifa);
+    }
+
 }

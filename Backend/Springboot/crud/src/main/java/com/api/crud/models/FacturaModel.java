@@ -3,9 +3,8 @@ package com.api.crud.models;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.util.Date;
 
-import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "Factura")
@@ -15,27 +14,35 @@ public class FacturaModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "valor_pagado", nullable = false)
-    private BigDecimal valorPagado;
+    @Column(name = "valor_ordinario", nullable = false)
+    private BigDecimal valorOrdinario;
+
+    @Column(name = "valor_extraordinario", nullable = false)
+    private BigDecimal valorExtraordinario;
+
+    @Column(name = "valor_total", nullable = false)
+    private BigDecimal valorTotal;
 
     @Column(name = "cupo_fk", nullable = false)
-    private long cupoId;
+    private Long cupoId;
 
     @Column(name = "vehiculo_fk", nullable = false)
-    private long vehiculoId;
+    private Long vehiculoId;
 
     @Column(name = "parqueadero_fk", nullable = false)
-    private long parqueaderoId;
+    private Long parqueaderoId;
 
     @Column(name = "usuario_fk", nullable = false)
-    private long usuarioId;
+    private Long usuarioId;
 
     @Column(name = "tarjeta_credito_fk", nullable = false)
-    private long tarjetaCreditoId;
+    private Long tarjetaCreditoId;
 
-    @CreationTimestamp
     @Column(name = "fecha_creacion", nullable = false, updatable = false, insertable = false)
-    private Timestamp fechaCreacion;
+    private Date fechaCreacion;
+
+    @Column(name = "activo")
+    private Boolean activo;
 
 
     public Long getId() {
@@ -46,13 +53,6 @@ public class FacturaModel {
         this.id = id;
     }
 
-    public BigDecimal getValorPagado() {
-        return valorPagado;
-    }
-
-    public void setValorPagado(BigDecimal valorPagado) {
-        this.valorPagado = valorPagado;
-    }
 
     public long getCupoId() {
         return cupoId;
@@ -94,11 +94,76 @@ public class FacturaModel {
         this.tarjetaCreditoId = tarjetaCreditoId;
     }
 
-    public Timestamp getFechaCreacion() {
+
+    /**
+     * @return BigDecimal return the valorOrdinario
+     */
+    public BigDecimal getValorOrdinario() {
+        return valorOrdinario;
+    }
+
+    /**
+     * @param valorOrdinario the valorOrdinario to set
+     */
+    public void setValorOrdinario(BigDecimal valorOrdinario) {
+        this.valorOrdinario = valorOrdinario;
+    }
+
+    /**
+     * @return BigDecimal return the valorExtraordinario
+     */
+    public BigDecimal getValorExtraordinario() {
+        return valorExtraordinario;
+    }
+
+    /**
+     * @param valorExtraordinario the valorExtraordinario to set
+     */
+    public void setValorExtraordinario(BigDecimal valorExtraordinario) {
+        this.valorExtraordinario = valorExtraordinario;
+    }
+
+    /**
+     * @return Date return the fechaCreacion
+     */
+    public Date getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Timestamp fechaCreacion) {
+    /**
+     * @param fechaCreacion the fechaCreacion to set
+     */
+    public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
+
+    /**
+     * @return Boolean return the activo
+     */
+    public Boolean isActivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+
+    /**
+     * @return BigDecimal return the valorTotal
+     */
+    public BigDecimal getValorTotal() {
+        return valorTotal;
+    }
+
+    /**
+     * @param valorTotal the valorTotal to set
+     */
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
 }

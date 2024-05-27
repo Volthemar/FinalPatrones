@@ -1,9 +1,11 @@
 package com.api.crud.models;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Entity;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
@@ -26,9 +28,11 @@ public class FacturaOfflineModel {
     @Column(name = "parqueadero_fk", nullable = false)
     private long parqueaderoId;
 
-    @CreationTimestamp
     @Column(name = "fecha_creacion", nullable = false, updatable = false, insertable = false)
-    private Timestamp fechaCreacion;
+    private Date fechaCreacion;
+
+    @Column(name = "activo")
+    private Boolean activo;
 
     // Getters and Setters
 
@@ -72,11 +76,33 @@ public class FacturaOfflineModel {
         this.parqueaderoId = parqueaderoId;
     }
 
-    public Timestamp getFechaCreacion() {
+
+    /**
+     * @return Date return the fechaCreacion
+     */
+    public Date getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Timestamp fechaCreacion) {
+    /**
+     * @param fechaCreacion the fechaCreacion to set
+     */
+    public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
+
+    /**
+     * @return Boolean return the activo
+     */
+    public Boolean isActivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
 }
