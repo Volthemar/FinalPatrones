@@ -33,6 +33,14 @@
   font-size: 2rem;
   height: 3rem;
 }
+.Select-Hours{
+  font-size: 2rem;
+  margin : 2%;
+}
+.Select-Hours #hours{
+  font-size: 2rem;
+  margin : 2%;
+}
 
 .cupos li {
   font-size: 16px;
@@ -74,5 +82,23 @@
 }
 
 .parqueadero .cerrar {
-  background-color: aquamarine;
+  margin-left: 5%;
+  font-size: 2rem;
+  background-color: rgb(255, 127, 127);
+}
+.reservar{
+  font-size: 2rem;
+}
+.date-picker {
+  font-size: 1.5rem;
+  height: 2.5rem;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10%;
+  margin-top: 3%;
+}
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list {
+  width: 128%;
 }

@@ -23,7 +23,7 @@ const ParkingManagement = () => {
   const [parkingData, setParkingData] = useState(null);
   const [disponible, setDisponible] = useState(true);
   const [isReservaOpen, setReservaOpen] = useState(false);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchParkingLot(1); // Change the ID if needed

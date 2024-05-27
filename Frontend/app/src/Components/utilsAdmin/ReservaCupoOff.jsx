@@ -23,12 +23,7 @@ export default function ReservaCupoOff({ isOpen, onClose }) {
                         <option value="3">Bicicleta</option>
                     </select>
                 </div>
-                <div className="reservaCupoOff-form">
-                    <label htmlFor="reservaCupoOff-nombre">Nombre de quien reserva:</label>
-                    <input type="text" id="reservaCupoOff-nombre" name="nombreReserva" />
-                    <label htmlFor="reservaCupoOff-horas">Horas:</label>
-                    <input type="number" id="reservaCupoOff-horas" name="horasReserva" />
-                </div>
+
                 <button className='reservaCupoOff-continuar' onClick={() => alert(`Reservado para: ${selectedVehicle}`)}>Continuar</button>
                 <button className='reservaCupoOff-cerrar' onClick={onClose}>Cerrar</button>
             </div>
