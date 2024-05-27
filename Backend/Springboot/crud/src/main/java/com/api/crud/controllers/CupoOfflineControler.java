@@ -3,15 +3,11 @@ package com.api.crud.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.crud.DTO.Request.ReservarCupoOfflineRequest;
-import com.api.crud.DTO.Request.VerificarDisponibilidadRequest;
-import com.api.crud.models.CupoModel;
 import com.api.crud.models.CupoOfflineModel;
-import com.api.crud.models.ParqueaderoModel;
 import com.api.crud.services.Codigos;
 import com.api.crud.services.CupoService;
 import com.api.crud.services.ManejarFechas;
-import com.api.crud.services.ParqueaderoService;
-import com.api.crud.services.models.EmailCupo;
+
 
 import java.util.Map;
 

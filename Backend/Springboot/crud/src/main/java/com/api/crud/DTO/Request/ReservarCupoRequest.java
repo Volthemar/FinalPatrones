@@ -1,12 +1,17 @@
 package com.api.crud.DTO.Request;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ReservarCupoRequest {
     private Long tarjetaId;
     private Long usuarioId;
     private Long parqueaderoId;
     private Long vehiculoId;
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date hora_llegada;
+
     private int horas;
     
     /**

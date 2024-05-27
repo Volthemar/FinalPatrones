@@ -93,7 +93,6 @@ public class CupoService {
     //  }
 
     public boolean verificarDisponibilidadCupo(Long parqueaderoId, Long vehiculoId, Date horaLlegada){
-
         List<CupoModel> cuposReservados = cupoRepository.findByParqueaderoAndVehiculoReservado(parqueaderoId, vehiculoId);
         Date horaLlegadaEvaluar = new Date();
         Date horaSalidaEvaluar = new Date();
@@ -144,10 +143,10 @@ public class CupoService {
                 parqueadero.setCupo_uti_carro(parqueadero.getCupo_uti_carro() + 1);
                 break;
             case "MOTO":
-                parqueadero.setCupo_uti_carro(parqueadero.getCupo_uti_carro() + 1);
+                parqueadero.setCupo_uti_moto(parqueadero.getCupo_uti_moto() + 1);
                 break;
             case "BICICLETA":
-                parqueadero.setCupo_uti_carro(parqueadero.getCupo_uti_carro() + 1);
+                parqueadero.setCupo_uti_bici(parqueadero.getCupo_uti_bici() + 1);
                 break;
         }
         parqueaderoRepository.save(parqueadero);
