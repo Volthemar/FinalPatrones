@@ -51,7 +51,6 @@ public class CupoController {
             cupo.setActivo(true);
             String codigo = Codigos.generarCodigoCupo();
             cupo.setCodigo(codigo);
-            cupoService.actualizarParqueadero(request.getParqueaderoId(),request.getVehiculoId());
             cupoService.guardarCupo(cupo);
             EmailCupo emailCupo = new EmailCupo();
             emailCupo.setAsunto("Confirmación de Reserva de Parqueadero y Código de Acceso");
