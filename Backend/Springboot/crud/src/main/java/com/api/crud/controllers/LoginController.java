@@ -27,7 +27,7 @@ import com.api.crud.services.TipoUsuarioService;
 import com.api.crud.services.TipoUsuarioUsuarioService;
 import com.api.crud.services.UsuarioService;
 import com.api.crud.services.models.EmailDTO;
-import com.api.crud.services.CodigoLogin;
+import com.api.crud.services.Codigos;
 
 import jakarta.mail.MessagingException;
 
@@ -56,8 +56,7 @@ public class LoginController {
             if (encriptarContrasena(contrasena).equals(contrasenaAlmacenada)) {
                 if (usuarioLoggeado.get().isEstado()) {
                     usuarioLoggeado.get().setNum_intentos(0);
-                    CodigoLogin lc = new CodigoLogin();
-                    String codigo = lc.generarCodigo();
+                    String codigo = Codigos.generarCodigoLogin();
                     usuarioLoggeado.get().setCod_verificacion(codigo);
                     userService.guardarUsuario(usuarioLoggeado.get());
                     email.setDestinatario(usuarioLoggeado.get().getCorreo());

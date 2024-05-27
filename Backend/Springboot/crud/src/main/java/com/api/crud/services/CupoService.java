@@ -13,7 +13,6 @@ import com.api.crud.repositories.ICupoOfflineRepository;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.sql.Timestamp;
 
 @Service
 public class CupoService {
@@ -31,20 +30,14 @@ public class CupoService {
         Optional<ParqueaderoModel> parqueaderoOptional = parqueaderoRepository.findById(parqueaderoId);
         if (parqueaderoOptional.isPresent()) {
             if (verificarDisponibilidadCupo(parqueaderoId, vehiculoId, hora_llegada)) {
-                CupoModel cupo = new CupoModel();
-                cupo.setEstado(CupoModel.Estado.RESERVADO);
-                cupo.setUsuario_fk(usuarioId);
-                cupo.setParqueadero_fk(parqueaderoId);
-                cupo.setVehiculo_fk(vehiculoId);
-                cupo.setFecha_creacion(ManejarFechas.obtenerFechaActual());
-                cupo.setHora_llegada(hora_llegada);
-                cupo.setHoras_pedidas(horas);
-                cupo.setActivo(true);
-                cupoRepository.save(cupo);
                 return true;
             }
         }
         return false;
+    }
+
+    public CupoModel guardarCupo(CupoModel cupo){
+        return cupoRepository.save(cupo);
     }
 
     public boolean occupyCupo(Long cupoId) {
@@ -57,53 +50,53 @@ public class CupoService {
          return false;
      }
 
-    public boolean ocuparCupoOffline(Long parqueaderoId, Long vehiculoId, String NombreCliente) {
-        Optional<ParqueaderoModel> parqueaderoOptional = parqueaderoRepository.findById(parqueaderoId);
-        if (parqueaderoOptional.isPresent()) {
-            ParqueaderoModel parqueadero = parqueaderoOptional.get();
-            if (verificarEspacio(parqueadero, vehiculoId)) {
-                CupoOfflineModel cupoOffline = new CupoOfflineModel();
-                cupoOffline.setParqueadero_fk(parqueaderoId);
-                cupoOffline.setVehiculo_fk(vehiculoId);
-                cupoOffline.setNombre_Cliente(NombreCliente);
-                cupoOffline.setHora_llegada(new Timestamp(System.currentTimeMillis()));
-                cupoOfflineRepository.save(cupoOffline);
+    // public boolean ocuparCupoOffline(Long parqueaderoId, Long vehiculoId, String NombreCliente) {
+    //     Optional<ParqueaderoModel> parqueaderoOptional = parqueaderoRepository.findById(parqueaderoId);
+    //     if (parqueaderoOptional.isPresent()) {
+    //         ParqueaderoModel parqueadero = parqueaderoOptional.get();
+    //         if (verificarEspacio(parqueadero, vehiculoId)) {
+    //             CupoOfflineModel cupoOffline = new CupoOfflineModel();
+    //             cupoOffline.setParqueadero_fk(parqueaderoId);
+    //             cupoOffline.setVehiculo_fk(vehiculoId);
+    //             cupoOffline.setNombre_Cliente(NombreCliente);
+    //             cupoOffline.setHora_llegada(new Timestamp(System.currentTimeMillis()));
+    //             cupoOfflineRepository.save(cupoOffline);
 
-                actualizarCupo(parqueadero, vehiculoId);
-                parqueaderoRepository.save(parqueadero);
+    //             actualizarCupo(parqueadero, vehiculoId);
+    //             parqueaderoRepository.save(parqueadero);
 
-                return true;
-            }
-        }
-        return false;
-    }
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
 
-     public boolean leaveCupo(Long cupoId, boolean isOffline) {
-         if (isOffline) {
-             Optional<CupoOfflineModel> cupo = cupoOfflineRepository.findById(cupoId);
-             if (cupo.isPresent()) {
-                 cupoOfflineRepository.delete(cupo.get());
-                 return true;
-             }
-         } else {
-             Optional<CupoModel> cupo = cupoRepository.findById(cupoId);
-             if (cupo.isPresent() && (cupo.get().getEstado().equals(CupoModel.Estado.OCUPADO))) {
-                 cupoRepository.delete(cupo.get());
-                 return true;
-             }
-         }
-         return false;
-     }
+    //  public boolean leaveCupo(Long cupoId, boolean isOffline) {
+    //      if (isOffline) {
+    //          Optional<CupoOfflineModel> cupo = cupoOfflineRepository.findById(cupoId);
+    //          if (cupo.isPresent()) {
+    //              cupoOfflineRepository.delete(cupo.get());
+    //              return true;
+    //          }
+    //      } else {
+    //          Optional<CupoModel> cupo = cupoRepository.findById(cupoId);
+    //          if (cupo.isPresent() && (cupo.get().getEstado().equals(CupoModel.Estado.OCUPADO))) {
+    //              cupoRepository.delete(cupo.get());
+    //              return true;
+    //          }
+    //      }
+    //      return false;
+    //  }
 
-     public boolean cancelReservation(Long cupoId) {
-         Optional<CupoModel> reservedCupo = cupoRepository.findByIdAndEstado(cupoId, CupoModel.Estado.RESERVADO);
-         if (reservedCupo.isPresent()) {
-             cupoRepository.delete(reservedCupo.get());
-             return true;
-         }
-         return false;
-     }
+    //  public boolean cancelReservation(Long cupoId) {
+    //      Optional<CupoModel> reservedCupo = cupoRepository.findByIdAndEstado(cupoId, CupoModel.Estado.RESERVADO);
+    //      if (reservedCupo.isPresent()) {
+    //          cupoRepository.delete(reservedCupo.get());
+    //          return true;
+    //      }
+    //      return false;
+    //  }
 
     public boolean verificarDisponibilidadCupo(Long parqueaderoId, Long vehiculoId, Date horaLlegada){
 

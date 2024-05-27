@@ -8,8 +8,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.api.crud.DTO.Request.*;
+import com.api.crud.models.CupoModel;
+import com.api.crud.services.Codigos;
 import com.api.crud.services.CupoService;
+import com.api.crud.services.IEmailService;
 // import com.api.crud.services.ManejarFechas;
+import com.api.crud.services.ManejarFechas;
+import com.api.crud.services.UsuarioService;
+import com.api.crud.services.models.EmailCupo;
+
+import jakarta.mail.MessagingException;
 
 
 
@@ -19,13 +27,40 @@ public class CupoController {
     
     @Autowired
     private CupoService cupoService;
+
+    @Autowired
+    private IEmailService emailService;
+
+    @Autowired
+    private UsuarioService usuarioService;
     
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/reservarCupo")
-    public Map<String, Object>reservarCupo(@RequestBody ReservarCupoRequest request) {
-        boolean isReserved = cupoService.reservarCupo(request.getParqueaderoId(),request.getUsuarioId(),request.getVehiculoId(),request.getHoras(),request.getHora_llegada(),request.getTarjetaId());
-        return Map.of("data","", "msg", "Cupo reservado con exito");
-        
+    public Map<String, Object>reservarCupo(@RequestBody ReservarCupoRequest request) throws MessagingException{
+        boolean disponibilidad = cupoService.reservarCupo(request.getParqueaderoId(),request.getUsuarioId(),request.getVehiculoId(),request.getHoras(),request.getHora_llegada(),request.getTarjetaId());
+        if (disponibilidad){
+            CupoModel cupo = new CupoModel();
+            cupo.setEstado(CupoModel.Estado.RESERVADO);
+            cupo.setUsuario_fk(request.getUsuarioId());
+            cupo.setParqueadero_fk(request.getParqueaderoId());
+            cupo.setVehiculo_fk(request.getVehiculoId());
+            cupo.setFecha_creacion(ManejarFechas.obtenerFechaActual());
+            cupo.setHora_llegada(request.getHora_llegada());
+            cupo.setHoras_pedidas(request.getHoras());
+            cupo.setActivo(true);
+            String codigo = Codigos.generarCodigoCupo();
+            cupo.setCodigo(codigo);
+            cupoService.guardarCupo(cupo);
+            EmailCupo emailCupo = new EmailCupo();
+            emailCupo.setAsunto("Confirmación de Reserva de Parqueadero y Código de Acceso");
+            emailCupo.setDestinatario(usuarioService.getPorId(request.getUsuarioId()).get().getCorreo());
+            emailCupo.setCodigo(codigo);
+            emailCupo.setHoraLlegada(request.getHora_llegada());
+            emailCupo.setHorasSolicitadas(request.getHoras());
+            emailService.enviarCorreoCodigoCupo(emailCupo);
+            return Map.of("data",Map.of("codigo",codigo), "msg", "Cupo reservado con exito");
+        }
+        return Map.of("data","", "msg", "Sin disponibilidad"); 
     }
 
     @PostMapping("/ocuparCupo")
@@ -38,35 +73,35 @@ public class CupoController {
         }
     }
 
-    @PostMapping("/ocuparCupoOffline")
-    public ResponseEntity<?> ocuparCupoOffline(@RequestBody OcuparCupoOfflineRequest request) {
-        boolean isOccupied = cupoService.ocuparCupoOffline(request.getParqueaderoId(),request.getVehiculoId(),request.getNombreCliente());
-        if (isOccupied) {
-            return ResponseEntity.ok("Cupo ocupado con éxito.");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No hay cupos disponibles.");
-        }
-    }
+    // @PostMapping("/ocuparCupoOffline")
+    // public ResponseEntity<?> ocuparCupoOffline(@RequestBody OcuparCupoOfflineRequest request) {
+    //     boolean isOccupied = cupoService.ocuparCupoOffline(request.getParqueaderoId(),request.getVehiculoId(),request.getNombreCliente());
+    //     if (isOccupied) {
+    //         return ResponseEntity.ok("Cupo ocupado con éxito.");
+    //     } else {
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No hay cupos disponibles.");
+    //     }
+    // }
 
-    @PostMapping("/leave")
-    public ResponseEntity<?> leaveCupo(@RequestBody LeaveCupoRequest request) {
-        boolean isLeft = cupoService.leaveCupo(request.getCupoId(), request.isOffline());
-        if (isLeft) {
-            return ResponseEntity.ok("Cupo ahora está disponible.");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al liberar el cupo.");
-        }
-    }
+    // @PostMapping("/leave")
+    // public ResponseEntity<?> leaveCupo(@RequestBody LeaveCupoRequest request) {
+    //     boolean isLeft = cupoService.leaveCupo(request.getCupoId(), request.isOffline());
+    //     if (isLeft) {
+    //         return ResponseEntity.ok("Cupo ahora está disponible.");
+    //     } else {
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al liberar el cupo.");
+    //     }
+    // }
 
-    @PostMapping("/cancelar")
-    public ResponseEntity<?> cancelReservation(@RequestBody CancelReservationRequest request) {
-        boolean isCancelled = cupoService.cancelReservation(request.getCupoId());
-        if (isCancelled) {
-            return ResponseEntity.ok("Reserva cancelada con éxito.");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo cancelar la reserva.");
-        }
-    }
+    // @PostMapping("/cancelar")
+    // public ResponseEntity<?> cancelReservation(@RequestBody CancelReservationRequest request) {
+    //     boolean isCancelled = cupoService.cancelReservation(request.getCupoId());
+    //     if (isCancelled) {
+    //         return ResponseEntity.ok("Reserva cancelada con éxito.");
+    //     } else {
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo cancelar la reserva.");
+    //     }
+    // }
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/verificarDisponibilidad")
