@@ -39,6 +39,9 @@ public class CupoOfflineModel {
     @Column
     private Boolean activo;
 
+    @Column
+    private String codigo;
+
     /**
      * @return Long return the id
      */
@@ -164,6 +167,35 @@ public class CupoOfflineModel {
      */
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+
+    /**
+     * @return String return the nombre_cliente
+     */
+    public String getNombre_cliente() {
+        return nombre_cliente;
+    }
+
+    /**
+     * @param nombre_cliente the nombre_cliente to set
+     */
+    public void setNombre_cliente(String nombre_cliente) {
+        this.nombre_cliente = nombre_cliente;
+    }
+
+    /**
+     * @return String return the codigo
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * @param codigo the codigo to set
+     */
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
 }
