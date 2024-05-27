@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.api.crud.DTO.Request.*;
 import com.api.crud.models.CupoModel;
 import com.api.crud.models.FacturaModel;
+import com.api.crud.models.FacturaOfflineModel;
 import com.api.crud.services.Codigos;
 import com.api.crud.services.CupoService;
 import com.api.crud.services.IEmailService;
@@ -93,8 +94,8 @@ public class CupoController {
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/finalizarCupoOffline")
     public Map<String, Object> finalizarCupoOff(@RequestBody OcuparRequest request) {
-        FacturaModel factura = cupoService.finalizarCupoOffline(request.getCodigo());
-        return Map.of("data",Map.of("valor_ordinario",factura.getValorOrdinario(), "valor_extraordinario",factura.getValorExtraordinario(), "valor_total",factura.getValorTotal()), "msg", "Error al finalizar el cupo");  
+        FacturaOfflineModel factura = cupoService.finalizarCupoOffline(request.getCodigo());
+        return Map.of("data",Map.of("valor_total",factura.getValorPagado()), "msg", "Error al finalizar el cupo");  
     }
 
     // @PostMapping("/cancelar")
