@@ -6,9 +6,11 @@ import com.api.crud.DTO.Request.ReservarCupoOfflineRequest;
 import com.api.crud.DTO.Request.VerificarDisponibilidadRequest;
 import com.api.crud.models.CupoModel;
 import com.api.crud.models.CupoOfflineModel;
+import com.api.crud.models.ParqueaderoModel;
 import com.api.crud.services.Codigos;
 import com.api.crud.services.CupoService;
 import com.api.crud.services.ManejarFechas;
+import com.api.crud.services.ParqueaderoService;
 import com.api.crud.services.models.EmailCupo;
 
 import java.util.Map;
@@ -43,10 +45,10 @@ public class CupoOfflineControler {
             String codigo = Codigos.generarCodigoCupo();
             cupoOffline.setCodigo(codigo);
             cupoService.guardarCupoOffline(cupoOffline);
+            cupoService.actualizarParqueadero(request.getParqueaderoId(),request.getVehiculoId());
             return Map.of("data",Map.of("codigo",codigo), "msg", "Cupo reservado con exito");
         }
         return Map.of("data","", "msg", "Sin disponibilidad");
     }
     
-
 }

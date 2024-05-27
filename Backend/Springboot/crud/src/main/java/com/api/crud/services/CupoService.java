@@ -107,6 +107,7 @@ public class CupoService {
                 cuposUtilizados+=1;
             }
         }
+
         cuposUtilizados = cuposUtilizados + cupoRepository.findByParqueaderoAndVehiculoOcupado(parqueaderoId, vehiculoId).size();
         cuposUtilizados = cuposUtilizados + cupoOfflineRepository.findByParqueaderoAndVehiculoOcupado(parqueaderoId, vehiculoId).size();
 
@@ -125,12 +126,31 @@ public class CupoService {
                 cupoTotal = parqueadero.get().getCupo_bici_total();
                 break;
         }
+
         if (cuposUtilizados < cupoTotal){
             return true;
         }else{
             return false;
         }
         
+    }
+
+    public void actualizarParqueadero(Long parqueaderoId, Long vehiculoId){
+        ParqueaderoModel parqueadero = parqueaderoRepository.findById(parqueaderoId).get();
+        String tipoVehiculo = cupoRepository.findVehicleTypeById(vehiculoId);
+
+        switch (tipoVehiculo.toUpperCase()) {
+            case "CARRO":
+                parqueadero.setCupo_uti_carro(parqueadero.getCupo_uti_carro() + 1);
+                break;
+            case "MOTO":
+                parqueadero.setCupo_uti_carro(parqueadero.getCupo_uti_carro() + 1);
+                break;
+            case "BICICLETA":
+                parqueadero.setCupo_uti_carro(parqueadero.getCupo_uti_carro() + 1);
+                break;
+        }
+        parqueaderoRepository.save(parqueadero);
     }
 
 }
