@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { toast, ToastContainer } from 'react-toastify';
-import { format } from 'date-fns';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import './Parqueadero.css';
+import Pago from '../../Components/Pago/Pago';
 
 export default function Parqueadero({ isOpen, onClose, idParqueadero, name, cupoCarro, cupoMoto, cupoBici, tipo }) {
   const [selectedVehicle, setSelectedVehicle] = useState('');
   const [selectedDateTime, setSelectedDateTime] = useState(null);
   const [reservationHours, setReservationHours] = useState(1);
-  const [isButtonActive, setIsButtonActive] = useState(false);
-  const [paymentInfo, setPaymentInfo] = useState(null);
-
+  const [isPagoOpen, setIsPagoOpen] = useState(false);
   const tarjetaId = localStorage.getItem('tarjetaId');
   const usuarioId = localStorage.getItem('usuarioId');
 
@@ -29,10 +27,15 @@ export default function Parqueadero({ isOpen, onClose, idParqueadero, name, cupo
   };
 
   const formatDateTime = (date) => {
-    return format(date, 'yyyy-MM-dd HH:00:00');
+    if (!date) return '';
+    const year = date.getFullYear();
+    const month = (`0${date.getMonth() + 1}`).slice(-2);
+    const day = (`0${date.getDate()}`).slice(-2);
+    const hours = (`0${date.getHours()}`).slice(-2);
+    return `${year}-${month}-${day} ${hours}:00:00`;
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!selectedVehicle || !selectedDateTime) {
       toast.error('Por favor, seleccione el tipo de vehículo y la fecha/hora de llegada.');
       return;
@@ -40,34 +43,7 @@ export default function Parqueadero({ isOpen, onClose, idParqueadero, name, cupo
 
     const formattedDateTime = formatDateTime(selectedDateTime);
 
-    try {
-      const response = await fetch('http://localhost:3241/reservarCupo', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          tarjetaId: parseInt(tarjetaId, 10),
-          usuarioId: parseInt(usuarioId, 10),
-          parqueaderoId: parseInt(idParqueadero, 10),
-          vehiculoId: parseInt(selectedVehicle, 10),
-          hora_llegada: formattedDateTime,
-          horas: parseInt(reservationHours, 10),
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setIsButtonActive(true);
-        setPaymentInfo(data.data.codigo);
-        toast.success('Cupo reservado con éxito.');
-      } else {
-        toast.error(data.msg || 'No se puede reservar');
-      }
-    } catch (error) {
-      toast.error('Error en la reserva, intente nuevamente.');
-    }
+    setIsPagoOpen(true);
   };
 
   const filterPassedTime = (time) => {
@@ -75,6 +51,18 @@ export default function Parqueadero({ isOpen, onClose, idParqueadero, name, cupo
     const selectedDate = new Date(time);
 
     return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const handleClose = () => {
+    setSelectedVehicle('');
+    setSelectedDateTime(null);
+    setReservationHours(1);
+    setIsPagoOpen(false);
+    onClose();
+  };
+
+  const handlePagoClose = () => {
+    setIsPagoOpen(false);
   };
 
   if (!isOpen) return null;
@@ -128,13 +116,21 @@ export default function Parqueadero({ isOpen, onClose, idParqueadero, name, cupo
         >
           Reservar
         </button>
-        <button className='cerrar' onClick={onClose}>Cerrar</button>
-        {paymentInfo && (
-          <div className="payment-info">
-            <p>Código de reserva: {paymentInfo}</p>
-          </div>
-        )}
+        <button className='cerrar' onClick={handleClose}>Cerrar</button>
+        <Pago 
+          isOpen={isPagoOpen} 
+          onClose={handlePagoClose} 
+          data={{ 
+            tarjetaId: parseInt(tarjetaId, 10),
+            usuarioId: parseInt(usuarioId, 10),
+            idParqueadero: parseInt(idParqueadero, 10),
+            vehiculoId: parseInt(selectedVehicle, 10),
+            hora_llegada: formatDateTime(selectedDateTime),
+            horas: parseInt(reservationHours, 10)
+          }} 
+        />
       </div>
+      
     </div>
   );
 }
