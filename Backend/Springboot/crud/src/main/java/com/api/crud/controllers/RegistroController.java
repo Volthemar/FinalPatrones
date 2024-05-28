@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
-import com.api.crud.DTO.Request.RegistroPersonaRequest;
-import com.api.crud.DTO.Response.RegistroResponse;
+
+import com.api.crud.dto.request.RegistroPersonaRequest;
+import com.api.crud.dto.response.RegistroResponse;
 import com.api.crud.models.TipoUsuarioUsuarioModel;
 import com.api.crud.models.UsuarioModel;
 import com.api.crud.services.Encriptar;

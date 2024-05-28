@@ -1,4 +1,5 @@
-package com.api.crud.DTO.Response;
+package com.api.crud.dto.response;
+
 import java.util.Vector;
 
 import com.api.crud.models.TipoUsuarioModel;

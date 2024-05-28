@@ -1,4 +1,4 @@
-package com.api.crud.DTO.Response;
+package com.api.crud.dto.response;
 
 public class EstadisticasVehiculo {
     private String tipoVehiculo;

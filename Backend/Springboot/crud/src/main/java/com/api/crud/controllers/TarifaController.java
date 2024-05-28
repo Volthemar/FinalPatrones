@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.crud.DTO.Request.TarifaRequest;
+import com.api.crud.dto.request.TarifaRequest;
 import com.api.crud.models.TarifaModel;
 import com.api.crud.services.CalculoPrecioService;
 import com.api.crud.services.TarifaService;

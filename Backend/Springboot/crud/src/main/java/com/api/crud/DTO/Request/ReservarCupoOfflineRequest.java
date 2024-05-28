@@ -1,4 +1,4 @@
-package com.api.crud.DTO.Request;
+package com.api.crud.dto.request;
 
 public class ReservarCupoOfflineRequest {
     private Long parqueaderoId;

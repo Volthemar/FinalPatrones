@@ -2,7 +2,7 @@ package com.api.crud.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.crud.DTO.Request.ReservarCupoOfflineRequest;
+import com.api.crud.dto.request.ReservarCupoOfflineRequest;
 import com.api.crud.models.CupoOfflineModel;
 import com.api.crud.services.Codigos;
 import com.api.crud.services.CupoService;

@@ -3,7 +3,7 @@ package com.api.crud.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.api.crud.DTO.Response.ParqueaderoEstadisticasResponse;
+import com.api.crud.dto.response.ParqueaderoEstadisticasResponse;
 import com.api.crud.models.ParqueaderoModel;
 import com.api.crud.repositories.IFacturaRepository;
 import com.api.crud.repositories.IFacturaOfflineRepository;

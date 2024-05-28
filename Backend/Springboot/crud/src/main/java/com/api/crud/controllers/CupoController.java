@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.api.crud.DTO.Request.*;
+import com.api.crud.dto.request.*;
 import com.api.crud.models.CupoModel;
 import com.api.crud.models.FacturaModel;
 import com.api.crud.models.FacturaOfflineModel;

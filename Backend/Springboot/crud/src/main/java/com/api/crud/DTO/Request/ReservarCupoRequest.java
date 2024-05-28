@@ -1,4 +1,4 @@
-package com.api.crud.DTO.Request;
+package com.api.crud.dto.request;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;

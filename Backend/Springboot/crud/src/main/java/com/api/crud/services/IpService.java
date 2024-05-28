@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 
-import com.api.crud.DTO.Request.IpCaptureRequest;
+import com.api.crud.dto.request.IpCaptureRequest;
 import com.api.crud.models.IpModel;
 import com.api.crud.repositories.IpRepository;
 

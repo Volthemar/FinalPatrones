@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletRequest;
 
-import com.api.crud.DTO.Request.LoginRequest;
-import com.api.crud.DTO.Response.LoginResponse;
-import com.api.crud.DTO.Request.LoginCodigoRequest;
-import com.api.crud.DTO.Request.IpCaptureRequest;
+import com.api.crud.dto.request.IpCaptureRequest;
+import com.api.crud.dto.request.LoginCodigoRequest;
+import com.api.crud.dto.request.LoginRequest;
+import com.api.crud.dto.response.LoginResponse;
 import com.api.crud.models.TipoUsuarioModel;
 import com.api.crud.models.TipoUsuarioUsuarioModel;
 import com.api.crud.models.UsuarioModel;

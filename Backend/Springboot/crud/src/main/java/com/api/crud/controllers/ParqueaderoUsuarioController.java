@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.crud.DTO.Request.UsuarioRequest;
-import com.api.crud.DTO.Response.ParqueaderoUsuarioResponse;
+import com.api.crud.dto.request.UsuarioRequest;
+import com.api.crud.dto.response.ParqueaderoUsuarioResponse;
 import com.api.crud.services.ParqueaderoUsuarioService;
 
 @RestController

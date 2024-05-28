@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.crud.DTO.Request.CiudadRequest;
+import com.api.crud.dto.request.CiudadRequest;
 import com.api.crud.models.CiudadModel;
 import com.api.crud.services.CiudadService;
 import com.api.crud.services.ManejarFechas;
