@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.crud.dto.request.UsuarioRequest;
-import com.api.crud.dto.response.ParqueaderoUsuarioResponse;
 import com.api.crud.services.ParqueaderoUsuarioService;
 
 @RestController
@@ -21,10 +20,7 @@ public class ParqueaderoUsuarioController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/parqueaderoAdmi")
-    public Map<String, Object> parqueaderoAdmi(@RequestBody UsuarioRequest usuario){
-        ParqueaderoUsuarioResponse parquaderoInfo = new ParqueaderoUsuarioResponse();
-        parquaderoInfo.setParqueadero(parqueaderoUsuarioService.obtenerIdParqueadero(usuario.getUsuario_id()));
-        parquaderoInfo.setUsuario(usuario.getUsuario_id());
-        return Map.of("data", parquaderoInfo, "msg", "Parqueaderos");
+    public Map<String, Object> parqueaderoAdmi(@RequestBody UsuarioRequest usuario) {
+        return parqueaderoUsuarioService.obtenerInfoParqueaderoUsuario(usuario);
     }
 }

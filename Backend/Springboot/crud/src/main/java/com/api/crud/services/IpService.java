@@ -8,6 +8,8 @@ import com.api.crud.dto.request.IpCaptureRequest;
 import com.api.crud.models.IpModel;
 import com.api.crud.repositories.IpRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Service
 public class IpService {
 
@@ -16,10 +18,18 @@ public class IpService {
 
     public void captureIp(IpCaptureRequest request) {
         IpModel ip = new IpModel();
+        ip.setActivo(true);
         ip.setDireccionIp(request.getIpAddress());
-         ip.setUsuarioFk(request.getUserId());
-         ip.setFechaCreacion(new Timestamp(System.currentTimeMillis()));
-         ipRepository.save(ip);
+        ip.setUsuarioFk(request.getUserId());
+        ip.setFechaCreacion(new Timestamp(System.currentTimeMillis()));
+        ipRepository.save(ip);
+    }
+
+    public void captureIpFromRequest(HttpServletRequest request) {
+        String clientIp = request.getRemoteAddr();
+        IpCaptureRequest ipCaptureRequest = new IpCaptureRequest();
+        ipCaptureRequest.setIpAddress(clientIp);
+        captureIp(ipCaptureRequest);
     }
 }
 

@@ -3,10 +3,7 @@ package com.api.crud.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.crud.dto.request.ReservarCupoOfflineRequest;
-import com.api.crud.models.CupoOfflineModel;
-import com.api.crud.services.Codigos;
 import com.api.crud.services.CupoService;
-import com.api.crud.services.ManejarFechas;
 
 
 import java.util.Map;
@@ -28,23 +25,8 @@ public class CupoOfflineControler {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/reservarCupoOffline")
-    public Map<String, Object> postMethodName(@RequestBody ReservarCupoOfflineRequest request) {
-        boolean disponibilidad = cupoService.verificarDisponibilidadCupo(request.getParqueaderoId(),request.getVehiculoId(),ManejarFechas.obtenerFechaActual());
-        if (disponibilidad){
-            CupoOfflineModel cupoOffline = new CupoOfflineModel();
-            cupoOffline.setEstado(CupoOfflineModel.Estado.OCUPADO);
-            cupoOffline.setParqueadero_fk(request.getParqueaderoId());
-            cupoOffline.setVehiculo_fk(request.getVehiculoId());
-            cupoOffline.setFecha_creacion(ManejarFechas.obtenerFechaActual());
-            cupoOffline.setHora_llegada(ManejarFechas.obtenerFechaActual());
-            cupoOffline.setActivo(true);
-            String codigo = Codigos.generarCodigoCupo();
-            cupoOffline.setCodigo(codigo);
-            cupoService.actualizarParqueadero(request.getParqueaderoId(),request.getVehiculoId(),1);
-            cupoService.guardarCupoOffline(cupoOffline);
-            return Map.of("data",Map.of("codigo",codigo), "msg", "Cupo reservado con exito");
-        }
-        return Map.of("data","", "msg", "Sin disponibilidad");
+    public Map<String, Object> reservarCupoOffline(@RequestBody ReservarCupoOfflineRequest request) {
+        return cupoService.reservarCupoOffline(request);
     }
     
 }

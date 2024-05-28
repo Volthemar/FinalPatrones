@@ -42,7 +42,7 @@ public class ParqueaderoEstadisticasResponse {
         this.cuposDisponibles = cuposDisponibles;
     }
 
-    public List<Integer> getingresos() {
+    public List<Integer> getIngresos() {
         return ingresos;
     }
 

@@ -3,10 +3,8 @@ package com.api.crud.models;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Date;
 
-import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "Factura_offline")

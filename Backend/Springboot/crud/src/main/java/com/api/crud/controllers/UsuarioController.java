@@ -28,27 +28,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public class UsuarioController {
     @Autowired
-    private UsuarioService userService;
+    private UsuarioService usuarioService;
     @Autowired
     IEmailService emailService;
 
     @PostMapping("/postUsuario")
     public UsuarioModel postGuardarUsuario(@RequestBody UsuarioModel usuario) {
-        return this.userService.guardarUsuario(usuario);
+        return this.usuarioService.guardarUsuario(usuario);
     }
 
     @GetMapping("/{id}")
     public Optional<UsuarioModel> getUsuariosPorId(@PathVariable Long id) {
-        return this.userService.getPorId(id);
+        return this.usuarioService.getPorId(id);
     }
-
-    @Autowired
-    UsuarioService UsuarioService;
 
     @PutMapping("/{id}/estado")
     public ResponseEntity<UsuarioModel> actualizarEstado(@PathVariable("id") long id,
             @RequestParam("estado") boolean estado) {
-        Optional<UsuarioModel> usuario = UsuarioService.actualizarEstado(id, estado);
+        Optional<UsuarioModel> usuario = usuarioService.actualizarEstado(id, estado);
         if (usuario.isPresent()) {
             return ResponseEntity.ok(usuario.get());
         } else {
@@ -58,7 +55,7 @@ public class UsuarioController {
 
     @GetMapping("/estado-false")
     public ResponseEntity<List<UsuarioModel>> getUsuariosConEstadoFalse() {
-        List<UsuarioModel> usuarios = UsuarioService.getUsuariosPorEstado(false);
+        List<UsuarioModel> usuarios = usuarioService.getUsuariosPorEstado(false);
         if (usuarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -68,7 +65,7 @@ public class UsuarioController {
 
     @GetMapping("/getUsuarios")
     public ResponseEntity<List<UsuarioModel>> getUsuarios() {
-        List<UsuarioModel> usuariosActivos = UsuarioService.getUsuariosPorActivo(true);
+        List<UsuarioModel> usuariosActivos = usuarioService.getUsuariosPorActivo(true);
         if (usuariosActivos.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -78,7 +75,7 @@ public class UsuarioController {
 
     @PatchMapping("/{id}/bloquear")
     public ResponseEntity<String> bloquearUsuario(@PathVariable Long id) {
-        UsuarioModel usuarioActualizado = UsuarioService.updateEstado(id, false);
+        UsuarioModel usuarioActualizado = usuarioService.updateEstado(id, false);
         if (usuarioActualizado != null) {
             return ResponseEntity.ok("Usuario con ID " + id + " fue bloqueado exitosamente.");
         }
@@ -87,7 +84,7 @@ public class UsuarioController {
 
     @PatchMapping("/{id}/desbloquear")
     public ResponseEntity<String> desbloquearUsuario(@PathVariable Long id) {
-        UsuarioModel usuarioActualizado = UsuarioService.updateEstado(id, true);
+        UsuarioModel usuarioActualizado = usuarioService.updateEstado(id, true);
         if (usuarioActualizado != null) {
             return ResponseEntity.ok("Usuario con ID " + id + " fue desbloqueado exitosamente.");
         }
@@ -96,7 +93,7 @@ public class UsuarioController {
 
     @PatchMapping("/{id}/activar")
     public ResponseEntity<String> activarUsuario(@PathVariable Long id) {
-        UsuarioModel usuarioActualizado = UsuarioService.updateActivo(id, true);
+        UsuarioModel usuarioActualizado = usuarioService.updateActivo(id, true);
         if (usuarioActualizado != null) {
             return ResponseEntity.ok("Usuario con ID " + id + " fue activado exitosamente.");
         }
@@ -105,7 +102,7 @@ public class UsuarioController {
 
     @PatchMapping("/{id}/desactivar")
     public ResponseEntity<String> desactivarUsuario(@PathVariable Long id) {
-        UsuarioModel usuarioActualizado = UsuarioService.updateActivo(id, false);
+        UsuarioModel usuarioActualizado = usuarioService.updateActivo(id, false);
         if (usuarioActualizado != null) {
             return ResponseEntity.ok("Usuario con ID " + id + " fue desactivado exitosamente.");
         }

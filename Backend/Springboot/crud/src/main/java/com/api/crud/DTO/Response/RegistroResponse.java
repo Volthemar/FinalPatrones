@@ -1,9 +1,5 @@
 package com.api.crud.dto.response;
-
-import java.util.Date;
-
 import com.api.crud.models.TipoUsuarioModel;
-import com.api.crud.models.UsuarioModel;
 
 public class RegistroResponse {
     private Long id;
