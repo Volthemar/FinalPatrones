@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    image: fourparks:latest
+    container_name: springboot-app
+    ports:
+      - "3241:3241"  # Map the container's port 8080 to the host's port 8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/parqueadero
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=AcceptanceCold13
+
+
