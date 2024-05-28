@@ -4,15 +4,14 @@ import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="vehiculo")
+@Table(name = "vehiculo")
 public class VehiculoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +23,8 @@ public class VehiculoModel {
     @Column
     private Timestamp fecha_creacion;
 
+    @Column
+    private Boolean activo;
 
     /**
      * @return long return the id
@@ -67,9 +68,32 @@ public class VehiculoModel {
         this.fecha_creacion = fecha_creacion;
     }
 
-    /*public enum Tipo{
-        CARRO,
-        MOTO,
-        BICI
-    }*/
+    /**
+     * @return boolean return the activo
+     */
+    public boolean isActivo() {
+        return activo;
+    }
+
+    /**
+     * @return Boolean return the activo
+     */
+    public Boolean getactivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    /*
+     * public enum Tipo{
+     * CARRO,
+     * MOTO,
+     * BICI
+     * }
+     */
 }

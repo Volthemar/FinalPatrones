@@ -44,6 +44,7 @@ public class TarjetaCreditoController {
         tarjetaCredito.setUsuario_fk(tarjeta.getUsuario());
         tarjetaCredito.setCvc(tarjeta.getCvc());
         tarjetaCredito.setFecha_vencimiento(tarjeta.getFecha_vencimiento());
+        tarjetaCredito.setActivo(true);
         tarjetaCreditoService.guardarTarjetaCredito(tarjetaCredito);
         Optional<UsuarioModel> usuario = userService.getPorId(tarjeta.getUsuario());
         EmailDTO email = new EmailDTO();

@@ -23,18 +23,19 @@ public class CiudadController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/obtenerCiudades")
-    public Map<String,Object> obenerCiudades(){
-        return Map.of("data", ciudadService.obtenerCiudades(), "msg", "Ciudades");
+    public Map<String, Object> obenerCiudades() {
+        return Map.of("data", ciudadService.obtenerCiudades(true), "msg", "Ciudades");
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/crearCiudad")
-    public Map<String,Object> crearCiudad(@RequestBody CiudadRequest ciudad){
+    public Map<String, Object> crearCiudad(@RequestBody CiudadRequest ciudad) {
         CiudadModel ciudadNueva = new CiudadModel();
         ciudadNueva.setFecha_creacion(ManejarFechas.obtenerFechaActual());
         ciudadNueva.setLatitud(ciudad.getLatitud());
         ciudadNueva.setLongitud(ciudad.getLongitud());
         ciudadNueva.setNombre(ciudad.getNombre());
+        ciudadNueva.setActivo(true);
         return Map.of("data", ciudadService.guardarCiudad(ciudadNueva), "msg", "Ciudad creada");
     }
 }

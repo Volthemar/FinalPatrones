@@ -1,5 +1,6 @@
 package com.api.crud.controllers;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.crud.DTO.Request.TarifaRequest;
+import com.api.crud.models.TarifaModel;
+import com.api.crud.services.CalculoPrecioService;
 import com.api.crud.services.TarifaService;
 
 @RestController
@@ -26,6 +29,12 @@ public class TarifaController {
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/tarifaParqueaderoVehiculo")
     public Map<String, Object> tarifaParqueaderoVehiculo(@RequestBody TarifaRequest tarifa){
-        return Map.of("data", tarifaService.obtenerTarifaParqueaderoVehiculo(tarifa.getParqueadero_fk(),tarifa.getVehiculo_fk()), "msg", "Precio");
+        Optional<TarifaModel> tarifaParqueadero = tarifaService.obtenerTarifaParqueaderoVehiculo(tarifa.getParqueadero_fk(),tarifa.getVehiculo_fk());
+        if(tarifaParqueadero.isPresent()){
+            int precioFinal = CalculoPrecioService.CalcularPrecio(tarifaParqueadero.get(), tarifa.getHoras());
+            return Map.of("data", Map.of("Precio",precioFinal) , "msg", "Calculo de precio");
+        }
+        return Map.of("data", "", "msg", "Parqueadero o vehiculo no encontrado");
+        
     }
 }

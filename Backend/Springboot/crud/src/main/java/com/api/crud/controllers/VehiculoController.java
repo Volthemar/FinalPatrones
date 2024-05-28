@@ -18,7 +18,7 @@ public class VehiculoController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/obtenerVehiculos")
-    public Map<String,Object> obtenerVehiculos(){
-        return Map.of("data", vehiculoService.obtenerVehiculos(), "msg", "Vehiculos");
+    public Map<String, Object> obtenerVehiculos() {
+        return Map.of("data", vehiculoService.obtenerVehiculos(true), "msg", "Vehiculos");
     }
 }

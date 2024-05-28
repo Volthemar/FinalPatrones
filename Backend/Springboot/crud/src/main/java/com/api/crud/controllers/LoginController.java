@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,14 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletRequest;
 
 import com.api.crud.DTO.Request.LoginRequest;
+import com.api.crud.DTO.Response.LoginResponse;
 import com.api.crud.DTO.Request.LoginCodigoRequest;
 import com.api.crud.DTO.Request.IpCaptureRequest;
+import com.api.crud.models.TipoUsuarioModel;
+import com.api.crud.models.TipoUsuarioUsuarioModel;
 import com.api.crud.models.UsuarioModel;
 import com.api.crud.services.IEmailService;
 import com.api.crud.services.IpService;
+import com.api.crud.services.TipoUsuarioService;
+import com.api.crud.services.TipoUsuarioUsuarioService;
 import com.api.crud.services.UsuarioService;
 import com.api.crud.services.models.EmailDTO;
-import com.api.crud.services.CodigoLogin;
+import com.api.crud.services.Codigos;
 
 import jakarta.mail.MessagingException;
 
@@ -44,16 +50,13 @@ public class LoginController {
         String contrasena = loginRequest.getContrasena();
         EmailDTO email = new EmailDTO();
         Optional<UsuarioModel> usuarioLoggeado = this.userService.buscarUsuario(usuario);
-
         if (usuarioLoggeado.isPresent()) {
             String contrasenaAlmacenada = usuarioLoggeado.get().getContrasena();
 
             if (encriptarContrasena(contrasena).equals(contrasenaAlmacenada)) {
-                // Contraseña correcta
                 if (usuarioLoggeado.get().isEstado()) {
                     usuarioLoggeado.get().setNum_intentos(0);
-                    CodigoLogin lc = new CodigoLogin();
-                    String codigo = lc.generarCodigo();
+                    String codigo = Codigos.generarCodigoLogin();
                     usuarioLoggeado.get().setCod_verificacion(codigo);
                     userService.guardarUsuario(usuarioLoggeado.get());
                     email.setDestinatario(usuarioLoggeado.get().getCorreo());
@@ -112,29 +115,45 @@ public class LoginController {
         }
     }
 
+    @Autowired
+    private TipoUsuarioService tipoUsuarioService;
+
+    @Autowired
+    private TipoUsuarioUsuarioService tipoUsuarioUsuarioService;
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/loginCodigo")
-    public Map<String, Object> loginCodigo(@RequestBody LoginCodigoRequest
-    loginCodigoRequest, HttpServletRequest request) {
+    public Map<String, Object> loginCodigo(@RequestBody LoginCodigoRequest loginCodigoRequest,
+            HttpServletRequest request) {
         Long id = loginCodigoRequest.getId();
         String codigo = loginCodigoRequest.getCodigo();
         String codigoUsuario = this.userService.codigoUsuario(id);
 
         if (codigo.equals(codigoUsuario)) {
             Optional<UsuarioModel> cliente = this.userService.getPorId(id);
-            String nombre = cliente.get().getNombre();
-            String correo = cliente.get().getCorreo();
-            String identificacion = cliente.get().getIdentificacion();
-            Boolean estado = cliente.get().isEstado();
-            String usuario = cliente.get().getUsuario();
+            LoginResponse respuestaLogin = new LoginResponse();
+            respuestaLogin.setNombre(cliente.get().getNombre());
+            respuestaLogin.setCorreo(cliente.get().getCorreo());
+            respuestaLogin.setIdentificacion(cliente.get().getIdentificacion());
+            respuestaLogin.setEstado(cliente.get().isEstado());
+            respuestaLogin.setUsuario(cliente.get().getUsuario());
+            Vector<TipoUsuarioUsuarioModel> rompimiento = tipoUsuarioUsuarioService
+                    .obtenerTipoUsuario(cliente.get().getId());
+            Vector<TipoUsuarioModel> tipos = new Vector<>();
+            for (int i = 0; i < rompimiento.size(); i++) {
+                Optional<TipoUsuarioModel> tipo = tipoUsuarioService
+                        .obtenerTipo(rompimiento.get(i).getTipo_usuario_fk());
+                if (!tipo.isEmpty()) {
+                    tipos.add(tipo.get());
+                }
+            }
+            respuestaLogin.setTipo(tipos);
+            respuestaLogin.setId(cliente.get().getId());
             IpCaptureRequest ipCaptureRequest = new IpCaptureRequest();
             ipCaptureRequest.setIpAddress(request.getRemoteAddr());
             ipCaptureRequest.setUserId(cliente.get().getId());
             ipService.captureIp(ipCaptureRequest);
-            return Map.of("data", Map.of("id",id,"nombre", nombre, "correo", correo,
-            "identificacion", identificacion, "estado",
-            estado, "usuario", usuario), "msg", "Codigo correcto");
+            return Map.of("data", respuestaLogin, "msg", "Codigo correcto");
         } else {
             IpCaptureRequest ipCaptureRequest = new IpCaptureRequest();
             ipCaptureRequest.setIpAddress(request.getRemoteAddr());

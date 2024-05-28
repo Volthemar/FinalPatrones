@@ -14,8 +14,10 @@ import java.util.Optional;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -64,14 +66,50 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/getUsuarios")
     public ResponseEntity<List<UsuarioModel>> getUsuarios() {
-        List<UsuarioModel> usuarios = UsuarioService.getUsuarios();
-        if (usuarios.isEmpty()) {
+        List<UsuarioModel> usuariosActivos = UsuarioService.getUsuariosPorActivo(true);
+        if (usuariosActivos.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.ok(usuarios);
+            return ResponseEntity.ok(usuariosActivos);
         }
+    }
+
+    @PatchMapping("/{id}/bloquear")
+    public ResponseEntity<String> bloquearUsuario(@PathVariable Long id) {
+        UsuarioModel usuarioActualizado = UsuarioService.updateEstado(id, false);
+        if (usuarioActualizado != null) {
+            return ResponseEntity.ok("Usuario con ID " + id + " fue bloqueado exitosamente.");
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PatchMapping("/{id}/desbloquear")
+    public ResponseEntity<String> desbloquearUsuario(@PathVariable Long id) {
+        UsuarioModel usuarioActualizado = UsuarioService.updateEstado(id, true);
+        if (usuarioActualizado != null) {
+            return ResponseEntity.ok("Usuario con ID " + id + " fue desbloqueado exitosamente.");
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PatchMapping("/{id}/activar")
+    public ResponseEntity<String> activarUsuario(@PathVariable Long id) {
+        UsuarioModel usuarioActualizado = UsuarioService.updateActivo(id, true);
+        if (usuarioActualizado != null) {
+            return ResponseEntity.ok("Usuario con ID " + id + " fue activado exitosamente.");
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PatchMapping("/{id}/desactivar")
+    public ResponseEntity<String> desactivarUsuario(@PathVariable Long id) {
+        UsuarioModel usuarioActualizado = UsuarioService.updateActivo(id, false);
+        if (usuarioActualizado != null) {
+            return ResponseEntity.ok("Usuario con ID " + id + " fue desactivado exitosamente.");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario con ID " + id + " no fue encontrado.");
     }
 
 }

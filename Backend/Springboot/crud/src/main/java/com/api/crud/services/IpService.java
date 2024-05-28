@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 
 import com.api.crud.DTO.Request.IpCaptureRequest;
-import com.api.crud.models.Ip;
+import com.api.crud.models.IpModel;
 import com.api.crud.repositories.IpRepository;
 
 @Service
@@ -15,7 +15,7 @@ public class IpService {
     private IpRepository ipRepository;
 
     public void captureIp(IpCaptureRequest request) {
-        Ip ip = new Ip();
+        IpModel ip = new IpModel();
         ip.setDireccionIp(request.getIpAddress());
          ip.setUsuarioFk(request.getUserId());
          ip.setFechaCreacion(new Timestamp(System.currentTimeMillis()));

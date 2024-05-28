@@ -12,11 +12,11 @@ public class CiudadService {
     @Autowired
     ICiudadRepository ciudadRepository;
 
-    public List<CiudadModel> obtenerCiudades(){
-        return ciudadRepository.findAll();
+    public List<CiudadModel> obtenerCiudades(boolean activo) {
+        return ciudadRepository.findByActivo(activo);
     }
 
-    public CiudadModel guardarCiudad(CiudadModel ciudad){
+    public CiudadModel guardarCiudad(CiudadModel ciudad) {
         return ciudadRepository.save(ciudad);
     }
 }

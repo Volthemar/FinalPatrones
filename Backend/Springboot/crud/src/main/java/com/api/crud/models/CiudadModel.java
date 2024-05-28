@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="ciudad")
+@Table(name = "ciudad")
 public class CiudadModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,12 +23,12 @@ public class CiudadModel {
 
     @Column
     private double latitud;
-    
+
     @Column
     private Date fecha_creacion;
 
-    
-
+    @Column
+    private Boolean activo;
 
     /**
      * @return long return the id
@@ -98,6 +98,27 @@ public class CiudadModel {
      */
     public void setFecha_creacion(Date fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
+    }
+
+    /**
+     * @return boolean return the activo
+     */
+    public boolean isActivo() {
+        return activo;
+    }
+
+    /**
+     * @return Boolean return the activo
+     */
+    public Boolean getactivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
 }

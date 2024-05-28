@@ -11,6 +11,7 @@ public class ParqueaderoResponse {
     private double latitud;
     private String color;
 
+
     /**
      * @return long return the id
      */
@@ -136,5 +137,8 @@ public class ParqueaderoResponse {
     public void setColor(String color) {
         this.color = color;
     }
+
+
+
 
 }

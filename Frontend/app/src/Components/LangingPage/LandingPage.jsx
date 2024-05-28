@@ -1,26 +1,61 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
 import Logo from '../../assets/logo.png';
 import Bogota from '../../assets/bogota.png';
 import Cali from '../../assets/cali.png';
 import Medellin from '../../assets/medellin.png';
+import carrusel1 from '../../assets/carrusel1.jpg';
+import carrusel2 from '../../assets/carrusel2.jpg';
+import carrusel3 from '../../assets/carrusel3.jpg';
 
 function LandingPage() {
+    const [imagenActual, setImagenActual] = useState(carrusel1);
+    const [siguienteImagen, setSiguienteImagen] = useState(carrusel2);
+
+    useEffect(() => {
+        const intervalo = setInterval(() => {
+            
+            if (imagenActual === carrusel1) {
+                setSiguienteImagen(carrusel2);
+            } else if (imagenActual === carrusel2) {
+                setSiguienteImagen(carrusel3);
+            } else {
+                setSiguienteImagen(carrusel1);
+            }
+        }, 2000);
+
+        return () => clearInterval(intervalo);
+    }, [imagenActual]);
+
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setImagenActual(siguienteImagen);
+        }, 100); 
+
+        return () => clearTimeout(timeout);
+    }, [siguienteImagen]);
+
     return (
         <div className="landing-page">
             <header className="header">
                 <img id='logo' src={Logo} alt="Logo"></img>
                 <nav>
-                    <Link to="/login" className="login-link">Login</Link>
+                    <Link to="/login" className="login-link">
+                        <button className='landing-button'>
+                        Ingresa
+                        </button>
+                        </Link>
                 </nav>
             </header>
             <div className='info'>
-                <section className="hero-section">
-                    <h1>Bienvenido a Four Parks</h1>
-                    <p>Reserva tu parqueadero en Cali, Medellín o Bogotá de manera fácil y rápida.</p>
+                <section className="hero-section" style={{ backgroundImage: `url(${imagenActual})` }}>
+                    <h1>¡Bienvenido a Four Parks!</h1>
+                    <p>Reserva tu parqueadero de manera fácil, rápida y segura.</p>
                     <Link to="/registro">
-                        <button>Regístrate Ahora</button>
+                        <button className='landing-button'>Regístrate</button>
                     </Link>
                 </section>
 
@@ -42,17 +77,6 @@ function LandingPage() {
                     </div>
                 </section>
             </div>
-
-
-            <section className="contact-form">
-                <h2>Contacto</h2>
-                <form>
-                    <input type="text" placeholder="Nombre" required />
-                    <input type="email" placeholder="Email" required />
-                    <textarea placeholder="Mensaje" required></textarea>
-                    <button type="submit">Enviar</button>
-                </form>
-            </section>
 
             <footer className="footer">
                 <p>© 2024 Four Parks. Todos los derechos reservados.</p>

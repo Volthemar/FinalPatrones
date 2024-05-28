@@ -53,7 +53,7 @@ public class ParqueaderoModel {
     private Date fecha_creacion;
 
     @Column
-    private long usuario_fk;
+    private Boolean activo;
 
     /**
      * @return long return the id
@@ -238,16 +238,23 @@ public class ParqueaderoModel {
     }
 
     /**
-     * @return long return the usuario_fk
+     * @return boolean return the activo
      */
-    public long getUsuario_fk() {
-        return usuario_fk;
+    public boolean isActivo() {
+        return activo;
     }
 
     /**
-     * @param usuario_fk the usuario_fk to set
+     * @return Boolean return the activo
      */
-    public void setUsuario_fk(long usuario_fk) {
-        this.usuario_fk = usuario_fk;
+    public Boolean getactivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 }

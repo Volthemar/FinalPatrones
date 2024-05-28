@@ -1,13 +1,14 @@
 package com.api.crud.models;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 @Entity
@@ -27,18 +28,32 @@ public class CupoOfflineModel {
     private boolean pagado;
 
     @Column
-    private Timestamp hora_llegada;
+    private Date hora_llegada;
 
     @Column
-    private Timestamp hora_salida;
+    private Date hora_salida;
 
     @Column
-    private Timestamp fecha_creacion;
+    private Date fecha_creacion;
+
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
 
     @Column
-    private String nombre_cliente;
+    private Boolean activo;
 
-    
+    @Column
+    private String codigo;
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public enum Estado {
+        OCUPADO,
+        FINALIZADO
+    }
+
     /**
      * @return Long return the id
      */
@@ -95,54 +110,92 @@ public class CupoOfflineModel {
         this.pagado = pagado;
     }
 
+
+
     /**
-     * @return Timestamp return the hora_llegada
+     * @return boolean return the activo
      */
-    public Timestamp getHora_llegada() {
+    public boolean isActivo() {
+        return activo;
+    }
+
+    /**
+     * @return Boolean return the activo
+     */
+    public Boolean getactivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    /**
+     * @return String return the codigo
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * @param codigo the codigo to set
+     */
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+
+    /**
+     * @return Date return the hora_llegada
+     */
+    public Date getHora_llegada() {
         return hora_llegada;
     }
 
     /**
      * @param hora_llegada the hora_llegada to set
      */
-    public void setHora_llegada(Timestamp hora_llegada) {
+    public void setHora_llegada(Date hora_llegada) {
         this.hora_llegada = hora_llegada;
     }
 
     /**
-     * @return Timestamp return the hora_salida
+     * @return Date return the hora_salida
      */
-    public Timestamp getHora_salida() {
+    public Date getHora_salida() {
         return hora_salida;
     }
 
     /**
      * @param hora_salida the hora_salida to set
      */
-    public void setHora_salida(Timestamp hora_salida) {
+    public void setHora_salida(Date hora_salida) {
         this.hora_salida = hora_salida;
     }
 
     /**
-     * @return Timestamp return the fecha_creacion
+     * @return Date return the fecha_creacion
      */
-    public Timestamp getFecha_creacion() {
+    public Date getFecha_creacion() {
         return fecha_creacion;
     }
 
     /**
      * @param fecha_creacion the fecha_creacion to set
      */
-    public void setFecha_creacion(Timestamp fecha_creacion) {
+    public void setFecha_creacion(Date fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
-    }
-
-    public String getNombre_Cliente(){
-        return nombre_cliente;
-    }
-
-    public void setNombre_Cliente(String nombre_cliente){
-        this.nombre_cliente = nombre_cliente;
     }
 
 }

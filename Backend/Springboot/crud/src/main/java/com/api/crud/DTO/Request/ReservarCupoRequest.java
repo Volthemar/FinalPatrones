@@ -1,82 +1,101 @@
 package com.api.crud.DTO.Request;
-import java.sql.Timestamp;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ReservarCupoRequest {
-    private long usuario_fk;
-    private long parqueadero_fk;
-    private long vehiculo_fk;
-    private Timestamp hora_llegada;
-    private int horas_pedidas;
+    private Long tarjetaId;
+    private Long usuarioId;
+    private Long parqueaderoId;
+    private Long vehiculoId;
     
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date hora_llegada;
 
+    private int horas;
+    
     /**
-     * @return long return the usuario_fk
+     * @return Long return the tarjetaId
      */
-    public long getUsuario_fk() {
-        return usuario_fk;
+    public Long getTarjetaId() {
+        return tarjetaId;
     }
 
     /**
-     * @param usuario_fk the usuario_fk to set
+     * @param tarjetaId the tarjetaId to set
      */
-    public void setUsuario_fk(long usuario_fk) {
-        this.usuario_fk = usuario_fk;
+    public void setTarjetaId(Long tarjetaId) {
+        this.tarjetaId = tarjetaId;
     }
 
     /**
-     * @return long return the parqueadero_fk
+     * @return Long return the usuarioId
      */
-    public long getParqueadero_fk() {
-        return parqueadero_fk;
+    public Long getUsuarioId() {
+        return usuarioId;
     }
 
     /**
-     * @param parqueadero_fk the parqueadero_fk to set
+     * @param usuarioId the usuarioId to set
      */
-    public void setParqueadero_fk(long parqueadero_fk) {
-        this.parqueadero_fk = parqueadero_fk;
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     /**
-     * @return long return the vehiculo_fk
+     * @return Long return the parqueaderoId
      */
-    public long getVehiculo_fk() {
-        return vehiculo_fk;
+    public Long getParqueaderoId() {
+        return parqueaderoId;
     }
 
     /**
-     * @param vehiculo_fk the vehiculo_fk to set
+     * @param parqueaderoId the parqueaderoId to set
      */
-    public void setVehiculo_fk(long vehiculo_fk) {
-        this.vehiculo_fk = vehiculo_fk;
+    public void setParqueaderoId(Long parqueaderoId) {
+        this.parqueaderoId = parqueaderoId;
+    }
+
+    /**
+     * @return Long return the vehiculoId
+     */
+    public Long getVehiculoId() {
+        return vehiculoId;
+    }
+
+    /**
+     * @param vehiculoId the vehiculoId to set
+     */
+    public void setVehiculoId(Long vehiculoId) {
+        this.vehiculoId = vehiculoId;
     }
 
     /**
      * @return Date return the hora_llegada
      */
-    public Timestamp getHora_llegada() {
+    public Date getHora_llegada() {
         return hora_llegada;
     }
 
     /**
      * @param hora_llegada the hora_llegada to set
      */
-    public void setHora_llegada(Timestamp hora_llegada) {
+    public void setHora_llegada(Date hora_llegada) {
         this.hora_llegada = hora_llegada;
-    }
-    
-    /**
-     * @return int return the horas_pedidas
-     */
-    public int getHoras_pedidas() {
-        return horas_pedidas;
     }
 
     /**
-     * @param horas_pedidas the horas_pedidas to set
+     * @return int return the horas
      */
-    public void setHoras_pedidas(int horas_pedidas) {
-        this.horas_pedidas = horas_pedidas;
+    public int getHoras() {
+        return horas;
+    }
+
+    /**
+     * @param horas the horas to set
+     */
+    public void setHoras(int horas) {
+        this.horas = horas;
     }
 
 }

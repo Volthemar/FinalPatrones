@@ -1,0 +1,25 @@
+#sidebar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease;
+  transform: translateX(-85%);
+}
+#sidebar:hover{
+    transform: translateX(0);
+}
+
+#contenidoGerente{
+    color: #121012;
+    width: 80%;
+    height: 10vh;
+    background-color: #ffffff;
+    margin-left: 10%;
+    box-sizing:border-box;
+    padding: 2%;
+
+}
+
+#contenidoGerente p{
+    margin: 0;
+}

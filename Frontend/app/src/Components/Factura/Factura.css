@@ -1,0 +1,70 @@
+.factura-container {
+    border: 2px solid #d3a35d;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .factura-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #d3a35d;
+    padding-bottom: 10px;
+  }
+  
+  .factura-logo {
+    max-width: 100px;
+  }
+  
+  .factura-info {
+    text-align: right;
+  }
+  
+  .factura-body {
+    padding: 20px 0;
+  }
+  
+  .factura-body p {
+    margin: 10px 0;
+    font-size: 1.2rem;
+  }
+  
+  .factura-print {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #d3a35d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .factura-print:hover {
+    background-color: #c4914a;
+  }
+  
+  /* Estilos para impresión */
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    .factura-container, .factura-container * {
+      visibility: visible;
+    }
+    .factura-container {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      box-shadow: none;
+      border: none;
+    }
+  }
+  
