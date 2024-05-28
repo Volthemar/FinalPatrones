@@ -15,7 +15,6 @@
 	<description>api rest</description>
 	<properties>
 		<java.version>17</java.version>
-		<sonar.projectKey>Volthemar_FinalPatrones</sonar.projectKey>
   		<sonar.organization>fourparksc</sonar.organization>
   		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
