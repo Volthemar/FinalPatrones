@@ -3,5 +3,6 @@
         "lib/**/*.jar",
         "Backend/lib/mysql-connector-j-8.3.0.jar"
     ],
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
