@@ -66,7 +66,9 @@ public class CupoService {
             guardarCupo(cupo);
             EmailCupo emailCupo = new EmailCupo();
             emailCupo.setAsunto("Confirmación de Reserva de Parqueadero y Código de Acceso");
-            emailCupo.setDestinatario(usuarioService.getPorId(request.getUsuarioId()).get().getCorreo());
+            if(usuarioService.getPorId(request.getUsuarioId()).isPresent()){
+                emailCupo.setDestinatario(usuarioService.getPorId(request.getUsuarioId()).get().getCorreo());
+            }
             emailCupo.setCodigo(codigo);
             emailCupo.setHoraLlegada(request.getHora_llegada());
             emailCupo.setHorasSolicitadas(request.getHoras());
@@ -82,7 +84,9 @@ public class CupoService {
         if (ocupado) {
             EmailCupo emailCupo = new EmailCupo();
             emailCupo.setAsunto("Confirmación de Reserva de Parqueadero y Código de Acceso");
-            emailCupo.setDestinatario(usuarioService.getPorId(buscarCodigo(request.getCodigo()).getUsuario_fk()).get().getCorreo());
+            if(usuarioService.getPorId(buscarCodigo(request.getCodigo()).getUsuario_fk()).isPresent()){
+                emailCupo.setDestinatario(usuarioService.getPorId(buscarCodigo(request.getCodigo()).getUsuario_fk()).get().getCorreo());
+            }
             emailCupo.setCodigo(request.getCodigo());
             emailCupo.setHoraLlegada(ManejarFechas.obtenerFechaActual());
             emailService.enviarCorreoConfirmacionCupo(emailCupo);
@@ -163,7 +167,7 @@ public class CupoService {
         if (cupoOffline.isPresent()) {
             cupoOffline.get().setHora_salida(ManejarFechas.obtenerFechaActual());
             cupoOffline.get().setEstado(CupoOfflineModel.Estado.FINALIZADO);
-            actualizarParqueadero(cupoOffline.get().getParqueadero_fk(), cupoOffline.get().getVehiculo_fk(), -1);
+            actualizarParqueadero(cupoOffline.get().getParqueaderoFk(), cupoOffline.get().getVehiculoFk(), -1);
             FacturaOfflineModel factura = realizarFacturaOffline(cupoOffline.get());
             cupoOfflineRepository.save(cupoOffline.get());
             return factura;
@@ -238,7 +242,9 @@ public class CupoService {
 
     private FacturaModel realizarFacturaOnline(CupoModel cupo) {
         FacturaModel factura = new FacturaModel();
-        TarifaModel tarifa = tarifaService.obtenerTarifaParqueaderoVehiculo(cupo.getParqueadero_fk(), cupo.getVehiculo_fk()).get();
+        if (tarifaService.obtenerTarifaParqueaderoVehiculo(cupo.getParqueadero_fk(), cupo.getVehiculo_fk()).isPresent()){
+            TarifaModel tarifa = tarifaService.obtenerTarifaParqueaderoVehiculo(cupo.getParqueadero_fk(), cupo.getVehiculo_fk()).get();
+        }
         TarjetaCreditoModel tarjeta = tarjetaCreditoService.obtenerTarjetas(cupo.getUsuario_fk()).get(0);
     
         BigDecimal valorOrdinario = BigDecimal.valueOf(CalculoPrecioService.CalcularPrecio(tarifa, cupo.getHoras_pedidas()));
@@ -266,14 +272,14 @@ public class CupoService {
     
     private FacturaOfflineModel realizarFacturaOffline(CupoOfflineModel cupo) {
         FacturaOfflineModel factura = new FacturaOfflineModel();
-        TarifaModel tarifa = tarifaService.obtenerTarifaParqueaderoVehiculo(cupo.getParqueadero_fk(), cupo.getVehiculo_fk()).get();
-    
-        BigDecimal valorTotal = CalculoPrecioService.CalcularPrecioOffline(tarifa, cupo.getHora_llegada(), cupo.getHora_salida());
-    
+        if(tarifaService.obtenerTarifaParqueaderoVehiculo(cupo.getParqueaderoFk(), cupo.getVehiculoFk()).isPresent()){
+            TarifaModel tarifa = tarifaService.obtenerTarifaParqueaderoVehiculo(cupo.getParqueaderoFk(), cupo.getVehiculoFk()).get();
+        }
+        BigDecimal valorTotal = CalculoPrecioService.CalcularPrecioOffline(tarifa, cupo.getHoraLlegada(), cupo.getHoraSalida());
         factura.setValorPagado(valorTotal);
         factura.setCupoOfflineId(cupo.getId());
-        factura.setVehiculoId(cupo.getVehiculo_fk());
-        factura.setParqueaderoId(cupo.getParqueadero_fk());
+        factura.setVehiculoId(cupo.getVehiculoFk());
+        factura.setParqueaderoId(cupo.getParqueaderoFk());
         factura.setFechaCreacion(ManejarFechas.obtenerFechaActual());
         factura.setActivo(true);
         FacturaOfflineModel facturaFinal = facturaOfflineService.guardarFactura(factura);
@@ -288,9 +294,9 @@ public class CupoService {
             CupoOfflineModel cupoOffline = new CupoOfflineModel();
             cupoOffline.setEstado(CupoOfflineModel.Estado.OCUPADO);
             cupoOffline.setParqueadero_fk(request.getParqueaderoId());
-            cupoOffline.setVehiculo_fk(request.getVehiculoId());
+            cupoOffline.setVehiculoFk(request.getVehiculoId());
             cupoOffline.setFecha_creacion(ManejarFechas.obtenerFechaActual());
-            cupoOffline.setHora_llegada(ManejarFechas.obtenerFechaActual());
+            cupoOffline.setHoraLlegada(ManejarFechas.obtenerFechaActual());
             cupoOffline.setActivo(true);
             String codigo = Codigos.generarCodigoCupo();
             cupoOffline.setCodigo(codigo);

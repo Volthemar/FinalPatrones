@@ -25,13 +25,13 @@ public class LoginController {
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody LoginRequest loginRequest) throws MessagingException {
-        return userService.handleLogin(loginRequest);
+        return userService.manejarLogin(loginRequest);
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/loginCodigo")
     public Map<String, Object> loginCodigo(@RequestBody LoginCodigoRequest loginCodigoRequest, HttpServletRequest request) {
-        return userService.handleLoginCodigo(loginCodigoRequest, request);
+        return userService.manejarLoginCodigo(loginCodigoRequest, request);
     }
 }
 

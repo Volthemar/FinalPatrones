@@ -1,8 +1,8 @@
 package com.api.crud.services;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class TarjetaCreditoService {
         return tarjetaCreditoRepository.save(tarjeta);
     }
 
-    public Vector<TarjetaCreditoModel> obtenerTarjetas(Long usuario) {
+    public ArrayList<TarjetaCreditoModel> obtenerTarjetas(Long usuario) {
         return tarjetaCreditoRepository.findByUsuario(usuario);
     }
 
@@ -49,14 +49,16 @@ public class TarjetaCreditoService {
         EmailDTO email = new EmailDTO();
         email.setNumeroTarjeta(tarjetaRequest.getNumero());
         email.setAsunto("Registro de tarjeta de credito");
-        email.setDestinatario(usuario.get().getCorreo());
+        if(usuario.isPresent()){
+            email.setDestinatario(usuario.get().getCorreo());
+        }
         emailService.enviarCorreoTarjeta(email);
 
         return Map.of("data", tarjetaCredito, "msg", "Tarjeta agregada");
     }
 
     public Map<String, Object> obtenerTarjetasResponse(TarjetaRequest tarjetaRequest) {
-        Vector<TarjetaCreditoModel> tarjetas = obtenerTarjetas(tarjetaRequest.getUsuario());
+        ArrayList<TarjetaCreditoModel> tarjetas = obtenerTarjetas(tarjetaRequest.getUsuario());
         return Map.of("data", tarjetas, "msg", "OK");
     }
 }

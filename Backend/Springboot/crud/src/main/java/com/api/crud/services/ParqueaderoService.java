@@ -15,8 +15,6 @@ import com.api.crud.repositories.IParqueaderoRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Vector;
-import java.util.logging.Logger;
 import java.util.Map;
 
 @Service
@@ -34,7 +32,12 @@ public class ParqueaderoService {
     @Autowired
     private TipoParqueaderoService tipoParqueaderoService;
 
-    public Vector<ParqueaderoModel> obtenerParqueaderoCiudad(Long ciudad) {
+    private static final String parqueaderos = "Parqueaderos";
+    private static final String carro = "CARRO";
+    private static final String moto = "MOTO";
+    private static final String bici = "BICI";
+
+    public ArrayList<ParqueaderoModel> obtenerParqueaderoCiudad(Long ciudad) {
         return parqueaderoRepository.findByCiudad(ciudad);
     }
 
@@ -47,63 +50,63 @@ public class ParqueaderoService {
     }
 
     public Map<String, Object> parqueaderoCiudad(ParqueaderoRequest ciudad) {
-        Vector<ParqueaderoModel> parquedaeros = obtenerParqueaderoCiudad(ciudad.getCiudad_fk());
-        Vector<ParqueaderoResponse> parqueaderos_disponibles = new Vector<>();
+        ArrayList<ParqueaderoModel> parquedaeros = obtenerParqueaderoCiudad(ciudad.getCiudad_fk());
+        ArrayList<ParqueaderoResponse> parqueaderos_disponibles = new ArrayList<>();
         for (ParqueaderoModel parqueadero : parquedaeros) {
-            ParqueaderoResponse parqueadero_parcial = new ParqueaderoResponse();
-            parqueadero_parcial.setId(parqueadero.getId());
-            parqueadero_parcial.setNombre(parqueadero.getNombre());
-            parqueadero_parcial.setLongitud(parqueadero.getLongitud());
-            parqueadero_parcial.setLatitud(parqueadero.getLatitud());
+            ParqueaderoResponse parqueaderoParcial = new ParqueaderoResponse();
+            parqueaderoParcial.setId(parqueadero.getId());
+            parqueaderoParcial.setNombre(parqueadero.getNombre());
+            parqueaderoParcial.setLongitud(parqueadero.getLongitud());
+            parqueaderoParcial.setLatitud(parqueadero.getLatitud());
 
-            int total_carro = parqueadero.getCupo_carro_total();
-            int total_bici = parqueadero.getCupo_bici_total();
-            int total_moto = parqueadero.getCupo_moto_total();
+            int totalCarro = parqueadero.getCupo_carro_total();
+            int totalBici = parqueadero.getCupo_bici_total();
+            int totalMoto = parqueadero.getCupo_moto_total();
 
-            int utilizado_carro = parqueadero.getCupo_uti_carro();
-            int utilizado_bici = parqueadero.getCupo_uti_bici();
-            int utilizado_moto = parqueadero.getCupo_uti_moto();
+            int utilizadoCarro = parqueadero.getCupo_uti_carro();
+            int utilizadoBici = parqueadero.getCupo_uti_bici();
+            int utilizadoMoto = parqueadero.getCupo_uti_moto();
 
-            parqueadero_parcial.setCupo_disponible_carro(total_carro - utilizado_carro);
-            parqueadero_parcial.setCupo_disponible_bici(total_bici - utilizado_bici);
-            parqueadero_parcial.setCupo_disponible_moto(total_moto - utilizado_moto);
+            parqueaderoParcial.setCupo_disponible_carro(totalCarro - utilizadoCarro);
+            parqueaderoParcial.setCupo_disponible_bici(totalBici - utilizadoBici);
+            parqueaderoParcial.setCupo_disponible_moto(totalMoto - utilizadoMoto);
 
-            int disponibilidad_total = total_carro + total_bici + total_moto;
-            int utilizado_total = utilizado_carro + utilizado_bici + utilizado_moto;
+            int disponibilidadTotal = totalCarro + totalBici + totalMoto;
+            int utilizadoTotal = utilizadoCarro + utilizadoBici + utilizadoMoto;
 
-            double porcentaje_ocupado = ((double) utilizado_total / (double) disponibilidad_total);
+            double porcentaje_ocupado = ((double) utilizadoTotal / (double) disponibilidadTotal);
 
             if (porcentaje_ocupado >= 0 && porcentaje_ocupado < 0.6) {
-                parqueadero_parcial.setColor("VERDE");
+                parqueaderoParcial.setColor("VERDE");
             } else if (porcentaje_ocupado >= 0.6 && porcentaje_ocupado < 1) {
-                parqueadero_parcial.setColor("AMARILLO");
+                parqueaderoParcial.setColor("AMARILLO");
             } else if (porcentaje_ocupado == 1) {
-                parqueadero_parcial.setColor("NEGRO");
+                parqueaderoParcial.setColor("NEGRO");
             }
 
-            parqueadero_parcial.setTipo(tipoParqueaderoService.obtenerTipo(parqueadero.getTipo_fk()));
+            parqueaderoParcial.setTipo(tipoParqueaderoService.obtenerTipo(parqueadero.getTipo_fk()));
 
-            parqueaderos_disponibles.add(parqueadero_parcial);
+            parqueaderos_disponibles.add(parqueaderoParcial);
         }
 
-        return Map.of("data", parqueaderos_disponibles, "msg", "Parqueaderos");
+        return Map.of("data", parqueaderos_disponibles, "msg", parqueaderos);
     }
 
     public Map<String, Object> parqueaderoCiudadBasico(ParqueaderoRequest ciudad) {
-        Vector<ParqueaderoModel> parquedaeros = obtenerParqueaderoCiudad(ciudad.getCiudad_fk());
-        Vector<ParqueaderoBasicoResponse> parqueaderos_disponibles = new Vector<>();
+        ArrayList<ParqueaderoModel> parquedaeros = obtenerParqueaderoCiudad(ciudad.getCiudad_fk());
+        ArrayList<ParqueaderoBasicoResponse> parqueaderos_disponibles = new ArrayList<>();
         for (ParqueaderoModel parqueadero : parquedaeros) {
-            ParqueaderoBasicoResponse parqueadero_parcial = new ParqueaderoBasicoResponse();
-            parqueadero_parcial.setId(parqueadero.getId());
-            parqueadero_parcial.setNombre(parqueadero.getNombre());
-            parqueaderos_disponibles.add(parqueadero_parcial);
+            ParqueaderoBasicoResponse parqueaderoParcial = new ParqueaderoBasicoResponse();
+            parqueaderoParcial.setId(parqueadero.getId());
+            parqueaderoParcial.setNombre(parqueadero.getNombre());
+            parqueaderos_disponibles.add(parqueaderoParcial);
         }
-        return Map.of("data", parqueaderos_disponibles, "msg", "Parqueaderos");
+        return Map.of("data", parqueaderos_disponibles, "msg", parqueaderos);
     }
 
     public Map<String, Object> obtenerParqueadero(ParqueaderoRequest parqueadero) {
         Optional<ParqueaderoModel> parquedaeros = obtenerParqueadero(parqueadero.getParqueadero_id());
-        return Map.of("data", parquedaeros.get(), "msg", "Parqueaderos");
+        return Map.of("data", parquedaeros.get(), "msg", parqueaderos);
     }
 
     public Map<String, Object> guardarParqueadero(ParqueaderoRequest parqueadero) {
@@ -122,7 +125,7 @@ public class ParqueaderoService {
         parqueaderoGuardado.setFecha_creacion(ManejarFechas.obtenerFechaActual());
         parqueaderoGuardado.setActivo(true);
         guardarParqueadero(parqueaderoGuardado);
-        return Map.of("data", parqueaderoGuardado, "msg", "Parqueaderos");
+        return Map.of("data", parqueaderoGuardado, "msg", parqueaderos);
     }
 
     public Optional<ParqueaderoEstadisticasResponse> obtenerEstadisticasParqueadero(long parqueaderoId) {
@@ -137,13 +140,13 @@ public class ParqueaderoService {
             List<Integer> CuposDisponibles = new ArrayList<>();
             List<Integer> Ingresos = new ArrayList<>();
 
-            labels.add("CARRO");
-            labels.add("MOTO");
-            labels.add("BICI");
+            labels.add(carro);
+            labels.add(moto);
+            labels.add(bici);
 
-            agregarEstadisticasPorVehiculo(parqueadero, "CARRO", CuposTotales, CuposOcupados, CuposDisponibles, Ingresos);
-            agregarEstadisticasPorVehiculo(parqueadero, "MOTO", CuposTotales, CuposOcupados, CuposDisponibles, Ingresos);
-            agregarEstadisticasPorVehiculo(parqueadero, "BICI", CuposTotales, CuposOcupados, CuposDisponibles, Ingresos);
+            agregarEstadisticasPorVehiculo(parqueadero, carro, CuposTotales, CuposOcupados, CuposDisponibles, Ingresos);
+            agregarEstadisticasPorVehiculo(parqueadero, moto, CuposTotales, CuposOcupados, CuposDisponibles, Ingresos);
+            agregarEstadisticasPorVehiculo(parqueadero, bici, CuposTotales, CuposOcupados, CuposDisponibles, Ingresos);
 
             ParqueaderoEstadisticasResponse response = new ParqueaderoEstadisticasResponse();
             response.setLabels(labels);
@@ -167,9 +170,9 @@ public class ParqueaderoService {
         List<Integer> CuposDisponibles = new ArrayList<>();
         List<Integer> Ingresos = new ArrayList<>();
 
-        labels.add("CARRO");
-        labels.add("MOTO");
-        labels.add("BICI");
+        labels.add(carro);
+        labels.add(moto);
+        labels.add(bici);
 
         int totalCuposCarro = 0;
         int cuposOcupadosCarro = 0;
@@ -233,15 +236,15 @@ public class ParqueaderoService {
         int totalCupos;
         int cuposOcupados;
         switch (tipoVehiculo) {
-            case "CARRO":
+            case carro:
                 totalCupos = parqueadero.getCupo_carro_total();
                 cuposOcupados = parqueadero.getCupo_uti_carro();
                 break;
-            case "MOTO":
+            case moto:
                 totalCupos = parqueadero.getCupo_moto_total();
                 cuposOcupados = parqueadero.getCupo_uti_moto();
                 break;
-            case "BICI":
+            case bici:
                 totalCupos = parqueadero.getCupo_bici_total();
                 cuposOcupados = parqueadero.getCupo_uti_bici();
                 break;

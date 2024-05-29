@@ -25,7 +25,7 @@ public class CiudadModel {
     private double latitud;
 
     @Column
-    private Date fecha_creacion;
+    private Date fechaCreacion;
 
     @Column
     private Boolean activo;
@@ -87,17 +87,17 @@ public class CiudadModel {
     }
 
     /**
-     * @return Date return the fecha_creacion
+     * @return Date return the fechaCreacion
      */
-    public Date getFecha_creacion() {
-        return fecha_creacion;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
     /**
-     * @param fecha_creacion the fecha_creacion to set
+     * @param fechaCreacion the fechaCreacion to set
      */
-    public void setFecha_creacion(Date fecha_creacion) {
-        this.fecha_creacion = fecha_creacion;
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     /**

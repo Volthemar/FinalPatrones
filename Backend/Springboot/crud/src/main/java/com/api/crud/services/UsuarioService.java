@@ -4,7 +4,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,58 +124,73 @@ public class UsuarioService {
         return IUsuarioRepository.findByActivo(activo);
     }
 
-    public Map<String, Object> handleLogin(LoginRequest loginRequest) throws MessagingException {
+    public Map<String, Object> manejarLogin(LoginRequest loginRequest) throws MessagingException {
         String usuario = loginRequest.getUsuario();
         String contrasena = loginRequest.getContrasena();
-        EmailDTO email = new EmailDTO();
         Optional<UsuarioModel> usuarioLoggeado = this.buscarUsuario(usuario);
-        if (usuarioLoggeado.isPresent()) {
-            String contrasenaAlmacenada = usuarioLoggeado.get().getContrasena();
 
-            if (encriptarContrasena(contrasena).equals(contrasenaAlmacenada)) {
-                if (usuarioLoggeado.get().isEstado()) {
-                    usuarioLoggeado.get().setNum_intentos(0);
-                    String codigo = Codigos.generarCodigoLogin();
-                    usuarioLoggeado.get().setCod_verificacion(codigo);
-                    guardarUsuario(usuarioLoggeado.get());
-                    email.setDestinatario(usuarioLoggeado.get().getCorreo());
-                    email.setMensaje(codigo);
-                    email.setAsunto("Código de verificación");
-                    emailService.enviarCorreoCodigo(email);
-                    return Map.of("data",
-                            Map.of("estado", usuarioLoggeado.get().isEstado(), "id", usuarioLoggeado.get().getId()),
-                            "msg",
-                            "Usuario habilitado");
-                } else {
-                    return Map.of("data", "", "msg", "Usuario bloqueado");
-                }
-            } else {
-                // Contraseña incorrecta
-                Optional<UsuarioModel> usuarioExiste = this.buscarUsuario(usuario);
-                if (!usuarioExiste.isEmpty()) {
-                    int intentos = usuarioExiste.get().getNum_intentos();
-                    intentos += 1;
-                    usuarioExiste.get().setNum_intentos(intentos);
-                    guardarUsuario(usuarioExiste.get());
-                    if (intentos >= 3) {
-                        usuarioExiste.get().setEstado(false);
-                        guardarUsuario(usuarioExiste.get());
-                        email.setDestinatario(usuarioExiste.get().getCorreo());
-                        email.setMensaje("Su cuenta ha sido bloqueada, por favor comuniquese con administración");
-                        email.setAsunto("Bloqueo de cuenta");
-                        emailService.enviarCorreoBloqueo(email);
-                        return Map.of("data", "", "msg", "El usuario ha sido bloqueado por exceso de intentos");
-                    } else {
-                        return Map.of("data", "", "msg", "Contraseña incorrecta");
-                    }
-                } else {
-                    return Map.of("data", this.login(usuario, contrasena), "msg",
-                            "Usuario o contraseña incorrecta");
-                }
-            }
+        if (usuarioLoggeado.isPresent()) {
+            return procesarUsuarioLoggeado(usuarioLoggeado.get(), contrasena);
         } else {
-            // Usuario no encontrado
             return Map.of("data", "", "msg", "Usuario o contraseña incorrecta");
+        }
+    }
+
+    private Map<String, Object> procesarUsuarioLoggeado(UsuarioModel usuarioLoggeado, String contrasena) throws MessagingException {
+        String contrasenaAlmacenada = usuarioLoggeado.getContrasena();
+
+        if (encriptarContrasena(contrasena).equals(contrasenaAlmacenada)) {
+            return manejarUsuarioHabilitado(usuarioLoggeado);
+        } else {
+            return manejarContrasenaIncorrecta(usuarioLoggeado);
+        }
+    }
+
+    private Map<String, Object> manejarUsuarioHabilitado(UsuarioModel usuarioLoggeado) throws MessagingException {
+        if (usuarioLoggeado.isEstado()) {
+            usuarioLoggeado.setNum_intentos(0);
+            String codigo = Codigos.generarCodigoLogin();
+            usuarioLoggeado.setCod_verificacion(codigo);
+            guardarUsuario(usuarioLoggeado);
+            enviarCorreoVerificacion(usuarioLoggeado.getCorreo(), codigo);
+            return Map.of("data", Map.of("estado", usuarioLoggeado.isEstado(), "id", usuarioLoggeado.getId()), "msg", "Usuario habilitado");
+        } else {
+            return Map.of("data", "", "msg", "Usuario bloqueado");
+        }
+    }
+
+    private Map<String, Object> manejarContrasenaIncorrecta(UsuarioModel usuarioLoggeado) {
+        int intentos = usuarioLoggeado.getNum_intentos() + 1;
+        usuarioLoggeado.setNum_intentos(intentos);
+        guardarUsuario(usuarioLoggeado);
+
+        if (intentos >= 3) {
+            usuarioLoggeado.setEstado(false);
+            guardarUsuario(usuarioLoggeado);
+            enviarCorreoBloqueo(usuarioLoggeado.getCorreo());
+            return Map.of("data", "", "msg", "El usuario ha sido bloqueado por exceso de intentos");
+        } else {
+            return Map.of("data", "", "msg", "Contraseña incorrecta");
+        }
+    }
+
+    private void enviarCorreoVerificacion(String destinatario, String codigo) throws MessagingException {
+        EmailDTO email = new EmailDTO();
+        email.setDestinatario(destinatario);
+        email.setMensaje(codigo);
+        email.setAsunto("Código de verificación");
+        emailService.enviarCorreoCodigo(email);
+    }
+
+    private void enviarCorreoBloqueo(String destinatario) {
+        EmailDTO email = new EmailDTO();
+        email.setDestinatario(destinatario);
+        email.setMensaje("Su cuenta ha sido bloqueada, por favor comuniquese con administración");
+        email.setAsunto("Bloqueo de cuenta");
+        try {
+            emailService.enviarCorreoBloqueo(email);
+        } catch (MessagingException e) {
+            throw new IllegalArgumentException("Error al enviar correo de bloqueo", e);
         }
     }
 
@@ -190,47 +204,64 @@ public class UsuarioService {
             }
             return sb.toString();
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error encriptando la contra", e);
+            throw new IllegalArgumentException("Error encriptando la contra", e);
         }
     }
 
-    public Map<String, Object> handleLoginCodigo(LoginCodigoRequest loginCodigoRequest, HttpServletRequest request) {
+    public Map<String, Object> manejarLoginCodigo(LoginCodigoRequest loginCodigoRequest, HttpServletRequest request) {
         Long id = loginCodigoRequest.getId();
         String codigo = loginCodigoRequest.getCodigo();
         String codigoUsuario = this.codigoUsuario(id);
 
         if (codigo.equals(codigoUsuario)) {
-            Optional<UsuarioModel> cliente = this.getPorId(id);
-            LoginResponse respuestaLogin = new LoginResponse();
-            respuestaLogin.setNombre(cliente.get().getNombre());
-            respuestaLogin.setCorreo(cliente.get().getCorreo());
-            respuestaLogin.setIdentificacion(cliente.get().getIdentificacion());
-            respuestaLogin.setEstado(cliente.get().isEstado());
-            respuestaLogin.setUsuario(cliente.get().getUsuario());
-            Vector<TipoUsuarioUsuarioModel> rompimiento = tipoUsuarioUsuarioService
-                    .obtenerTipoUsuario(cliente.get().getId());
-            Vector<TipoUsuarioModel> tipos = new Vector<>();
-            for (int i = 0; i < rompimiento.size(); i++) {
-                Optional<TipoUsuarioModel> tipo = tipoUsuarioService
-                        .obtenerTipo(rompimiento.get(i).getTipo_usuario_fk());
-                if (!tipo.isEmpty()) {
-                    tipos.add(tipo.get());
-                }
-            }
-            respuestaLogin.setTipo(tipos);
-            respuestaLogin.setId(cliente.get().getId());
-            IpCaptureRequest ipCaptureRequest = new IpCaptureRequest();
-            ipCaptureRequest.setIpAddress(request.getRemoteAddr());
-            ipCaptureRequest.setUserId(cliente.get().getId());
-            ipService.captureIp(ipCaptureRequest);
-            return Map.of("data", respuestaLogin, "msg", "Codigo correcto");
+            return procesarCodigoCorrecto(id, request);
         } else {
-            IpCaptureRequest ipCaptureRequest = new IpCaptureRequest();
-            ipCaptureRequest.setIpAddress(request.getRemoteAddr());
-            ipService.captureIp(ipCaptureRequest);
+            capturarIp(request, id);
             return Map.of("msg", "Codigo incorrecto");
         }
     }
+
+    private Map<String, Object> procesarCodigoCorrecto(Long id, HttpServletRequest request) {
+        Optional<UsuarioModel> clienteOpt = this.getPorId(id);
+        if (clienteOpt.isPresent()) {
+            UsuarioModel cliente = clienteOpt.get();
+            LoginResponse respuestaLogin = construirRespuestaLogin(cliente);
+            capturarIp(request, id);
+            return Map.of("data", respuestaLogin, "msg", "Codigo correcto");
+        } else {
+            return Map.of("msg", "Usuario no encontrado");
+        }
+    }
+
+    private LoginResponse construirRespuestaLogin(UsuarioModel cliente) {
+        LoginResponse respuestaLogin = new LoginResponse();
+        respuestaLogin.setNombre(cliente.getNombre());
+        respuestaLogin.setCorreo(cliente.getCorreo());
+        respuestaLogin.setIdentificacion(cliente.getIdentificacion());
+        respuestaLogin.setEstado(cliente.isEstado());
+        respuestaLogin.setUsuario(cliente.getUsuario());
+        respuestaLogin.setTipo(obtenerTiposUsuario(cliente.getId()));
+        respuestaLogin.setId(cliente.getId());
+        return respuestaLogin;
+    }
+
+    private ArrayList<TipoUsuarioModel> obtenerTiposUsuario(Long usuarioId) {
+        ArrayList<TipoUsuarioUsuarioModel> rompimiento = tipoUsuarioUsuarioService.obtenerTipoUsuario(usuarioId);
+        ArrayList<TipoUsuarioModel> tipos = new ArrayList<>();
+        for (TipoUsuarioUsuarioModel tipoUsuarioUsuario : rompimiento) {
+            Optional<TipoUsuarioModel> tipoOpt = tipoUsuarioService.obtenerTipo(tipoUsuarioUsuario.getTipo_usuario_fk());
+            tipoOpt.ifPresent(tipos::add);
+        }
+        return tipos;
+    }
+
+    private void capturarIp(HttpServletRequest request, Long usuarioId) {
+        IpCaptureRequest ipCaptureRequest = new IpCaptureRequest();
+        ipCaptureRequest.setIpAddress(request.getRemoteAddr());
+        ipCaptureRequest.setUserId(usuarioId);
+        ipService.captureIp(ipCaptureRequest);
+    }
+
 
     public Map<String, Object> registrarUsuario(RegistroPersonaRequest registroPersona) throws MessagingException {
         String nombre = registroPersona.getNombre();

@@ -20,8 +20,8 @@ public class VehiculoModel {
     @Column
     private String tipo;
 
-    @Column
-    private Timestamp fecha_creacion;
+    @Column (name = "Fecha_creacion")
+    private Timestamp fechaCreacion;
 
     @Column
     private Boolean activo;
@@ -57,15 +57,15 @@ public class VehiculoModel {
     /**
      * @return Timestamp return the fecha_creacion
      */
-    public Timestamp getFecha_creacion() {
-        return fecha_creacion;
+    public Timestamp getFechaCreacion() {
+        return fechaCreacion;
     }
 
     /**
      * @param fecha_creacion the fecha_creacion to set
      */
-    public void setFecha_creacion(Timestamp fecha_creacion) {
-        this.fecha_creacion = fecha_creacion;
+    public void setFechaCreacion(Timestamp fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     /**
@@ -88,12 +88,4 @@ public class VehiculoModel {
     public void setActivo(Boolean activo) {
         this.activo = activo;
     }
-
-    /*
-     * public enum Tipo{
-     * CARRO,
-     * MOTO,
-     * BICI
-     * }
-     */
 }

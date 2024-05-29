@@ -18,28 +18,28 @@ public class CupoOfflineModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private long parqueadero_fk;
+    @Column (name = "Parqueadero_fk")
+    private long parqueaderoFk;
 
-    @Column
-    private Long vehiculo_fk;
+    @Column (name = "Vehiculo_fk")
+    private Long vehiculoFk;
 
-    @Column
+    @Column 
     private boolean pagado;
 
-    @Column
-    private Date hora_llegada;
+    @Column (name = "Hora_llegada")
+    private Date horaLlegada;
 
-    @Column
-    private Date hora_salida;
+    @Column (name = "Hora_salida")
+    private Date horaSalida;
 
-    @Column
-    private Date fecha_creacion;
+    @Column (name = "Fecha_creacion")
+    private Date fechaCreacion;
 
     @Enumerated(EnumType.STRING)
     private Estado estado;
 
-    @Column
+    @Column 
     private Boolean activo;
 
     @Column
@@ -71,29 +71,29 @@ public class CupoOfflineModel {
     /**
      * @return Long return the parqueader_fk
      */
-    public Long getParqueadero_fk() {
-        return parqueadero_fk;
+    public Long getParqueaderoFk() {
+        return parqueaderoFk;
     }
 
     /**
      * @param parqueader_fk the parqueader_fk to set
      */
     public void setParqueadero_fk(Long parqueadero_fk) {
-        this.parqueadero_fk = parqueadero_fk;
+        this.parqueaderoFk = parqueadero_fk;
     }
 
     /**
      * @return Long return the vehiculo_fk
      */
-    public Long getVehiculo_fk() {
-        return vehiculo_fk;
+    public Long getVehiculoFk() {
+        return vehiculoFk;
     }
 
     /**
      * @param vehiculo_fk the vehiculo_fk to set
      */
-    public void setVehiculo_fk(Long vehiculo_fk) {
-        this.vehiculo_fk = vehiculo_fk;
+    public void setVehiculoFk(Long vehiculo_fk) {
+        this.vehiculoFk = vehiculo_fk;
     }
 
     /**
@@ -122,7 +122,7 @@ public class CupoOfflineModel {
     /**
      * @return Boolean return the activo
      */
-    public Boolean getactivo() {
+    public Boolean getActivo() {
         return activo;
     }
 
@@ -159,43 +159,43 @@ public class CupoOfflineModel {
     /**
      * @return Date return the hora_llegada
      */
-    public Date getHora_llegada() {
-        return hora_llegada;
+    public Date getHoraLlegada() {
+        return horaLlegada;
     }
 
     /**
      * @param hora_llegada the hora_llegada to set
      */
-    public void setHora_llegada(Date hora_llegada) {
-        this.hora_llegada = hora_llegada;
+    public void setHoraLlegada(Date horaLlegada) {
+        this.horaLlegada = horaLlegada;
     }
 
     /**
      * @return Date return the hora_salida
      */
-    public Date getHora_salida() {
-        return hora_salida;
+    public Date getHoraSalida() {
+        return horaSalida;
     }
 
     /**
      * @param hora_salida the hora_salida to set
      */
-    public void setHora_salida(Date hora_salida) {
-        this.hora_salida = hora_salida;
+    public void setHora_salida(Date horaSalida) {
+        this.horaSalida = horaSalida;
     }
 
     /**
      * @return Date return the fecha_creacion
      */
-    public Date getFecha_creacion() {
-        return fecha_creacion;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
     /**
      * @param fecha_creacion the fecha_creacion to set
      */
-    public void setFecha_creacion(Date fecha_creacion) {
-        this.fecha_creacion = fecha_creacion;
+    public void setFecha_creacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
 }

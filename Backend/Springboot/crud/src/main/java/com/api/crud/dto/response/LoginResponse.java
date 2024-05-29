@@ -1,6 +1,6 @@
 package com.api.crud.dto.response;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import com.api.crud.models.TipoUsuarioModel;
 
@@ -11,7 +11,7 @@ public class LoginResponse {
     private String usuario;
     private boolean estado;
     private Long id;
-    private Vector<TipoUsuarioModel> tipo;
+    private ArrayList<TipoUsuarioModel> tipo;
     
 
     /**
@@ -101,14 +101,14 @@ public class LoginResponse {
     /**
      * @return List return the tipo
      */
-    public Vector<TipoUsuarioModel> getTipo() {
+    public ArrayList<TipoUsuarioModel> getTipo() {
         return tipo;
     }
 
     /**
      * @param tipo the tipo to set
      */
-    public void setTipo(Vector<TipoUsuarioModel> tipo) {
+    public void setTipo(ArrayList<TipoUsuarioModel> tipo) {
         this.tipo = tipo;
     }
 
