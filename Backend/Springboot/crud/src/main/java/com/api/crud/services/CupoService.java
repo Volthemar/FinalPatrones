@@ -293,7 +293,7 @@ public class CupoService {
         if (disponibilidad) {
             CupoOfflineModel cupoOffline = new CupoOfflineModel();
             cupoOffline.setEstado(CupoOfflineModel.Estado.OCUPADO);
-            cupoOffline.setParqueadero_fk(request.getParqueaderoId());
+            cupoOffline.setParqueaderoFk(request.getParqueaderoId());
             cupoOffline.setVehiculoFk(request.getVehiculoId());
             cupoOffline.setFecha_creacion(ManejarFechas.obtenerFechaActual());
             cupoOffline.setHoraLlegada(ManejarFechas.obtenerFechaActual());
