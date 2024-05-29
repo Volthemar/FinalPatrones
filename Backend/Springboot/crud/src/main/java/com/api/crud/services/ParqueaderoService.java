@@ -74,13 +74,13 @@ public class ParqueaderoService {
             int disponibilidadTotal = totalCarro + totalBici + totalMoto;
             int utilizadoTotal = utilizadoCarro + utilizadoBici + utilizadoMoto;
 
-            double porcentaje_ocupado = ((double) utilizadoTotal / (double) disponibilidadTotal);
+            double porcentajeOcupado = ((double) utilizadoTotal / (double) disponibilidadTotal);
 
-            if (porcentaje_ocupado >= 0 && porcentaje_ocupado < 0.6) {
+            if (porcentajeOcupado >= 0 && porcentajeOcupado < 0.6) {
                 parqueaderoParcial.setColor("VERDE");
-            } else if (porcentaje_ocupado >= 0.6 && porcentaje_ocupado < 1) {
+            } else if (porcentajeOcupado >= 0.6 && porcentajeOcupado < 1) {
                 parqueaderoParcial.setColor("AMARILLO");
-            } else if (porcentaje_ocupado == 1) {
+            } else if (porcentajeOcupado == 1) {
                 parqueaderoParcial.setColor("NEGRO");
             }
 
