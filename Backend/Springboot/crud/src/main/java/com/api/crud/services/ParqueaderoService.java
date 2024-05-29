@@ -231,29 +231,29 @@ public class ParqueaderoService {
     }
 
     private void agregarEstadisticasPorVehiculo(ParqueaderoModel parqueadero, String tipoVehiculo,
-                                                List<Integer> CuposTotales, List<Integer> CuposOcupados,
-                                                List<Integer> CuposDisponibles, List<Integer> Ingresos) {
+                                                List<Integer> cuposTotales, List<Integer> cuposOcupados,
+                                                List<Integer> cuposDisponibles, List<Integer> ingresos) {
         int totalCupos;
-        int cuposOcupados;
+        int cuposOcupadosLocal;
         switch (tipoVehiculo) {
             case CARRO:
                 totalCupos = parqueadero.getCupo_carro_total();
-                cuposOcupados = parqueadero.getCupo_uti_carro();
+                cuposOcupadosLocal = parqueadero.getCupo_uti_carro();
                 break;
             case MOTO:
                 totalCupos = parqueadero.getCupo_moto_total();
-                cuposOcupados = parqueadero.getCupo_uti_moto();
+                cuposOcupadosLocal = parqueadero.getCupo_uti_moto();
                 break;
             case BICI:
                 totalCupos = parqueadero.getCupo_bici_total();
-                cuposOcupados = parqueadero.getCupo_uti_bici();
+                cuposOcupadosLocal = parqueadero.getCupo_uti_bici();
                 break;
             default:
                 totalCupos = 0;
-                cuposOcupados = 0;
+                cuposOcupadosLocal = 0;
         }
 
-        int cuposDisponibles = totalCupos - cuposOcupados;
+        int cuposDisponiblesLocal = totalCupos - cuposOcupadosLocal;
         Integer ingresosGeneradosPorFacturaOnline = facturaRepository.sumByParqueaderoIdAndVehiculoTipo(parqueadero.getId(), tipoVehiculo);
         if (ingresosGeneradosPorFacturaOnline == null) {
             ingresosGeneradosPorFacturaOnline = 0;
@@ -265,9 +265,9 @@ public class ParqueaderoService {
 
         int ingresosGenerados = ingresosGeneradosPorFacturaOnline + ingresosGeneradosPorFacturaOffline;
 
-        CuposTotales.add(totalCupos);
-        CuposOcupados.add(cuposOcupados);
-        CuposDisponibles.add(cuposDisponibles);
-        Ingresos.add(ingresosGenerados);
+        cuposTotales.add(totalCupos);
+        cuposOcupados.add(cuposOcupadosLocal);
+        cuposDisponibles.add(cuposDisponiblesLocal);
+        ingresos.add(ingresosGenerados);
     }
 }
