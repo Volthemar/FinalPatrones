@@ -78,8 +78,8 @@ public class CupoOfflineModel {
     /**
      * @param parqueader_fk the parqueader_fk to set
      */
-    public void setParqueadero_fk(Long parqueadero_fk) {
-        this.parqueaderoFk = parqueadero_fk;
+    public void setParqueaderoFk(Long parqueaderoFk) {
+        this.parqueaderoFk = parqueaderoFk;
     }
 
     /**
