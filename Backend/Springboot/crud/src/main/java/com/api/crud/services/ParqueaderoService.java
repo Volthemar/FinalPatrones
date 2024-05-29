@@ -135,25 +135,25 @@ public class ParqueaderoService {
             ParqueaderoModel parqueadero = parqueaderoOpt.get();
 
             List<String> labels = new ArrayList<>();
-            List<Integer> CuposTotales = new ArrayList<>();
-            List<Integer> CuposOcupados = new ArrayList<>();
-            List<Integer> CuposDisponibles = new ArrayList<>();
-            List<Integer> Ingresos = new ArrayList<>();
+            List<Integer> cuposTotales = new ArrayList<>();
+            List<Integer> cuposOcupados = new ArrayList<>();
+            List<Integer> cuposDisponibles = new ArrayList<>();
+            List<Integer> ingresos = new ArrayList<>();
 
             labels.add(CARRO);
             labels.add(MOTO);
             labels.add(BICI);
 
-            agregarEstadisticasPorVehiculo(parqueadero, CARRO, CuposTotales, CuposOcupados, CuposDisponibles, Ingresos);
-            agregarEstadisticasPorVehiculo(parqueadero, MOTO, CuposTotales, CuposOcupados, CuposDisponibles, Ingresos);
-            agregarEstadisticasPorVehiculo(parqueadero, BICI, CuposTotales, CuposOcupados, CuposDisponibles, Ingresos);
+            agregarEstadisticasPorVehiculo(parqueadero, CARRO, cuposTotales, cuposOcupados, cuposDisponibles, ingresos);
+            agregarEstadisticasPorVehiculo(parqueadero, MOTO, cuposTotales, cuposOcupados, cuposDisponibles, ingresos);
+            agregarEstadisticasPorVehiculo(parqueadero, BICI, cuposTotales, cuposOcupados, cuposDisponibles, ingresos);
 
             ParqueaderoEstadisticasResponse response = new ParqueaderoEstadisticasResponse();
             response.setLabels(labels);
-            response.setCuposTotales(CuposTotales);
-            response.setCuposOcupados(CuposOcupados);
-            response.setCuposDisponibles(CuposDisponibles);
-            response.setIngresos(Ingresos);
+            response.setCuposTotales(cuposTotales);
+            response.setCuposOcupados(cuposOcupados);
+            response.setCuposDisponibles(cuposDisponibles);
+            response.setIngresos(ingresos);
 
             return Optional.of(response);
         } else {
